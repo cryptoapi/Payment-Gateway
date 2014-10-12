@@ -1,6 +1,6 @@
 	@package     CRYPTOCOIN PAYMENT BOX / CRYPTOCOIN CAPTCHA 
 	@copyright   Copyright (c) 2014 Delta Consultants
-	@category    Libraries
+	@category    Libraries PHP/MySQL/HTML
 	@website     https://gourl.io
 	@api         https://gourl.io/cryptocoin_payment_api.html
 	@demo        https://gourl.io/#section6
@@ -20,7 +20,7 @@ you can easily integrate into your own website in minutes.
 Start accepting payments on your website, including all major cryptocoins, 
 and start selling online in minutes. No application process.
 
-GoUrl Cryptocoin Payment Box is that it fully integrated on your website, 
+The big benefit of Cryptocoin Payment Box is that it fully integrated on your website, 
 no external payment pages opens (as other payment gateways offer).  Your website 
 will receive full user payment information immediately after cryptocoin payment 
 is made and you can process it in automatic mode. 
