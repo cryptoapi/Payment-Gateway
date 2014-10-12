@@ -17,18 +17,22 @@
 PHP Cryptocoin Payment Box/Captcha is a simple PHP/MySQL script which 
 you can easily integrate into your own website in minutes.
 
-Gourl.io committed to your online security. SSL is used to secure cryptocoin 
-transactions, data transfer and cryptocoin payment information.
+Start accepting payments on your website, including all major cryptocoins, 
+and start selling online in minutes. No application process.
 
-The big benefit of our Cryptocoin Payment Box is that it fully integrated 
-on your website, no external payment pages opens (as other payment gateways offer). 
-Your website will receive full user payment information immediately after cryptocoin 
-payment is made and you can process it in automatic mode. 
-You can install multiple payment boxes for different products on the same webpage.
+GoUrl Cryptocoin Payment Box is that it fully integrated on your website, 
+no external payment pages opens (as other payment gateways offer).  Your website 
+will receive full user payment information immediately after cryptocoin payment 
+is made and you can process it in automatic mode. 
+
+
+.
+
 
 HOW IT WORKS
 ------------
 Usually there will be the following -
+
 	a) You install payment box directly on your website and dynamically configure order id, currency, amount to pay, etc.
 	b) All your users will see coin payment box on your webpage, and some users will use them coin wallets and make payments to you.
 	c) In around 5 seconds after cryptocoin payment is made, user will see confirmation on your website page that payment is received (i.e. very fast).
@@ -39,7 +43,7 @@ Usually there will be the following -
 
 No paperwork, no chargebacks, no monthly fee and low transaction fee (from 0%). 
 
-
+.
 
 
 -----------------------------------------------------
@@ -60,7 +64,7 @@ You can accepting cryptocoins on your website with cryptobox variable 'amountUSD
 It increase your online sales and also use Cryptsy.com AutoSell feature 
 (to trade your cryptocoins to USD/BTC during next 30 minutes after payment received).
 
-
+.
 
 
 -----------------------------------------------------
@@ -79,7 +83,7 @@ or 'Captcha Passed successfully'. We have made it for more easy you adopt our
 crypto coin payment boxes on your website. On signup page you can use 
 'Dogecoin Captcha' and on sell products page - 'Dogecoin Payment'. 
 
-
+.
 
 
 -----------------------------------------------------
@@ -94,7 +98,7 @@ THAT'S IT! CRYPTOCOIN PAYMENT BOX SHOULD NOW BE WORKING ON YOUR SITE.
 
 Read more - https://gourl.io/cryptocoin_payment_api.html
 
-
+.
 
 
 ---------------------------
@@ -108,7 +112,7 @@ Read more - https://gourl.io/cryptocoin_payment_api.html
 	5.6) example.php                 - example
 	5.7) readme.md                  - this readme file
 				  
-				  
+.				  
 
 				  
 -----------------------
@@ -180,6 +184,9 @@ Read more - https://gourl.io/cryptocoin_payment_api.html
 	?> 
 
 API: https://gourl.io/cryptocoin_payment_api.html
+
+.
+
 
 
 -----------------
