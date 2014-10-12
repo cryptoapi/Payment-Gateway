@@ -1,11 +1,11 @@
-@package     CRYPTOCOIN PAYMENT BOX / CRYPTOCOIN CAPTCHA 
-@copyright   Copyright (c) 2014 Delta Consultants
-@category    Libraries
-@website     https://gourl.io
-@api         https://gourl.io/cryptocoin_payment_api.html
-@demo        https://gourl.io/#section6
-@version     1.0
-@crypto      Supported Cryptocoins - Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin 
+	@package     CRYPTOCOIN PAYMENT BOX / CRYPTOCOIN CAPTCHA 
+	@copyright   Copyright (c) 2014 Delta Consultants
+	@category    Libraries
+	@website     https://gourl.io
+	@api         https://gourl.io/cryptocoin_payment_api.html
+	@demo        https://gourl.io/#section6
+	@version     1.0
+	@crypto      Supported Cryptocoins - Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin 
 
 
 			 
@@ -29,13 +29,13 @@ You can install multiple payment boxes for different products on the same webpag
 HOW IT WORKS
 ------------
 Usually there will be the following -
-a) You install payment box directly on your website and dynamically configure order id, currency, amount to pay, etc.
-b) All your users will see coin payment box on your webpage, and some users will use them coin wallets and make payments to you.
-c) In around 5 seconds after cryptocoin payment is made, user will see confirmation on your website page that payment is received (i.e. very fast).
-d) Your website will automatically immediately receive current user id with full payment information from our payment server.
-e) The user will still be on your webpage and see that successful payment result, your script can automatically process payment and give user confirmation (for example, upgrading user membership or giving download link on your products, etc). All in automatic mode - no manual actions are needed.
-f) For user that payment procedure on your website will be looking very similar visually and compare with normal credit cards for its speed.
-g) During the next 30 minutes (after transaction is verified) payment will be automatically forwarded to your own wallet address.
+	a) You install payment box directly on your website and dynamically configure order id, currency, amount to pay, etc.
+	b) All your users will see coin payment box on your webpage, and some users will use them coin wallets and make payments to you.
+	c) In around 5 seconds after cryptocoin payment is made, user will see confirmation on your website page that payment is received (i.e. very fast).
+	d) Your website will automatically immediately receive current user id with full payment information from our payment server.
+	e) The user will still be on your webpage and see that successful payment result, your script can automatically process payment and give user confirmation (for example, upgrading user membership or giving download link on your products, etc). All in automatic mode - no manual actions are needed.
+	f) For user that payment procedure on your website will be looking very similar visually and compare with normal credit cards for its speed.
+	g) During the next 30 minutes (after transaction is verified) payment will be automatically forwarded to your own wallet address.
 
 No paperwork, no chargebacks, no monthly fee and low transaction fee (from 0%). 
 
@@ -85,10 +85,10 @@ crypto coin payment boxes on your website. On signup page you can use
 -----------------------------------------------------
 4. INSTALLATION INSTRUCTIONS
 -----------------------------------------------------
-a) Free Registration on gourl.io and get private/public keys
-b) Edit file cryptobox_config.php, add your db details and your private key
-c) Create mysql table cryptobox_payments (sql query below)
-d) Place your public/private keys in example.php and run it
+	a) Free Registration on gourl.io and get private/public keys
+	b) Edit file cryptobox_config.php, add your db details and your private key
+	c) Create mysql table cryptobox_payments (sql query below)
+	d) Place your public/private keys in example.php and run it
 
 THAT'S IT! CRYPTOCOIN PAYMENT BOX SHOULD NOW BE WORKING ON YOUR SITE.
 
@@ -100,13 +100,13 @@ Read more - https://gourl.io/cryptocoin_payment_api.html
 ---------------------------
 5. Archive has seven files
 ---------------------------
-5.1) cryptobox_config.php        - configuration file; please edit it and place your gourl.io details
-5.2) cryptobox.class.php         - cryptocoin payment box class PHP/MySQL
-5.3) cryptobox.callback.php      - file which processes call-backs from Cryptocoin Payment Box server when new payment from your users comes in. Please link this file in your cryptobox configuration on gourl.io - Callback url: http://yoursite.com/cryptobox.callback.php
-5.4) cryptobox.js                - cryptocoin payment box JavaScript
-5.5) cryptobox.min.js            - minimized version of JavaScript
-5.6) example.php                 - example
-5.7) readme.txt                  - this readme file
+	5.1) cryptobox_config.php        - configuration file; please edit it and place your gourl.io details
+	5.2) cryptobox.class.php         - cryptocoin payment box class PHP/MySQL
+	5.3) cryptobox.callback.php      - file which processes call-backs from Cryptocoin Payment Box server when new payment from your users comes in. Please link this file in your cryptobox configuration on gourl.io - Callback url: http://yoursite.com/cryptobox.callback.php
+	5.4) cryptobox.js                - cryptocoin payment box JavaScript
+	5.5) cryptobox.min.js            - minimized version of JavaScript
+	5.6) example.php                 - example
+	5.7) readme.md                  - this readme file
 				  
 				  
 
