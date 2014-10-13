@@ -43,6 +43,7 @@ Usually there will be the following -
 
 No paperwork, no chargebacks, no monthly fee and low transaction fee (from 0%). 
 
+
 .
 
 
@@ -83,6 +84,7 @@ or 'Captcha Passed successfully'. We have made it for more easy you adopt our
 crypto coin payment boxes on your website. On signup page you can use 
 'Dogecoin Captcha' and on sell products page - 'Dogecoin Payment'. 
 
+
 .
 
 
@@ -98,6 +100,7 @@ THAT'S IT! CRYPTOCOIN PAYMENT BOX SHOULD NOW BE WORKING ON YOUR SITE.
 
 Read more - https://gourl.io/cryptocoin_payment_api.html
 
+
 .
 
 
@@ -111,7 +114,8 @@ Read more - https://gourl.io/cryptocoin_payment_api.html
 	5.5) cryptobox.min.js            - minimized version of JavaScript
 	5.6) example.php                 - example
 	5.7) readme.md                  - this readme file
-				  
+
+	
 .				  
 
 				  
@@ -134,8 +138,8 @@ Read more - https://gourl.io/cryptocoin_payment_api.html
 		"orderID"     => "your_product1_or_signuppage1_etc", // order name, not unique
 		"userID" 	  => "", 		// autogenerate unique identifier for each your user
 		"userFormat"  => "COOKIE", 	// save your user identifier userID in cookies
-		"amount" 	  => 0,			// convert amountUSD to cryptocoin using live exchange rate
-		"amountUSD"   => 2,  		// 2 USD
+		"amount" 	  => 0,			// you can use amount (cryptocoins) or amountUSD (US$)
+		"amountUSD"   => 2,  		// 2 USD, convert amountUSD to cryptocoin amount using live exchange rate
 		"period"      => "24 HOUR",	// after 24 hours new payment box will be display
 		"iframeID"    => "",    	// autogenerate iframe html payment box id
 		"language" 	  => "EN" 		// english, please contact us and we can add your language	
@@ -184,6 +188,7 @@ Read more - https://gourl.io/cryptocoin_payment_api.html
 	?> 
 
 API: https://gourl.io/cryptocoin_payment_api.html
+
 
 .
 
