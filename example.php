@@ -14,8 +14,8 @@
 	"orderID"     => "your_product1_or_signuppage1_etc", // order name, not unique
 	"userID" 	  => "", 		// autogenerate unique identifier for each your user
 	"userFormat"  => "COOKIE", 	// save your user identifier userID in cookies
-	"amount" 	  => 0,			// convert amountUSD to cryptocoin using live exchange rate
-	"amountUSD"   => 2,  		// 2 USD
+	"amount" 	  => 0,			// you can use amount (cryptocoins) or amountUSD (US$)  
+	"amountUSD"   => 2,  		// 2 USD, convert amountUSD to cryptocoin amount using live exchange rate
 	"period"      => "24 HOUR",	// after 24 hours new payment box will be display
 	"iframeID"    => "",    	// autogenerate iframe html payment box id
 	"language" 	  => "EN" 		// english, please contact us and we can add your language	
@@ -51,7 +51,7 @@
 		// Your code here - for example, send confirmation email to user
 		// ...
 
-		// Also you can use $box1->is_confirmed() - retutn true if payment confirmed 
+		// Also you can use $box1->is_confirmed() - return true if payment confirmed 
 		// Average transaction confirmation time - 10-20min for 6 confirmations  
 		
 		// Set Payment Status to Processed

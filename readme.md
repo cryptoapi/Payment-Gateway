@@ -168,7 +168,7 @@ Read more - https://gourl.io/cryptocoin_payment_api.html
 		// Your code here - for example, send confirmation email to user
 		// ...
 
-		// Also you can use $box1->is_confirmed() - retutn true if payment confirmed 
+		// Also you can use $box1->is_confirmed() - return true if payment confirmed 
 		// Average transaction confirmation time - 10-20min for 6 confirmations  
 
 		// Set Payment Status to Processed

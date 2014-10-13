@@ -31,6 +31,8 @@
 		else if (userFormat != 'COOKIE' && userFormat != 'SESSION' && userFormat != 'IPADDRESS' && userFormat != 'MANUAL') alert('Invalid cryptobox userFormat value');
 		else if (userFormat == 'COOKIE' && cookieName == '') alert('Invalid cryptobox cookie name');
 		else if (userFormat == 'COOKIE' && cryptobox_cookie(cookieName) != userID) alert('Please enable Cookies in your browser !');
+		else if (orderID == '') alert('Invalid orderID');
+		else if (period == '') alert('Invalid period');
 		else if (hash == '') alert('Invalid cryptobox hash');
 		else 
 		{
