@@ -118,11 +118,23 @@ class Cryptobox {
 	private $paymentDate	= "";		// transaction/payment datetime in GMT format
 	private $amountPaid 	= 0;		// exact paid amount; for example, $amount = 10 DOGE and user paid - $amountPaid = 10.03223 DOGE
 	private $amountPaidUSD 	= 0;		// approximate paid amount in USD; using cryptocurrency exchange rate on datetime of payment
-	private $boxType	= "";			// cryptobox type - 'paymentbox' or 'captchabox'
+	private $boxType		= "";		// cryptobox type - 'paymentbox' or 'captchabox'
 	private $processed		= false;	// optional - set flag to paid & processed	
 	private $cookieName 	= "";		// user cookie/session name (if cookies/sessions use)
 	
-	
+	private $localisation	= array("en" => array("button"			 => "Click Here if you have already sent %coinName%s &#187;",
+												  "msg_not_received" => "<b>%coinName%s have not yet been received.</b><br>If you have already sent %coinName%s (the exact %coinName% sum in one payment as shown in the box below), please wait %time% to receive them by %coinName% Payment System. If you send any other sum, Payment System will ignore the transaction and you will need to send the correct sum again.",
+												  "msg_received" 	 => "%coinName% Payment System received %amountPaid% %coinLabel% successfully !",
+												  "msg_received2" 	 => "%coinName% Captcha received %amountPaid% %coinLabel% successfully !",
+												  "time"		 	 => "a few minutes",
+												  "time2"		 	 => "5-7 minutes"),
+									"ru" => array("button"			 => "&#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1079;&#1076;&#1077;&#1089;&#1100; &#1077;&#1089;&#1083;&#1080; &#1074;&#1099; &#1091;&#1078;&#1077; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; %coinName% &#187;",
+												  "msg_not_received" => "<b>%coinName% &#1085;&#1077; &#1087;&#1086;&#1083;&#1091;&#1095;&#1077;&#1085;&#1099; &#1077;&#1097;&#1105;.</b><br>&#1045;&#1089;&#1083;&#1080; &#1074;&#1099; &#1091;&#1078;&#1077; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; %coinName% (&#1090;&#1086;&#1095;&#1085;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091; %coinName% &#1086;&#1076;&#1085;&#1080;&#1084; &#1087;&#1083;&#1072;&#1090;&#1077;&#1078;&#1105;&#1084; &#1082;&#1072;&#1082; &#1087;&#1086;&#1082;&#1072;&#1079;&#1072;&#1085;&#1086; &#1085;&#1080;&#1078;&#1077;), &#1087;&#1086;&#1078;&#1072;&#1083;&#1091;&#1081;&#1089;&#1090;&#1072; &#1087;&#1086;&#1076;&#1086;&#1078;&#1076;&#1080;&#1090;&#1077; %time% &#1076;&#1083;&#1103; &#1087;&#1086;&#1083;&#1091;&#1095;&#1077;&#1085;&#1080;&#1103; &#1080;&#1093; %coinName% &#1087;&#1083;&#1072;&#1090;&#1105;&#1078;&#1085;&#1086;&#1081; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1086;&#1081;. &#1045;&#1089;&#1083;&#1080; &#1074;&#1099; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; &#1083;&#1102;&#1073;&#1091;&#1102; &#1076;&#1088;&#1091;&#1075;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091;, &#1087;&#1083;&#1072;&#1090;&#1105;&#1078;&#1085;&#1072;&#1103; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1072; &#1073;&#1091;&#1076;&#1077;&#1090; &#1080;&#1075;&#1085;&#1086;&#1088;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; &#1101;&#1090;&#1086; &#1080; &#1074;&#1072;&#1084; &#1085;&#1091;&#1078;&#1085;&#1086; &#1073;&#1091;&#1076;&#1077;&#1090; &#1087;&#1086;&#1089;&#1083;&#1072;&#1090;&#1100; &#1087;&#1088;&#1072;&#1074;&#1080;&#1083;&#1100;&#1085;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091; &#1086;&#1087;&#1103;&#1090;&#1100;",
+												  "msg_received" 	 => "%coinName% &#1087;&#1083;&#1072;&#1090;&#1105;&#1078;&#1085;&#1072;&#1103; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1072; &#1087;&#1086;&#1083;&#1091;&#1095;&#1080;&#1083;&#1072; %amountPaid% %coinLabel% &#1091;&#1089;&#1087;&#1077;&#1096;&#1085;&#1086; !",
+												  "msg_received2" 	 => "%coinName% &#1082;&#1072;&#1087;&#1095;&#1072; &#1087;&#1086;&#1083;&#1091;&#1095;&#1080;&#1083;&#1072; %amountPaid% %coinLabel% &#1091;&#1089;&#1087;&#1077;&#1096;&#1085;&#1086; !",
+												  "time"		 	 => "&#1085;&#1077;&#1089;&#1082;&#1086;&#1083;&#1100;&#1082;&#1086; &#1084;&#1080;&#1085;&#1091;&#1090;",
+												  "time2"		 	 => "5-7 &#1084;&#1080;&#1085;&#1091;&#1090;"));
+		
 	
 	public function __construct($options = array()) 
 	{
@@ -256,11 +268,13 @@ class Cryptobox {
 			if ($submit_btn)
 			{
 				$id = "id".md5(mt_rand()); 
+				if (!$this->paid) $cryptobox_html .= "<a id='c".$this->iframeID."' name='c".$this->iframeID."'></a>";
 				$cryptobox_html .= "<br><div id='$id' align='center'>";
 				$cryptobox_html .= "<div style='display:inline-block;max-width:570px;padding:15px 20px;box-shadow:0 0 10px #aaa;-moz-box-shadow: 0 0 10px #aaa;margin:7px;font-size:13px;line-height:21px;font-family: Verdana, Arial, Helvetica, sans-serif;'>";
 		
-				if ($this->paid) $cryptobox_html .= "<span style='color:#339e2e'>".$this->coinName." ".($this->boxType=="captchabox"?"Captcha":"Payment System")." received $this->amountPaid $this->coinLabel successfully !</span>";
-				else $cryptobox_html .= "<span style='color:#eb4847'><b>".$this->coinName."s have not yet been received.</b><br>If you have already sent ".$this->coinName."s (the exact ".$this->coinName." sum in one payment as shown in the box below), please wait ".($this->coinLabel=="BTC"?"5-7 minutes":"a few minutes")." to receive them by ".$this->coinName." Cryptobox. If you send any other sum, Cryptobox will ignore the transaction and you will need to send the correct sum again.</span><script type='text/javascript'>cryptobox_msghide('$id')</script>";
+
+				if ($this->paid) $cryptobox_html .= "<span style='color:#339e2e'>".str_replace(array("%coinName%", "%coinLabel%", "%amountPaid%"), array($this->coinName, $this->coinLabel, $this->amountPaid), $this->localisation[$this->language][($this->boxType=="paymentbox"?"msg_received":"msg_received2")])."</span>";
+				else $cryptobox_html .= "<span style='color:#eb4847'>".str_replace(array("%coinName%", "%coinLabel%", "%time%"), array($this->coinName, $this->coinLabel, ($this->coinLabel=="BTC"?$this->localisation[$this->language]["time2"]:$this->localisation[$this->language]["time"])), $this->localisation[$this->language]["msg_not_received"])."</span><script type='text/javascript'>cryptobox_msghide('$id')</script>";
 				
 				$cryptobox_html .= "</div></div><br>";
 			}
@@ -276,9 +290,10 @@ class Cryptobox {
 		if ($submit_btn && !$this->paid)
 		{
 			$cryptobox_html .= "<div align='center'>";
-			$cryptobox_html .= "<form action='".$_SERVER["REQUEST_URI"]."' method='post'>";
+			$cryptobox_html .= "<form action='".$_SERVER["REQUEST_URI"]."#c".$this->iframeID."' method='post'>";
 			$cryptobox_html .= "<input type='hidden' id='_cryptobox_live_' name='_cryptobox_live_' value='$val'>";
-			$cryptobox_html .= "<button style='margin:7px;padding:5px;font-family: Verdana, Arial, Helvetica, sans-serif;'>&#160; Click Here if you have already sent ".$this->coinName."s &#187; &#160;</button>";
+			
+			$cryptobox_html .= "<button style='margin:7px;padding:5px;font-family: Verdana, Arial, Helvetica, sans-serif;'>&#160; ".str_replace(array("%coinName%", "%coinLabel%"), array($this->coinName, $this->coinLabel), $this->localisation[$this->language]["button"])." &#160;</button>";
 			$cryptobox_html .= "</form>";
 			$cryptobox_html .= "</div>";
 		}
