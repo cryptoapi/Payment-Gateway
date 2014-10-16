@@ -257,7 +257,7 @@ class Cryptobox {
 	 * And when your user next time comes on your website/reload page he will automatically will see message 
 	 * that his payment has been received successfully.
 	*/
-	public function display_cryptobox($submit_btn = true, $width = "510", $height = "230", $style = "border-radius:15px;box-shadow:0 0 12px #aaa;-moz-box-shadow:0 0 12px #aaa;-webkit-box-shadow:0 0 12px #aaa;padding:3px 6px;margin:10px", $css = "")
+	public function display_cryptobox($submit_btn = true, $width = "520", $height = "230", $style = "border-radius:15px;box-shadow:0 0 12px #aaa;-moz-box-shadow:0 0 12px #aaa;-webkit-box-shadow:0 0 12px #aaa;padding:3px 6px;margin:10px", $css = "")
 	{
 		$cryptobox_html = "";
 		$val 			= md5($this->iframeID.$this->private_key.$this->userID);
