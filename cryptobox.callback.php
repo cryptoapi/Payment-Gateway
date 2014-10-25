@@ -10,7 +10,7 @@
  * @package     Cryptobox callbacks
  * @category    Libraries
  * @website     https://gourl.io
- * @version     1.0
+ * @version     1.1
  *
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
