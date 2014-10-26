@@ -6,7 +6,10 @@ Version 1.1
 
 **Accept Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin Payments Online on your website**
 
-Our Payment Gateway with Instant Checkout allows you easily organise on your website -
+# ![Payment-Gateway](https://gourl.io/images/gateway.jpg)
+
+
+Our Payment Gateway with Instant Checkout allows you to easily organise your website -
 
 * 100% Free Open Source on Github.com
 * No Monthly Fee, Transaction Fee from 0%
@@ -21,10 +24,7 @@ Our Payment Gateway with Instant Checkout allows you easily organise on your web
 * User will see successful payment result typically within 5 seconds after the payment has been sent
 * Your website users and visitors will see GoUrl payment box on your website in their own native languages
 * Our Payment Gateway supports the following interface languages: [English](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=en#gourlcryptolang), [French](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=fr#gourlcryptolang), [Russian](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ru#gourlcryptolang), [Arabic](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ar#gourlcryptolang), [Simplified Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=cn#gourlcryptolang), [Traditional Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=zh#gourlcryptolang), [Hindi](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=hi#gourlcryptolang). We can also add any new language to payment system on [request](http://gourl.local/cryptocoin_payment_api.html#lan)
-* Global, Anonymous, Secure, Zero Risk, No Chargebacks
-
-
-# ![Payment-Gateway](https://gourl.io/images/gateway.jpg)
+* Global, Anonymous, Secure, Zero Risk, No Chargebacks, No visitor registration is needed.
 
 
 
@@ -65,7 +65,7 @@ How It Works
 Usually there will be the following -
 
 * You install payment box directly on your website and dynamically configure order id, currency, amount to pay, etc.
-* All your users will see coin payment box on your webpage, and some users will use them coin wallets and make payments to you.
+* All your users will see coin payment box on your webpage, and some users will use their coin wallets and make payments to you.
 * In around 5 seconds after cryptocoin payment is made, user will see confirmation on your website page that payment is received (i.e. very fast).
 * Your website will automatically immediately receive current user id with full payment information from our payment server.
 * The user will still be on your webpage and see that successful payment result, your script can automatically process payment and give user confirmation (for example, upgrading user membership or giving download link on your products, etc). All in automatic mode - no manual actions are needed.
@@ -96,7 +96,8 @@ MySQL Table
 -----------------
 
 Please also run MySQL query below which will create MySQL
-table where will be stored all cryptocoin payments to you.
+table where all the cryptocoin payments made to you will 
+be stored.
 You can have multiple crypto boxes on site, all of them
 relates to your different crypto boxes and will be stored
 in that one table :
@@ -143,5 +144,37 @@ in that one table :
 	  KEY `key2` (`boxID`,`orderID`,`userID`),
 	  KEY `key3` (`boxID`,`orderID`,`userID`,`txID`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+
+.
+
+	
+Payment API List :
+---------------------
+
+* [Bitcoin Payment API](https://gourl.io/bitcoin-payment-gateway-api.html)
+* [Litecoin Payment API](https://gourl.io/litecoin-payment-gateway-api.html)
+* [Dogecoin Payment API](https://gourl.io/dogecoin-payment-gateway-api.html)
+* [Speedcoin Payment API](https://gourl.io/speedcoin-payment-gateway-api.html)
+* [Darkcoin Payment API](https://gourl.io/darkcoin-payment-gateway-api.html)
+* [Vertcoin Payment API](https://gourl.io/vertcoin-payment-gateway-api.html)
+* [Reddcoin Payment API](https://gourl.io/reddcoin-payment-gateway-api.html)
+* [Feathercoin Payment API](https://gourl.io/feathercoin-payment-gateway-api.html)
+* [Vericoin Payment API](https://gourl.io/vericoin-payment-gateway-api.html)
+
+
+.
+
+
+PHP Examples / Live Demo : 
+-----------------------------
+
+* **Pay-Per-Product**: Example1 - [multiple crypto](https://gourl.io/lib/examples/pay-per-product-multi.php), Example2 - [bitcoin](https://gourl.io/lib/examples/pay-per-product.php)
+* **Pay-Per-Download**: Example3 - [multiple crypto](https://gourl.io/lib/examples/pay-per-download-multi.php), Example4 - [bitcoin](https://gourl.io/lib/examples/pay-per-download.php)
+* **Pay-Per-Post**: Example5 - [multiple crypto](https://gourl.io/lib/examples/pay-per-post-multi.php), Example6 - [bitcoin](https://gourl.io/lib/examples/pay-per-post.php)
+* **Pay-Per-Registration**: Example7 - [multiple crypto](https://gourl.io/lib/examples/pay-per-registration-multi.php), Example8 - [bitcoin](https://gourl.io/lib/examples/pay-per-registration.php)
+* **Pay-Per-Page-Access**: Example19 - [multiple crypto](https://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](https://gourl.io/lib/examples/pay-per-page.php)
+* **Pay-Per-Membership**: Example11 - [multiple crypto](https://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](https://gourl.io/lib/examples/pay-per-membership.php)
+
 
 .
