@@ -56,8 +56,8 @@
 	$coinName = CRYPTOBOX_SELCOIN; // current selected coin by user
 	
 	// Current Coin public/private keys
-	//$public_key  = $all_keys[$coinName]["public_key"];
-	//$private_key = $all_keys[$coinName]["private_key"];
+	$public_key  = $all_keys[$coinName]["public_key"];
+	$private_key = $all_keys[$coinName]["private_key"];
 	
 	
 	

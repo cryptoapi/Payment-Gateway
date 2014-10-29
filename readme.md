@@ -160,6 +160,7 @@ Payment API List :
 * [Vertcoin Payment API](https://gourl.io/vertcoin-payment-gateway-api.html)
 * [Reddcoin Payment API](https://gourl.io/reddcoin-payment-gateway-api.html)
 * [Feathercoin Payment API](https://gourl.io/feathercoin-payment-gateway-api.html)
+* [Potcoin Payment API](https://gourl.io/potcoin-payment-gateway-api.html)
 * [Vericoin Payment API](https://gourl.io/vericoin-payment-gateway-api.html)
 
 
