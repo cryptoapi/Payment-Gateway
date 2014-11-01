@@ -20,7 +20,7 @@
 	$amountUSD		= 0.5;				// price per one post - 0.5 USD
 	$period			= "NOEXPIRY";		// one time payment for each new user post, not expiry
 	$def_language	= "en";				// default Payment Box Language
-	$def_payment	= "dogecoin";		// Default Coin in Payment Box
+	$def_payment	= "bitcoin";		// Default Coin in Payment Box
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 

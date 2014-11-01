@@ -20,7 +20,7 @@
 	$amountUSD		= 79;						// price per membership - 79 USD
 	$period			= "1 MONTH";				// one month membership; after need to pay again
 	$def_language	= "en";						// default Payment Box Language
-	$def_payment	= "dogecoin";				// Default Coin in Payment Box
+	$def_payment	= "bitcoin";				// Default Coin in Payment Box
 	
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 

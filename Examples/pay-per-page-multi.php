@@ -21,7 +21,7 @@
 	$amountUSD		= 0.6;				// price per page(s) - 0.6 USD
 	$period			= "24 HOUR";		// user will get access to page(s) for 24 hours; after need to pay again
 	$def_language	= "en";				// default Payment Box Language
-	$def_payment	= "dogecoin";		// Default Coin in Payment Box
+	$def_payment	= "bitcoin";		// Default Coin in Payment Box
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 
