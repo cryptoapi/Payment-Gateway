@@ -37,6 +37,7 @@
 	$options = array(
 			"public_key"  => $public_key, 	// your public key from gourl.io
 			"private_key" => $private_key, 	// your private key from gourl.io
+			"webdev_key"  => "", 		// optional, gourl affiliate key
 			"orderID"     => $orderID, 		// order id
 			"userID"      => $userID, 		// unique identifier for each your user
 			"userFormat"  => $userFormat, 	// save userID in COOKIE, IPADDRESS or SESSION

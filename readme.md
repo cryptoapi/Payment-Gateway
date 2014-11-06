@@ -2,7 +2,7 @@
 GoUrl.io Cryptocoin Payment Gateway API
 -----------------------------------------
 
-Version 1.2
+Version 1.3
 
 **Accept Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin Payments Online on your website**
 
@@ -24,8 +24,9 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 * User will see successful payment result typically within 5 seconds after the payment has been sent
 * Your website users and visitors will see GoUrl payment box on your website in their own native languages
 * Our Payment Gateway supports the following interface languages: [English](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=en#gourlcryptolang), [French](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=fr#gourlcryptolang), [Russian](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ru#gourlcryptolang), [Arabic](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ar#gourlcryptolang), [Simplified Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=cn#gourlcryptolang), [Traditional Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=zh#gourlcryptolang), [Hindi](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=hi#gourlcryptolang). We can also add any new language to payment system on [request](http://gourl.local/cryptocoin_payment_api.html#lan)
+* [Affiliate Program](https://gourl.io/affiliates.html) (0.50% commission from all cryptocoin/bitcoin payments) for Web Developers
 * Global, Anonymous, Secure, Zero Risk, No Chargebacks, No visitor registration is needed.
-
+* [Free Support](https://gourl.io/view/contact/Contact_Us.html) in the integration of our GoUrl Crypto Payment Gateway in your scripts/plugins/website
 
 
 Information
@@ -59,32 +60,44 @@ Your website will receive full user payment information immediately after crypto
 # ![Payment-Box](https://gourl.io/images/paymentbox.png)
 
 
+
 How It Works
 ----------------
 
-Usually there will be the following -
+**A. Website Owner / Seller Side**
 
-* You install payment box directly on your website and dynamically configure order id, currency, amount to pay, etc.
-* All your users will see coin payment box on your webpage, and some users will use their coin wallets and make payments to you.
-* In around 5 seconds after cryptocoin payment is made, user will see confirmation on your website page that payment is received (i.e. very fast).
-* Your website will automatically immediately receive current user id with full payment information from our payment server.
-* The user will still be on your webpage and see that successful payment result, your script can automatically process payment and give user confirmation (for example, upgrading user membership or giving download link on your products, etc). All in automatic mode - no manual actions are needed.
-* For user that payment procedure on your website will be looking very similar visually and compare with normal credit cards for its speed.
-* During the next 30 minutes (after transaction is verified) payment will be automatically forwarded to your own wallet address.
+You can use the following steps to sell your products on your website for cryptocoins if you wish to and can automatically convert them to USD
 
-No paperwork, no chargebacks, no monthly fee and low transaction fee (from 0%). 
+* [Install](https://gourl.io/cryptocoin_payment_api.html#installation) GoUrl crypto Payment Box on your website and dynamically configure order id, currency, amount to pay, etc. Or use [Monetiser Online](https://gourl.io/view/newurl/Cryptocoin_Monetiser_Make_Money_Online.html) if you don't have your own website.
+* You can accept payments in Bitcoins only or you can accept other coins - Dogecoin, Litecoin, Reddcoin, etc also. See [Demo1](https://gourl.io/lib/examples/pay-per-product-multi.php) (multiple coins) or [Demo2](https://gourl.io/lib/examples/pay-per-membership.php?gourlcryptocoin=bitcoin) (Bitcoin only)
+* When you [setup](https://gourl.io/editrecord/coin_boxes/0) Cryptocoin Payment Box, you can enter the [original amount](https://gourl.io/images/instruction-config2.png) in USD or in cryptocoins. The USD amount will be automatically converted to cryptocoin amount using today's LIVE cryptocurrency exchange rates (updated every 30 minutes) and the cryptocoin amount will be displayed in the payment box. For example, if you entered 20 USD, it will display 0.059 BTC in the payment box.
+* You will need to create an account on [Cryptsy.com](https://www.cryptsy.com/) or on [Bitstamp.net](https://www.bitstamp.net/) (trading platforms)
+* [Setup](https://gourl.io/images/instruction-config3.png) so that all your received payments are automatically forwarded from your GoUrl.io account to your account on Cryptsy / Bitstamp (enter your Cryptsy/Bitstamp coin wallet address in gourl [payment box settings](https://gourl.io/images/instruction-config3.png)). And use the "autosell" feature (auto trade your cryptocoins to USD) on Cryptsy/Bitstamp.
+* Using that functionality you don't need to worry if cryptocurrency prices go down or up. Within 1-2 hours after a cryptocoin payment has been received by you, your payment will be automatically converted to USD on Cryptsy/Bitstamp and will be kept on your Cryptsy/Bitstamp USD account.
+* Later you can withdraw your USD from Cryptsy/Bitstamp to your own USA/UK/France/etc bank account
 
+
+**B. End User / Buyer Side**
+
+* All your users will see GoUrl [Payment Box](https://gourl.io/cryptocoin_payment_api.html#live) on your webpage, and some users will use their coin wallets and make payments to you
+* In around 5 seconds after cryptocoin payment is made, user will see confirmation on your website page that payment is received (i.e. very fast)
+* Your website will automatically immediately receive current user id with full payment information from our payment server
+* The user will still be on your webpage and see that successful payment result, your script can automatically process payment and give user confirmation (for example, upgrading user membership or giving download link on your products, etc). All in automatic mode - no manual actions are needed
+* For user that payment procedure on your website will be looking very similar visually and compare with normal credit cards for its speed
+* No paperwork, no chargebacks, no monthly fee, low transaction fee ([from 0%](https://gourl.io/#section4)). Please note that during the next 30 minutes (after transaction is verified) payment will be automatically forwarded to your wallet address
 
 
 
 Installation
 ----------------------------
-* [Free Registration](https://gourl.io/view/registration/New_User_Registration.html) on gourl.io and get private/public keys
-* Edit file [cryptobox_config.php](https://gourl.io/images/instruction-config1.png), add your db details and your private key
-* Create mysql table cryptobox_payments (mysql query below - table `crypto_payments`)
-* Place your [public/private keys](https://gourl.io/images/instruction-config2.png) in any file from Examples directory and run it
+* [Free Register](https://gourl.io/view/registration/New_User_Registration.html) or [Login](https://gourl.io/info/memberarea/My_Account.html) on the website and [create new payment box](https://gourl.io/editrecord/coin_boxes/0)
+* [Download](https://coins.gourl.io/lib/cryptoapi_php.rar) Free PHP/MySQL Script and read [How It Works](https://gourl.io/#section8)
+* Edit file [cryptobox_config.php](https://github.com/cryptoapi/Payment-Gateway/blob/master/cryptobox.config.php), add your db details and your private key ([screenshot](https://gourl.io/images/instruction-config1.png))
+* Run [SQL query](https://github.com/cryptoapi/Payment-Gateway#mysql-table) in your database to create new table crypto_payments
+* Place your public/private keys from new created payment box in any [example](https://github.com/cryptoapi/Payment-Gateway/tree/master/Examples)
+* You can use this [example](https://github.com/cryptoapi/Payment-Gateway/blob/master/Examples/pay-per-product.php) ([screenshot](https://gourl.io/images/instruction-config2.png)) and run it
 
-THAT'S IT! CRYPTOCOIN PAYMENT BOX SHOULD NOW BE WORKING ON YOUR SITE.
+THAT'S IT! CRYPTOCOIN PAYMENT BOX/CAPTCHA SHOULD NOW BE WORKING ON YOUR SITE.
 
 Read more - [https://gourl.io/cryptocoin_payment_api.html](https://gourl.io/cryptocoin_payment_api.html)
 

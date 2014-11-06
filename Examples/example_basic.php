@@ -11,6 +11,7 @@
 	$options = array( 
 	"public_key"  => "", 		// place your public key from gourl.io
 	"private_key" => "", 		// place your private key from gourl.io
+	"webdev_key" => "", 		// optional, gourl affiliate key
 	"orderID"     => "your_product1_or_signuppage1_etc", // order name, not unique
 	"userID" 	  => "", 		// autogenerate unique identifier for each your user
 	"userFormat"  => "COOKIE", 	// save your user identifier userID in cookies
