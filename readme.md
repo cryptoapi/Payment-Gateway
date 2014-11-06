@@ -54,10 +54,10 @@ Start accepting payments on your website, including all major cryptocoins, and s
 
 The big benefit of Cryptocoin Payment Box is that it fully integrated on your website, no external payment pages opens (as other payment gateways offer). 
 
-Your website will receive full user payment information immediately after cryptocoin payment is made and you can process it in automatic mode. 
+Your website will receive full user payment information immediately after cryptocoin payment is made and you can process it in automatic mode.
 
 
-# ![Payment-Box](https://gourl.io/images/paymentbox.png)
+# ![Payment-Box](https://gourl.io/images/bitcoinbox.png)
 
 
 
