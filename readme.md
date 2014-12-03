@@ -2,7 +2,7 @@
 GoUrl.io Cryptocoin Payment Gateway API
 -----------------------------------------
 
-Version 1.3
+Version 1.4
 
 **Accept Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin Payments Online on your website**
 
@@ -13,12 +13,12 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 
 * 100% Free Open Source on Github.com
 * No Monthly Fee, Transaction Fee from 0%
-* [Pay-Per-Product](https://gourl.io/lib/examples/pay-per-product-multi.php) - sell your products for bitcoin, dogecoin, litecoin, etc. online on your website. It is easy!
-* [Pay-Per-Download](https://gourl.io/lib/examples/pay-per-download-multi.php) -  make money on file downloads/other digital content from your website online
-* [Pay-Per-Post](https://gourl.io/lib/examples/pay-per-post-multi.php) - get separate payments for each post/article published on your website
-* [Pay-Per-Registration](https://gourl.io/lib/examples/pay-per-registration-multi.php) - earn money on user registration on your website; stop spam
-* [Pay-Per-Page-Access](https://gourl.io/lib/examples/pay-per-page-multi.php) - sell paid access to selected web page(es) to unregistered visitors online
-* [Pay-Per-Membership](https://gourl.io/lib/examples/pay-per-membership-multi.php) - sell monthly/daily membership of your website to members online
+* [Pay-Per-Product](http://gourl.io/lib/examples/pay-per-product-multi.php) - sell your products for bitcoin, dogecoin, litecoin, etc. online on your website. It is easy!
+* [Pay-Per-Download](http://gourl.io/lib/examples/pay-per-download-multi.php) -  make money on file downloads/other digital content from your website online
+* [Pay-Per-Post](http://gourl.io/lib/examples/pay-per-post-multi.php) - get separate payments for each post/article published on your website
+* [Pay-Per-Registration](http://gourl.io/lib/examples/pay-per-registration-multi.php) - earn money on user registration on your website; stop spam
+* [Pay-Per-Page-Access](http://gourl.io/lib/examples/pay-per-page-multi.php) - sell paid access to selected web page(es) to unregistered visitors online
+* [Pay-Per-Membership](http://gourl.io/lib/examples/pay-per-membership-multi.php) - sell monthly/daily membership of your website to members online
 * Set your own Prices in USD. It will automatically convert usd to cryptocoins using Live [exchange rates](https://cryptsy.com/)
 * Direct Integration on your website (iframe), no external payment pages opens (as other payment gateways offer)
 * User will see successful payment result typically within 5 seconds after the payment has been sent
@@ -32,13 +32,13 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 Information
 ------------------------------------
 
-Source: [https://github.com/cryptoapi/Payment-Gateway](https://github.com/cryptoapi/Payment-Gateway)
-
-Copyright &copy; 2014 [Delta Consultants](https://gourl.io)
+Copyright &copy; 2014-2015 [Delta Consultants](https://gourl.io)
 
 Website: [https://gourl.io](https://gourl.io)
 
-API: [https://gourl.io/cryptocoin_payment_api.html](https://gourl.io/cryptocoin_payment_api.html)
+PHP Script: [https://gourl.io/cryptocoin_payment_api.html](https://gourl.io/cryptocoin_payment_api.html)
+
+Wordpress Plugin: [https://gourl.io/bitcoin_wordpress_plugin.html](https://gourl.io/bitcoin-wordpress-plugin.html)
 
 Demo: [https://gourl.io/bitcoin-payment-gateway-api.html](https://gourl.io/bitcoin-payment-gateway-api.html)
 
@@ -48,7 +48,7 @@ Demo: [https://gourl.io/bitcoin-payment-gateway-api.html](https://gourl.io/bitco
 Introduction
 ----------------
 
-PHP Cryptocoin Payment Gateway is a simple PHP/MySQL script which you can easily integrate into your own website in minutes.
+PHP Cryptocoin Payment Gateway is a simple PHP/MySQL script / Wordpress Plugin which you can easily integrate into your own website in minutes.
 
 Start accepting payments on your website, including all major cryptocoins, and start selling online in minutes. No application process.
 
@@ -69,7 +69,7 @@ How It Works
 You can use the following steps to sell your products on your website for cryptocoins if you wish to and can automatically convert them to USD
 
 * [Install](https://gourl.io/cryptocoin_payment_api.html#installation) GoUrl crypto Payment Box on your website and dynamically configure order id, currency, amount to pay, etc. Or use [Monetiser Online](https://gourl.io/view/newurl/Cryptocoin_Monetiser_Make_Money_Online.html) if you don't have your own website.
-* You can accept payments in Bitcoins only or you can accept other coins - Dogecoin, Litecoin, Reddcoin, etc also. See [Demo1](https://gourl.io/lib/examples/pay-per-product-multi.php) (multiple coins) or [Demo2](https://gourl.io/lib/examples/pay-per-membership.php?gourlcryptocoin=bitcoin) (Bitcoin only)
+* You can accept payments in Bitcoins only or you can accept other coins - Dogecoin, Litecoin, Reddcoin, etc also. See [Demo1](http://gourl.io/lib/examples/pay-per-product-multi.php) (multiple coins) or [Demo2](http://gourl.io/lib/examples/pay-per-membership.php?gourlcryptocoin=bitcoin) (Bitcoin only)
 * When you [setup](https://gourl.io/editrecord/coin_boxes/0) Cryptocoin Payment Box, you can enter the [original amount](https://gourl.io/images/instruction-config2.png) in USD or in cryptocoins. The USD amount will be automatically converted to cryptocoin amount using today's LIVE cryptocurrency exchange rates (updated every 30 minutes) and the cryptocoin amount will be displayed in the payment box. For example, if you entered 20 USD, it will display 0.059 BTC in the payment box.
 * You will need to create an account on [Cryptsy.com](https://www.cryptsy.com/) or on [Bitstamp.net](https://www.bitstamp.net/) (trading platforms)
 * [Setup](https://gourl.io/images/instruction-config3.png) so that all your received payments are automatically forwarded from your GoUrl.io account to your account on Cryptsy / Bitstamp (enter your Cryptsy/Bitstamp coin wallet address in gourl [payment box settings](https://gourl.io/images/instruction-config3.png)). And use the "autosell" feature (auto trade your cryptocoins to USD) on Cryptsy/Bitstamp.
@@ -88,7 +88,7 @@ You can use the following steps to sell your products on your website for crypto
 
 
 
-Installation
+Installation - PHP Script
 ----------------------------
 * [Free Register](https://gourl.io/view/registration/New_User_Registration.html) or [Login](https://gourl.io/info/memberarea/My_Account.html) on the website and [create new payment box](https://gourl.io/editrecord/coin_boxes/0)
 * [Download](https://coins.gourl.io/lib/cryptoapi_php.rar) Free PHP/MySQL Script and read [How It Works](https://gourl.io/#section8)
@@ -102,6 +102,11 @@ THAT'S IT! CRYPTOCOIN PAYMENT BOX/CAPTCHA SHOULD NOW BE WORKING ON YOUR SITE.
 Read more - [https://gourl.io/cryptocoin_payment_api.html](https://gourl.io/cryptocoin_payment_api.html)
 
 
+
+Installation - Wordpress Plugin
+----------------------------
+
+Go to [https://gourl.io/bitcoin-wordpress-plugin.html](https://gourl.io/bitcoin-wordpress-plugin.html)
 
 
 
@@ -183,12 +188,12 @@ Payment API List :
 PHP Examples / Live Demo : 
 -----------------------------
 
-* **Pay-Per-Product**: Example1 - [multiple crypto](https://gourl.io/lib/examples/pay-per-product-multi.php), Example2 - [bitcoin](https://gourl.io/lib/examples/pay-per-product.php)
-* **Pay-Per-Download**: Example3 - [multiple crypto](https://gourl.io/lib/examples/pay-per-download-multi.php), Example4 - [bitcoin](https://gourl.io/lib/examples/pay-per-download.php)
-* **Pay-Per-Post**: Example5 - [multiple crypto](https://gourl.io/lib/examples/pay-per-post-multi.php), Example6 - [bitcoin](https://gourl.io/lib/examples/pay-per-post.php)
-* **Pay-Per-Registration**: Example7 - [multiple crypto](https://gourl.io/lib/examples/pay-per-registration-multi.php), Example8 - [bitcoin](https://gourl.io/lib/examples/pay-per-registration.php)
-* **Pay-Per-Page-Access**: Example19 - [multiple crypto](https://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](https://gourl.io/lib/examples/pay-per-page.php)
-* **Pay-Per-Membership**: Example11 - [multiple crypto](https://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](https://gourl.io/lib/examples/pay-per-membership.php)
+* **Pay-Per-Product**: Example1 - [multiple crypto](http://gourl.io/lib/examples/pay-per-product-multi.php), Example2 - [bitcoin](http://gourl.io/lib/examples/pay-per-product.php)
+* **Pay-Per-Download**: Example3 - [multiple crypto](http://gourl.io/lib/examples/pay-per-download-multi.php), Example4 - [bitcoin](http://gourl.io/lib/examples/pay-per-download.php)
+* **Pay-Per-Post**: Example5 - [multiple crypto](http://gourl.io/lib/examples/pay-per-post-multi.php), Example6 - [bitcoin](http://gourl.io/lib/examples/pay-per-post.php)
+* **Pay-Per-Registration**: Example7 - [multiple crypto](http://gourl.io/lib/examples/pay-per-registration-multi.php), Example8 - [bitcoin](http://gourl.io/lib/examples/pay-per-registration.php)
+* **Pay-Per-Page-Access**: Example19 - [multiple crypto](http://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](http://gourl.io/lib/examples/pay-per-page.php)
+* **Pay-Per-Membership**: Example11 - [multiple crypto](http://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](http://gourl.io/lib/examples/pay-per-membership.php)
 
 
 .

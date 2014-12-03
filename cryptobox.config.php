@@ -3,10 +3,10 @@
  *  YOUR MYSQL DATABASE DETAILS
  */
 
- define("DB_HOSTNAME", 	"localhost");				// hostname
- define("DB_USERNAME", 	"-Please Enter Username-");		// database username
+ define("DB_HOST", 	"localhost");				// hostname
+ define("DB_USER", 	"-Please Enter Username-");		// database username
  define("DB_PASSWORD", 	"-Please Enter Password-");		// database password
- define("DB_DATABASE", 	"-Please Enter Database Name-");	// database name
+ define("DB_NAME", 	"-Please Enter Database Name-");	// database name
 
 
 

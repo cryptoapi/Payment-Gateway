@@ -2,10 +2,10 @@
 /**
  * @category    Example5 - Pay-Per-Post (single crypto currency in payment box)
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014 Delta Consultants
+ * copyright 	(c) 2014-2015 Delta Consultants
  * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p3
- * @live_demo   https://gourl.io/lib/examples/pay-per-post.php
+ * @live_demo   http://gourl.io/lib/examples/pay-per-post.php
  */ 
 	
 	require_once( "../cryptobox.class.php" );
@@ -28,8 +28,6 @@
 
 
 	
-	// Optional - Language selection list for payment box (html code)
-	$languages_list = display_language_box($def_language);
 	
 	
 
@@ -52,6 +50,12 @@
 	
 	// coin name
 	$coinName = $box->coin_name(); 
+	
+	
+	// Optional - Language selection list for payment box (html code)
+	$languages_list = display_language_box($def_language);
+	
+	
 	
 	
 	// Form Data

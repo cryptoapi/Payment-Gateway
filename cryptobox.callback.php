@@ -4,10 +4,10 @@
  * Cryptobox Server Callbacks
  *
  * @package     Cryptobox callbacks
- * @copyright   2014 Delta Consultants
+ * @copyright   2014-2015 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     1.3
+ * @version     1.4
  *
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
@@ -44,7 +44,11 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 		$sql = "INSERT INTO crypto_payments (boxID, boxType, orderID, userID, countryID, coinLabel, amount, amountUSD, unrecognised, addr, txID, txDate, txConfirmed, txCheckDate, recordCreated)
 				VALUES (".$_POST["box"].", '".$_POST["boxtype"]."', '".$_POST["order"]."', '".$_POST["user"]."', '".$_POST["usercountry"]."', '".$_POST["coinlabel"]."', ".$_POST["amount"].", ".$_POST["amountusd"].", ".($_POST["status"]=="payment_received_unrecognised"?1:0).", '".$_POST["addr"]."', '".$_POST["tx"]."', '".$_POST["datetime"]."', ".$_POST["confirmed"].", '$dt', '$dt')";
 
-		run_sql($sql);
+		$paymentID = run_sql($sql);
+		
+		// User-defined function for new payment - cryptobox_new_payment() - for example, send confirmation email, update user membership, etc.
+		if (function_exists('cryptobox_new_payment')) cryptobox_new_payment($paymentID, $_POST);
+		
 	}
 	// Update transaction status to confirmed
 	elseif ($_POST["confirmed"])

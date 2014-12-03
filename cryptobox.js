@@ -3,11 +3,11 @@
   * Cryptocoin Payment Box Javascript
   *
   * @package     Cryptocoin Payment Box / Cryptocoin Captcha 
-  * @copyright   2014 Delta Consultants
+  * @copyright   2014-2015 Delta Consultants
   * @category    Javascript
   * @website     https://gourl.io
   * @api         https://gourl.io/cryptocoin_payment_api.html
-  * @version     1.3
+  * @version     1.4
   *
   */
 
@@ -18,20 +18,23 @@
 		return c.substring(nameEQ.length,c.length); } return ''; 
 	}
 	
-	function cryptobox_show(boxID, coinName, public_key, amount, amountUSD, period, language, iframeID, userID, userFormat, orderID, cookieName, webdev_key, hash)
+	function cryptobox_show(boxID, coinName, public_key, amount, amountUSD, period, language, iframeID, userID, userFormat, orderID, cookieName, webdev_key, hash, width, height)
 	{
+		if (typeof width !== 'number') width = 0;
+		if (typeof height !== 'number') height = 0;
+	
 		var id = public_key.substr(0, public_key.indexOf("AA"));
-		if (id == '' || boxID != id || public_key.indexOf("PUB") == -1) alert('Invalid cryptobox public_key');
-		else if ((amount <= 0 && amountUSD <= 0) || (amount > 0 && amountUSD > 0)) alert('You can use in cryptobox options one of variable only: amount or amountUSD. You cannot place values in that two variables together');
-		else if (amount != 0 && ((amount - 0) != amount || amount < 0.001)) alert('Invalid cryptobox amount');
-		else if (amountUSD != 0 && ((amountUSD - 0) != amountUSD || amountUSD < 0.01)) alert('Invalid cryptobox amountUSD');
-		else if (userFormat != 'COOKIE' && userFormat != 'SESSION' && userFormat != 'IPADDRESS' && userFormat != 'MANUAL') alert('Invalid cryptobox userFormat value');
-		else if (userFormat == 'COOKIE' && cookieName == '') alert('Invalid cryptobox cookie name');
+		if (id == '' || boxID != id || public_key.indexOf("PUB") == -1) alert('Invalid payment box public_key');
+		else if ((amount <= 0 && amountUSD <= 0) || (amount > 0 && amountUSD > 0)) alert('You can use in payment box options one of variable only: amount or amountUSD. You cannot place values in that two variables together');
+		else if (amount != 0 && ((amount - 0) != amount || amount < 0.001)) alert('Invalid payment box amount');
+		else if (amountUSD != 0 && ((amountUSD - 0) != amountUSD || amountUSD < 0.01)) alert('Invalid payment box amountUSD');
+		else if (userFormat != 'COOKIE' && userFormat != 'SESSION' && userFormat != 'IPADDRESS' && userFormat != 'MANUAL') alert('Invalid payment box userFormat value');
+		else if (userFormat == 'COOKIE' && cookieName == '') alert('Invalid payment box cookie name');
 		else if (userFormat == 'COOKIE' && cryptobox_cookie(cookieName) != userID) alert('Please enable Cookies in your browser !');
 		else if (orderID == '') alert('Invalid orderID');
 		else if (period == '') alert('Invalid period');
 		else if (webdev_key != '' && (webdev_key.indexOf("DEV") == -1 || webdev_key.length < 20)) alert('Invalid webdev_key, leave it empty');
-		else if (hash == '') alert('Invalid cryptobox hash');
+		else if (hash == '') alert('Invalid payment box hash');
 		else 
 		{
 			var url = 'https://coins.gourl.io' + 
@@ -42,6 +45,8 @@
 			'/i/'+encodeURIComponent(iframeID)+'/u/'+encodeURIComponent(userID)+
 			'/us/'+encodeURIComponent(userFormat)+'/o/'+encodeURIComponent(orderID)+
 			(webdev_key?'/w/'+encodeURIComponent(webdev_key):'')+
+			(width>0?'/ws/'+encodeURIComponent(width):'')+
+			(height>0?'/hs/'+encodeURIComponent(height):'')+
 			'/h/'+encodeURIComponent(hash)+'/z/'+Math.random();
 			var html = document.getElementById(iframeID);
 			if (html == null) alert('Cryptobox iframeID HTML with id "' + iframeID + '" not exist!');

@@ -2,10 +2,10 @@
 /**
  * @category    Example2 - Pay-Per-Product (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014 Delta Consultants
+ * copyright 	(c) 2014-2015 Delta Consultants
  * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p1
- * @live_demo   https://gourl.io/lib/examples/pay-per-product-multi.php
+ * @live_demo   http://gourl.io/lib/examples/pay-per-product-multi.php
  */ 
 	
 	require_once( "../cryptobox.class.php" );
@@ -49,12 +49,12 @@
 		elseif (strpos(CRYPTOBOX_PRIVATE_KEYS, $all_keys[$v]["private_key"]) === false) die("Please add your private key for '$v' in variable \$cryptobox_private_keys, file cryptobox.config.php.");
 	}
 	
-	// Optional - Language selection list for payment box (html code)
-	$languages_list = display_language_box($def_language);
 	
-	// Optional - Coin selection list (html code)
-	$coins_list = display_currency_box($available_payments, $def_payment, $def_language);
-	$coinName = CRYPTOBOX_SELCOIN; // current selected coin by user
+	
+	// Current selected coin by user
+	$coinName = cryptobox_selcoin($available_payments, $def_payment);
+	
+	
 	
 	// Current Coin public/private keys
 	$public_key  = $all_keys[$coinName]["public_key"];
@@ -107,6 +107,19 @@
 		}
 	}
 	else $message = "This invoice has not been paid yet";
+	
+	
+
+
+	// Optional - Language selection list for payment box (html code)
+	$languages_list = display_language_box($def_language);
+	
+	
+	
+	// Optional - Coin selection list (html code)
+	if (!$box->is_paid()) $coins_list = display_currency_box($available_payments, $def_payment, $def_language, 60, "margin: 80px 0 0 0");
+	
+	
 	
 ?>
 

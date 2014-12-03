@@ -2,10 +2,10 @@
 /**
  * @category    Example9 - Pay-Per-Page Access (single crypto currency in payment box)
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014 Delta Consultants
+ * copyright 	(c) 2014-2015 Delta Consultants
  * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p5
- * @live_demo   https://gourl.io/lib/examples/pay-per-page.php
+ * @live_demo   http://gourl.io/lib/examples/pay-per-page.php
  */ 
 	
 	require_once( "../cryptobox.class.php" );
@@ -29,8 +29,6 @@
 
 
 	
-	// Optional - Language selection list for payment box (html code)
-	$languages_list = display_language_box($def_language);
 	
 	
 	
@@ -54,12 +52,17 @@
 	// coin name
 	$coinName = $box->coin_name(); 
 	
+	
+	// Optional - Language selection list for payment box (html code)
+	$languages_list = display_language_box($def_language);
+	
+	
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <html><head>
-<title><?= $coinName ?> Pay-Per-Page Access Cryptocoin Payment Example</title>
+<title><?= $coinName ?> Pay-Per-View / Page Access Cryptocoin Payment Example</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='Expires' content='-1'>
@@ -69,12 +72,12 @@
 <body style='font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#666;margin:0'>
 <div align='center'>
 <div style='width:100%;height:auto;line-height:50px;background-color:#f1f1f1;border-bottom:1px solid #ddd;color:#49abe9;font-size:18px;'>
-	9. GoUrl <b>Pay-Per-Page Access</b> Example (<?= $coinName ?> payments). Use it on your website. 
+	9. GoUrl <b>Pay-Per-View/Page</b> Example (<?= $coinName ?> payments). Use it on your website. 
 	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/Examples/pay-per-page.php'>View Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?= "//".$_SERVER["HTTP_HOST"].str_replace(".php", "-multi.php", $_SERVER["REQUEST_URI"]); ?>'>Multiple Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
 </div>
 <br>
-<h1>Example - Paid Page Access for Unregistered Visitors</h1>
-<h3>Your Website Visitors have to pay for access to your premium webpage(s)</h3>
+<h1>Example - Pay Per View - Video/Page Access for Unregistered Visitors</h1>
+<h3>Your Website Visitors have to pay for access to your premium video/webpage(s)</h3>
 <br>
 Price: ~<?= $amountUSD ?> US$ for <?= $period ?> access 
 <br><br>

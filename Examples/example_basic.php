@@ -2,7 +2,7 @@
 /**
  * @category    Basic Example
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014 Delta Consultants
+ * copyright 	(c) 2014-2015 Delta Consultants
  * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
  * @website     https://gourl.io/cryptocoin_payment_api.html
  */ 

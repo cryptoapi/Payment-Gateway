@@ -2,10 +2,10 @@
 /**
  * @category    Example11 - Pay-Per-Membership (single crypto currency in payment box)
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014 Delta Consultants
+ * copyright 	(c) 2014-2015 Delta Consultants
  * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p6
- * @live_demo   https://gourl.io/lib/examples/pay-per-membership.php
+ * @live_demo   http://gourl.io/lib/examples/pay-per-membership.php
  */ 
 	
 	require_once( "../cryptobox.class.php" );
@@ -28,8 +28,6 @@
 
 
 	
-	// Optional - Language selection list for payment box (html code)
-	$languages_list = display_language_box($def_language);
 	
 	
 	/** PAYMENT BOX **/
@@ -70,6 +68,11 @@
 		else $message = "You have a Premium Membership";
 	}
 	
+	
+	// Optional - Language selection list for payment box (html code)
+	$languages_list = display_language_box($def_language);
+	
+	
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -105,7 +108,7 @@
 <? else: ?>
 
 	 <!-- Awaiting Payment -->
-	<img alt='Awaiting Payment - Cryptocoin Pay Per Membership' border='0' src='https://gourl.io/images/example10.png'>
+	<a href='#gourlcryptocoins'><img alt='Awaiting Payment - Cryptocoin Pay Per Membership' border='0' src='https://gourl.io/images/example10.png'></a>
 	<br><br><br>	
 	<h3>Upgrade Your Membership Now ( $<?= $amountUSD ?> per <?= $period ?> ) - </h3>
 	
