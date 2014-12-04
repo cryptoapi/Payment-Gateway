@@ -912,7 +912,7 @@ class Cryptobox {
 		$localisation = $localisation[$lan];
 						
 		$id  = "gourlcryptocoins";
-		$tmp = "<div id='$id' name='$id' ".(CRYPTOBOX_WORDPRESS?"class='gourlmethod'":"style='$style'")."><div style='margin-bottom:15px'><b>".$localisation["payment"]." -</b></div>";
+		$tmp = "<div id='$id' ".(CRYPTOBOX_WORDPRESS?"class='gourlmethod'":"style='$style'")."><div style='margin-bottom:15px'><b>".$localisation["payment"]." -</b></div>";
 		foreach ($coins as $v)
 		{
 			$v = trim(strtolower($v));
