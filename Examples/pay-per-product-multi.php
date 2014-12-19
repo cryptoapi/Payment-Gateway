@@ -76,7 +76,7 @@
 			"period"      => $period, 		// payment valid period
 			"language"	  => $def_language  // text on EN - english, FR - french, etc
 	);
-
+	
 	// Initialise Payment Class
 	$box = new Cryptobox ($options);
 	
@@ -84,6 +84,7 @@
 	$coinName = $box->coin_name(); 
 	
 	// Successful Cryptocoin Payment received
+	// Please use also IPN function cryptobox_new_payment($paymentID, $arr) for update db records, etc
 	if ($box->is_paid()) 
 	{
 		if (!$box->is_confirmed()) {
@@ -96,7 +97,6 @@
 			if (!$box->is_processed())
 			{
 				// One time action after payment has been made/confirmed
-				// For example, Send EMAIL to user
 				 
 				$message = "Thank you for order (order #".$orderID.", payment #".$box->payment_id()."). We will send soon";
 				

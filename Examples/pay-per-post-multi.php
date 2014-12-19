@@ -114,12 +114,12 @@
 		if ($box->is_paid() && !$error)
 		{
 			// Successful Cryptocoin Payment received
-
 			// Your code here - 
-			// save text in db / publish user post on your website ...
 			// ...
 			// ...
 					
+			// Please use also IPN function cryptobox_new_payment($paymentID, $arr) for update db records, etc
+
 			// Set Payment Status to Processed
 			$successful = true;
 			$box->set_status_processed();

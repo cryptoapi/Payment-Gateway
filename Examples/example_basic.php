@@ -40,6 +40,7 @@
 		
 		// Your code here to handle a successful cryptocoin payment/captcha verification
 		// For example, give user 24 hour access to your member pages
+		// Please use also IPN function cryptobox_new_payment($paymentID, $arr) for update db records, etc
 		// ...
 	}  
 	else $message .= "The payment has not been made yet";
@@ -50,7 +51,7 @@
 	{
 		$message .= "B. User will see this message one time after payment has been made!";	
 	
-		// Your code here - for example, send confirmation email to user
+		// Your code here - for example, publish order number for user
 		// ...
 
 		// Also you can use $box1->is_confirmed() - return true if payment confirmed 
@@ -64,6 +65,51 @@
 		// Cryptobox will recognize user as a new one with new generated userID
 		// $box1->cryptobox_reset(); 
 	}
+	
+	
+	
+	
+	
+	
+	/*
+	 *  IPN - User Instant Payment Notification Function 
+	 *  
+	 *  This function called every time when a new payment from any user is received successfully.
+	 *  Move that function in separate file or in end of cryptobox.class.php file  
+	 *   
+	 *  Function gets $paymentID from table crypto_payments and payment details as array -
+	 *  $arr = array(
+	 						"status"        => "payment_received" or "payment_received_unrecognised"
+							"box"     		=> 
+							"order"       	=> 
+							"user"        	=> 
+							"usercountry"   => 
+							"amount"		=> 
+							"amountusd"		=> 
+							"coinlabel"		=> 
+							"coinname"		=> 
+							"addr"       	=> 
+							"tx"            => 
+							"confirmed"     => 
+							"timestamp"     => 
+							"date"          => 
+							"datetime"      =>
+					);		 
+	*/
+	function cryptobox_new_payment($paymentID, $arr)
+	{
+
+		// Your code here to handle a successful cryptocoin payment/captcha verification
+		// for example, send confirmation email to user
+		// .... ....
+		
+		return true;
+	}
+		
+	
+	
+	
+	
 ?>
 
 <!DOCTYPE html>

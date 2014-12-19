@@ -10,7 +10,7 @@
  * @api         https://gourl.io/cryptocoin_payment_api.html
  * @wordpress   https://gourl.io/bitcoin-wordpress-plugin.html
  * @demo        https://gourl.io/bitcoin-payment-gateway-api.html
- * @version     1.4
+ * @version     1.4.1
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -38,7 +38,7 @@
  *  C. function display_language_box($defLang = "en")							// Language selection dropdown list for cryptocoin payment box 
  *  D. function display_currency_box($coins = array(), $defCoin = "", $defLang = "en")	// Multiple crypto currency selection list. You can accept payments in multiple crypto currencies (for example: bitcoin, litecoin, dogecoin)
  *  E. function cryptobox_selcoin($coins = array(), $defCoin = "")				// Current selected coin by user 
- *  F. function get_country_name($countryID)									// Get country name by country code
+ *  F. function get_country_name($countryID, $reverse = false)					// Get country name by country code or reverse
  *  G. function run_sql($sql)													// Run SQL queries and return result in array/object formats
  *
  *
@@ -49,6 +49,10 @@
 if(!defined("CRYPTOBOX_WORDPRESS")) define("CRYPTOBOX_WORDPRESS", false);
 
 if (!CRYPTOBOX_WORDPRESS) require_once( "cryptobox.config.php" );
+elseif (!defined('ABSPATH')) exit; // Exit if accessed directly in wordpress
+
+
+define("CRYPTOBOX_VERSION", "1.4.1");
 
 
 class Cryptobox {
@@ -62,7 +66,7 @@ class Cryptobox {
 										/* we will use this $amount value of cryptocoins in the payment box with a small fraction after the decimal point to uniquely identify each of your users individually
 										 * (for example, if you enter 2455 DOGE, one of your user will see 2455.02308 DOGE, and another will see  2455.07832 DOGE, etc) */
 	private $amountUSD 		= 0;		/* you can specify your price in USD and cryptobox will automatically convert that USD amount to cryptocoin amount using today live cryptocurrency exchange rates.
-										 * Using that functionality (price in USD), you don't need to worry if cryptocurrency prices go down or go up. 
+										 * Using that functionality (price in USD), you don't need to worry if cryptocurrency prices go down or up. 
 										 * User will pay you all times the actual price which is linked on current exchange price in USD on the datetime of purchase.      
 										 * You can use in cryptobox options one variable only: amount or amountUSD. You cannot place values of those two variables together. */
 	private $period 		= "";		// period after which the payment becomes obsolete and new cryptobox will be shown; allow values: NOEXPIRY, 1 MINUTE..90 MINUTE, 1 HOUR..90 HOURS, 1 DAY..90 DAYS, 1 WEEK..90 WEEKS, 1 MONTH..90 MONTHS  
@@ -141,14 +145,14 @@ class Cryptobox {
 		$this->localisation = $this->localisation[$this->language];
 		unset($id);
 		
-		if ($this->iframeID && preg_replace('/[^A-Za-z0-9\_\-]/', '', $this->iframeID) != $this->iframeID || $this->iframeID == "cryptobox_live_") die("Invalid iframe ID - $this->iframeID. Allow symbols: a..Z0..9_-");
+		if ($this->iframeID && preg_replace('/[^A-Za-z0-9\_\-]/', '', $this->iframeID) != $this->iframeID || $this->iframeID == "cryptobox_live_") die("Invalid iframe ID - $this->iframeID. Allowed symbols: a..Z0..9_-");
 		
 		$this->userID = trim($this->userID);
-		if ($this->userID && preg_replace('/[^A-Za-z0-9\.\_\-]/', '', $this->userID) != $this->userID) die("Invalid User ID - $this->userID. Allow symbols: a..Z0..9_-.");
+		if ($this->userID && preg_replace('/[^A-Za-z0-9\.\_\-]/', '', $this->userID) != $this->userID) die("Invalid User ID - $this->userID. Allowed symbols: a..Z0..9_-.");
 		if (strlen($this->userID) > 50) die("Invalid User ID - $this->userID. Max: 50 symbols");
 		
 		$this->orderID = trim($this->orderID);
-		if ($this->orderID && preg_replace('/[^A-Za-z0-9\.\_\-]/', '', $this->orderID) != $this->orderID) die("Invalid Order ID - $this->orderID. Allow symbols: a..Z0..9_-.");
+		if ($this->orderID && preg_replace('/[^A-Za-z0-9\.\_\-]/', '', $this->orderID) != $this->orderID) die("Invalid Order ID - $this->orderID. Allowed symbols: a..Z0..9_-.");
 		if (!$this->orderID || strlen($this->orderID) > 50) die("Invalid Order ID - $this->orderID. Max: 50 symbols");
 		
 		if ($this->userID) 
@@ -254,9 +258,9 @@ class Cryptobox {
 	
 		$hash = md5($this->boxID.$this->coinName.$this->public_key.$this->private_key.$this->webdev_key.$this->amount.$this->period.$this->amountUSD.$this->language.$this->amount.$this->iframeID.$this->amountUSD.$this->userID);
 		$cryptobox_html .= "<div align='center' style='min-width:".$width."px'><iframe id='$this->iframeID' ".($box_style?'style="'.htmlspecialchars($box_style, ENT_COMPAT).'"':'')." scrolling='no' marginheight='0' marginwidth='0' frameborder='0' width='$width' height='$height'></iframe></div>";
-		$cryptobox_html .= "<script type='text/javascript'>";
+		$cryptobox_html .= "<div><script type='text/javascript'>";
 		$cryptobox_html .= "cryptobox_show($this->boxID, '$this->coinName', '$this->public_key', $this->amount, $this->amountUSD, '$this->period', '$this->language', '$this->iframeID', '$this->userID', '$this->userFormat', '$this->orderID', '$this->cookieName', '$this->webdev_key', '$hash', $width, $height);";
-		$cryptobox_html .= "</script>";
+		$cryptobox_html .= "</script></div>";
 	
 		if ($submit_btn && !$this->paid)
 		{
@@ -264,7 +268,7 @@ class Cryptobox {
 			$cryptobox_html .= "<form action='".$_SERVER["REQUEST_URI"]."#".($anchor?$anchor:"c".$this->iframeID)."' method='post'>";
 			$cryptobox_html .= "<input type='hidden' id='cryptobox_live_' name='cryptobox_live_' value='$val'>";
 			
-			$cryptobox_html .= "<button ".(CRYPTOBOX_WORDPRESS?"class='gourlbutton'":"style='margin:7px;padding:5px;white-space:nowrap;font-family: Verdana, Arial, Helvetica, sans-serif;'").">&#160; ".str_replace(array("%coinName%", "%coinLabel%"), array($this->coinName, $this->coinLabel), $this->localisation["button"]).($this->language!="ar"?" &#187;":"")." &#160;</button>";
+			$cryptobox_html .= "<button style='color:#555;border-color:#ccc;background:#f7f7f7;-webkit-box-shadow:inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.08);box-shadow:inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.08);vertical-align:top;display:inline-block;text-decoration:none;font-size:13px;line-height:26px;height:28px;margin:20px 0 25px 0;padding:0 10px 1px;cursor:pointer;border-width:1px;border-style:solid;-webkit-appearance:none;-webkit-border-radius:3px;border-radius:3px;white-space:nowrap;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;font-family:\"Open Sans\",sans-serif;font-size: 13px;font-weight: normal;text-transform: none;'>&#160; ".str_replace(array("%coinName%", "%coinLabel%"), array($this->coinName, $this->coinLabel), $this->localisation["button"]).($this->language!="ar"?" &#187;":"")." &#160;</button>";
 			$cryptobox_html .= "</form>";
 			$cryptobox_html .= "</div>";
 		}
@@ -349,8 +353,8 @@ class Cryptobox {
 	 * variable 'amountUSD'. Cryptobox will automatically convert that USD amount 
 	 * to cryptocoin amount using today current live cryptocurrency exchange rates. 
 	 * 
-	 * Using that functionality, you don't need to worry if cryptocurrency prices go down or 
-	 * go up. User will pay you all times the actual price which is linked on current exchange 
+	 * Using that functionality, you don't need to worry if cryptocurrency prices go down or up.
+	 * User will pay you all times the actual price which is linked on current exchange 
 	 * price in USD on the datetime of purchase. 
 	 * 
 	 * You can accepting cryptocoins on your website with cryptobox variable 'amountUSD'. 
@@ -585,7 +589,7 @@ class Cryptobox {
 		
 		if (!$obj && isset($_POST["cryptobox_live_"]) && $_POST["cryptobox_live_"] == md5($this->iframeID.$this->private_key.$this->userID)) $remotedb = true;
 		
-		if ((!$obj && $remotedb) || ($obj && !$this->confirmed && $diff > ($this->coinLabel=='BTC'?65:15)*60 && $diff2 < 44*60*60))
+		if ((!$obj && $remotedb) || ($obj && !$this->confirmed && $diff > ($this->coinLabel=='BTC'?35:12)*60 && $diff2 < 44*60*60))
 		{
 			$this->check_payment_live();
 		}
@@ -614,7 +618,7 @@ class Cryptobox {
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query($data));
 		curl_setopt( $ch, CURLOPT_HEADER, 0);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt( $ch, CURLOPT_TIMEOUT, 40);
+		curl_setopt( $ch, CURLOPT_TIMEOUT, 20);
 			
 		$res = curl_exec( $ch );
 	
@@ -865,7 +869,7 @@ class Cryptobox {
 		
 		$url = $_SERVER["REQUEST_URI"];
 		if (mb_strpos($url, "?")) $url = mb_substr($url, 0, mb_strpos($url, "?"));
-		$tmp  = "<select name='$id' id='$id' onchange='window.open(\"//".$_SERVER["HTTP_HOST"].$url."?".http_build_query($arr).($arr?"&amp;":"").$id."=\"+this.options[this.selectedIndex].value+\"#".$anchor."\",\"_self\")' style='width:120px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#666;border-radius:5px;-moz-border-radius:5px;border: #ccc 1px solid;padding:3px 0 3px 6px;'>";
+		$tmp  = "<select name='$id' id='$id' onchange='window.open(\"//".$_SERVER["HTTP_HOST"].$url."?".http_build_query($arr).($arr?"&amp;":"").$id."=\"+this.options[this.selectedIndex].value+\"#".$anchor."\",\"_self\")' style='width:130px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#666;border-radius:5px;-moz-border-radius:5px;border: #ccc 1px solid;margin:0;padding:3px 0 3px 6px;white-space:nowrap;overflow:hidden;'>";
 		foreach ($localisation as $k => $v) $tmp .= "<option ".($k==$lan?"selected":"")." value='$k'>".$v["name"]."</option>";
 		$tmp .= "</select>";
 				
@@ -912,7 +916,7 @@ class Cryptobox {
 		$localisation = $localisation[$lan];
 						
 		$id  = "gourlcryptocoins";
-		$tmp = "<div id='$id' ".(CRYPTOBOX_WORDPRESS?"class='gourlmethod'":"style='$style'")."><div style='margin-bottom:15px'><b>".$localisation["payment"]." -</b></div>";
+		$tmp = "<div id='$id' align='center' style='".htmlspecialchars($style, ENT_QUOTES)."'><div style='margin-bottom:15px'><b>".$localisation["payment"]." -</b></div>";
 		foreach ($coins as $v)
 		{
 			$v = trim(strtolower($v));
@@ -951,20 +955,26 @@ class Cryptobox {
 
 	
 	
-	
+
 	/* F. Function get_country_name()
 	 * 
 	 * Get country name by country code
 	 */
-	function get_country_name($countryID)
+	function get_country_name($countryID, $reverse = false)
 	{
 		$arr = array("AFG"=>"Afghanistan", "ALA"=>"Aland Islands", "ALB"=>"Albania", "DZA"=>"Algeria", "ASM"=>"American Samoa", "AND"=>"Andorra", "AGO"=>"Angola", "AIA"=>"Anguilla", "ATA"=>"Antarctica", "ATG"=>"Antigua and Barbuda", "ARG"=>"Argentina", "ARM"=>"Armenia", "ABW"=>"Aruba", "AUS"=>"Australia", "AUT"=>"Austria", "AZE"=>"Azerbaijan", "BHS"=>"Bahamas", "BHR"=>"Bahrain", "BGD"=>"Bangladesh", "BRB"=>"Barbados", "BLR"=>"Belarus", "BEL"=>"Belgium", "BLZ"=>"Belize", "BEN"=>"Benin", "BMU"=>"Bermuda", "BTN"=>"Bhutan", "BOL"=>"Bolivia", "BIH"=>"Bosnia and Herzegovina", "BWA"=>"Botswana", "BVT"=>"Bouvet Island", "BRA"=>"Brazil", "IOT"=>"British Indian Ocean Territory", "BRN"=>"Brunei", "BGR"=>"Bulgaria", "BFA"=>"Burkina Faso", "BDI"=>"Burundi", "KHM"=>"Cambodia", "CMR"=>"Cameroon", "CAN"=>"Canada", "CPV"=>"Cape Verde", "BES"=>"Caribbean Netherlands", "CYM"=>"Cayman Islands", "CAF"=>"Central African Republic", "TCD"=>"Chad", "CHL"=>"Chile", "CHN"=>"China", "CXR"=>"Christmas Island", "CCK"=>"Cocos (Keeling) Islands", "COL"=>"Colombia", "COM"=>"Comoros", "COG"=>"Congo", "COD"=>"Congo, Democratic Republic", "COK"=>"Cook Islands", "CRI"=>"Costa Rica", "CIV"=>"Côte d’Ivoire", "HRV"=>"Croatia", "CUB"=>"Cuba", "CUW"=>"Curacao", "CBR"=>"Cyberbunker", "CYP"=>"Cyprus", "CZE"=>"Czech Republic", "DNK"=>"Denmark", "DJI"=>"Djibouti", "DMA"=>"Dominica", "DOM"=>"Dominican Republic", "TMP"=>"East Timor", "ECU"=>"Ecuador", "EGY"=>"Egypt", "SLV"=>"El Salvador", "GNQ"=>"Equatorial Guinea", "ERI"=>"Eritrea", "EST"=>"Estonia", "ETH"=>"Ethiopia", "EUR"=>"European Union", "FLK"=>"Falkland Islands", "FRO"=>"Faroe Islands", "FJI"=>"Fiji Islands", "FIN"=>"Finland", "FRA"=>"France", "GUF"=>"French Guiana", "PYF"=>"French Polynesia", "ATF"=>"French Southern territories", "GAB"=>"Gabon", "GMB"=>"Gambia", "GEO"=>"Georgia", "DEU"=>"Germany", "GHA"=>"Ghana", "GIB"=>"Gibraltar", "GRC"=>"Greece", "GRL"=>"Greenland", "GRD"=>"Grenada", "GLP"=>"Guadeloupe", "GUM"=>"Guam", "GTM"=>"Guatemala", "GGY"=>"Guernsey", "GIN"=>"Guinea", "GNB"=>"Guinea-Bissau", "GUY"=>"Guyana", "HTI"=>"Haiti", "HMD"=>"Heard Island and McDonald Islands", "HND"=>"Honduras", "HKG"=>"Hong Kong", "HUN"=>"Hungary", "ISL"=>"Iceland", "IND"=>"India", "IDN"=>"Indonesia", "IRN"=>"Iran", "IRQ"=>"Iraq", "IRL"=>"Ireland", "IMN"=>"Isle of Man", "ISR"=>"Israel", "ITA"=>"Italy", "JAM"=>"Jamaica", "JPN"=>"Japan", "JEY"=>"Jersey", "JOR"=>"Jordan", "KAZ"=>"Kazakstan", "KEN"=>"Kenya", "KIR"=>"Kiribati", "KWT"=>"Kuwait", "KGZ"=>"Kyrgyzstan", "LAO"=>"Laos", "LVA"=>"Latvia", "LBN"=>"Lebanon", "LSO"=>"Lesotho", "LBR"=>"Liberia", "LBY"=>"Libya", "LIE"=>"Liechtenstein", "LTU"=>"Lithuania", "LUX"=>"Luxembourg", "MAC"=>"Macao", "MKD"=>"Macedonia", "MDG"=>"Madagascar", "MWI"=>"Malawi", "MYS"=>"Malaysia", "MDV"=>"Maldives", "MLI"=>"Mali", "MLT"=>"Malta", "MHL"=>"Marshall Islands", "MTQ"=>"Martinique", "MRT"=>"Mauritania", "MUS"=>"Mauritius", "MYT"=>"Mayotte", "MEX"=>"Mexico", "FSM"=>"Micronesia, Federated States", "MDA"=>"Moldova", "MCO"=>"Monaco", "MNG"=>"Mongolia", "MNE"=>"Montenegro", "MSR"=>"Montserrat", "MAR"=>"Morocco", "MOZ"=>"Mozambique", "MMR"=>"Myanmar", "NAM"=>"Namibia", "NRU"=>"Nauru", "NPL"=>"Nepal", "NLD"=>"Netherlands", "ANT"=>"Netherlands Antilles", "NCL"=>"New Caledonia", "NZL"=>"New Zealand", "NIC"=>"Nicaragua", "NER"=>"Niger", "NGA"=>"Nigeria", "NIU"=>"Niue", "NFK"=>"Norfolk Island", "PRK"=>"North Korea", "MNP"=>"Northern Mariana Islands", "NOR"=>"Norway", "OMN"=>"Oman", "PAK"=>"Pakistan", "PLW"=>"Palau", "PSE"=>"Palestine", "PAN"=>"Panama", "PNG"=>"Papua New Guinea", "PRY"=>"Paraguay", "PER"=>"Peru", "PHL"=>"Philippines", "PCN"=>"Pitcairn", "POL"=>"Poland", "PRT"=>"Portugal", "PRI"=>"Puerto Rico", "QAT"=>"Qatar", "REU"=>"Réunion", "ROM"=>"Romania", "RUS"=>"Russia", "RWA"=>"Rwanda", "BLM"=>"Saint Barthelemy", "SHN"=>"Saint Helena", "KNA"=>"Saint Kitts and Nevis", "LCA"=>"Saint Lucia", "MAF"=>"Saint Martin", "SPM"=>"Saint Pierre and Miquelon", "VCT"=>"Saint Vincent and the Grenadines", "WSM"=>"Samoa", "SMR"=>"San Marino", "STP"=>"Sao Tome and Principe", "SAU"=>"Saudi Arabia", "SEN"=>"Senegal", "SRB"=>"Serbia", "SYC"=>"Seychelles", "SLE"=>"Sierra Leone", "SGP"=>"Singapore", "SXM"=>"Sint Maarten", "SVK"=>"Slovakia", "SVN"=>"Slovenia", "SLB"=>"Solomon Islands", "SOM"=>"Somalia", "ZAF"=>"South Africa", "SGS"=>"South Georgia and the South Sandwich Islands", "KOR"=>"South Korea", "SSD"=>"South Sudan", "ESP"=>"Spain", "LKA"=>"Sri Lanka", "SDN"=>"Sudan", "SUR"=>"Suriname", "SJM"=>"Svalbard and Jan Mayen", "SWZ"=>"Swaziland", "SWE"=>"Sweden", "CHE"=>"Switzerland", "SYR"=>"Syria", "TWN"=>"Taiwan", "TJK"=>"Tajikistan", "TZA"=>"Tanzania", "THA"=>"Thailand", "TGO"=>"Togo", "TKL"=>"Tokelau", "TON"=>"Tonga", "TTO"=>"Trinidad and Tobago", "TUN"=>"Tunisia", "TUR"=>"Turkey", "TKM"=>"Turkmenistan", "TCA"=>"Turks and Caicos Islands", "TUV"=>"Tuvalu", "UGA"=>"Uganda", "UKR"=>"Ukraine", "ARE"=>"United Arab Emirates", "GBR"=>"United Kingdom", "UMI"=>"United States Minor Outlying Islands", "URY"=>"Uruguay", "USA"=>"USA", "UZB"=>"Uzbekistan", "VUT"=>"Vanuatu", "VAT"=>"Vatican (Holy See)", "VEN"=>"Venezuela", "VNM"=>"Vietnam", "VGB"=>"Virgin Islands, British", "VIR"=>"Virgin Islands, U.S.", "WLF"=>"Wallis and Futuna", "ESH"=>"Western Sahara", "YEM"=>"Yemen", "ZMB"=>"Zambia", "ZWE"=>"Zimbabwe");
-		if (isset($arr[$countryID])) return $arr[$countryID]; else return "";
+		
+		if ($reverse) $result = array_search(ucwords(mb_strtolower($countryID)), $arr);
+		elseif (isset($arr[strtoupper($countryID)])) $result = $arr[strtoupper($countryID)];
+		
+		if (!$result) $result = "";
+		
+		return $result;
 	}
-	
-	
-	
-	
+
+
+
+
 	/* G. Function run_sql()
 	 *
 	 * Run SQL queries and return result in array/object formats
@@ -1082,7 +1092,7 @@ class Cryptobox {
 	unset($cryptobox_localisation);
 	
 	if (!CRYPTOBOX_WORDPRESS || defined("CRYPTOBOX_PRIVATE_KEYS"))
-	{		
+	{
 		$cryptobox_private_keys = explode("^", CRYPTOBOX_PRIVATE_KEYS);
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));

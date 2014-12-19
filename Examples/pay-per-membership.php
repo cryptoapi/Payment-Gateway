@@ -52,13 +52,13 @@
 	
 	
 	// Successful Cryptocoin Payment received
+	// Please use also IPN function cryptobox_new_payment($paymentID, $arr) for update db records, etc
 	if ($box->is_paid())
 	{
 		// one time action
 		if (!$box->is_processed())
 		{
 			// One time action after payment has been made
-			// For example, Send EMAIL to user
 					
 			$message = "Thank you (order #".$orderID.", payment #".$box->payment_id()."). We upgraded your membership to Premium";
 	

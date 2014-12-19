@@ -7,7 +7,7 @@
  * @copyright   2014-2015 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     1.4
+ * @version     1.4.1
  *
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
@@ -26,7 +26,19 @@
  *
  */
 
-include_once("cryptobox.class.php");
+
+if(!defined("CRYPTOBOX_WORDPRESS")) define("CRYPTOBOX_WORDPRESS", false);
+
+if (!CRYPTOBOX_WORDPRESS) include_once("cryptobox.class.php");
+elseif (!defined('ABSPATH')) exit; // Exit if accessed directly in wordpress
+
+
+
+if (isset($_POST["plugin_ver"]) && !isset($_POST["status"]) && isset($_POST["private_key"]) && in_array($_POST["private_key"], explode("^", CRYPTOBOX_PRIVATE_KEYS)))
+{
+	echo "cryptoboxver_" . (CRYPTOBOX_WORDPRESS ? "wordpress_" . GOURL_VERSION : "php_" . CRYPTOBOX_VERSION);
+	die; 
+}
 
 
 if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_received", "payment_received_unrecognised")) && $_POST["amount"] && strpos($_POST["private_key"], " ") === false && in_array($_POST["private_key"], explode("^", CRYPTOBOX_PRIVATE_KEYS)))
@@ -46,6 +58,8 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 
 		$paymentID = run_sql($sql);
 		
+		echo "cryptobox_newrecord";
+		
 		// User-defined function for new payment - cryptobox_new_payment() - for example, send confirmation email, update user membership, etc.
 		if (function_exists('cryptobox_new_payment')) cryptobox_new_payment($paymentID, $_POST);
 		
@@ -55,9 +69,13 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	{
 		$sql = "UPDATE crypto_payments SET txConfirmed = 1, txCheckDate = '$dt' WHERE paymentID = $paymentID LIMIT 1";
 		run_sql($sql);
+		
+		echo "cryptobox_updated";
 	}
-	
-	echo "Payment Processed";
+	else 
+	{
+		echo "cryptobox_nochanges";
+	}
 }
 	
 else 
