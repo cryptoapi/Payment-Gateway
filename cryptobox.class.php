@@ -10,7 +10,7 @@
  * @api         https://gourl.io/cryptocoin_payment_api.html
  * @wordpress   https://gourl.io/bitcoin-wordpress-plugin.html
  * @demo        https://gourl.io/bitcoin-payment-gateway-api.html
- * @version     1.4.1
+ * @version     1.4.2
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -52,7 +52,7 @@ if (!CRYPTOBOX_WORDPRESS) require_once( "cryptobox.config.php" );
 elseif (!defined('ABSPATH')) exit; // Exit if accessed directly in wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.4.1");
+define("CRYPTOBOX_VERSION", "1.4.2");
 
 
 class Cryptobox {
@@ -107,13 +107,13 @@ class Cryptobox {
 
 		$this->boxID = $this->left($this->public_key, "AA");
 		 
-		if (strpos($this->public_key, " ") !== false || !strpos($this->public_key, "AA") || !$this->boxID || !is_numeric($this->boxID) || strpos($this->public_key, "77") === false || !strpos($this->public_key, "PUB")) die("Invalid Cryptocoin Payment Box PUBLIC KEY - " . ($this->public_key?$this->public_key:"cannot be empty"));
+		if (preg_replace('/[^A-Za-z0-9]/', '', $this->public_key) != $this->public_key || !strpos($this->public_key, "AA") || !$this->boxID || !is_numeric($this->boxID) || strpos($this->public_key, "77") === false || !strpos($this->public_key, "PUB")) die("Invalid Cryptocoin Payment Box PUBLIC KEY - " . ($this->public_key?$this->public_key:"cannot be empty"));
 				
-		if (strpos($this->private_key, " ") !== false || !strpos($this->private_key, "AA") || $this->boxID != $this->left($this->private_key, "AA") || !strpos($this->private_key, "PRV") || $this->left($this->private_key, "PRV") != $this->left($this->public_key, "PUB")) die("Invalid Cryptocoin Payment Box PRIVATE KEY".($this->private_key?"":" - cannot be empty"));
+		if (preg_replace('/[^A-Za-z0-9]/', '', $this->private_key) != $this->private_key || !strpos($this->private_key, "AA") || $this->boxID != $this->left($this->private_key, "AA") || !strpos($this->private_key, "PRV") || $this->left($this->private_key, "PRV") != $this->left($this->public_key, "PUB")) die("Invalid Cryptocoin Payment Box PRIVATE KEY".($this->private_key?"":" - cannot be empty"));
 		
 		if (!defined("CRYPTOBOX_PRIVATE_KEYS") || !in_array($this->private_key, explode("^", CRYPTOBOX_PRIVATE_KEYS))) die("Error. Please add your Cryptobox Private Key ".(CRYPTOBOX_WORDPRESS ? "on your plugin settings page" : "to \$cryptobox_private_keys in file cryptobox.config.php"));
 
-		if ($this->webdev_key && (strpos($this->webdev_key, " ") !== false || strpos($this->webdev_key, "DEV") !== 0 || $this->webdev_key != strtoupper($this->webdev_key) || $this->icrc32($this->left($this->webdev_key, "G", false)) != $this->right($this->webdev_key, "G", false))) die("Invalid webdev_key '".$this->webdev_key."'. You can leave it empty");
+		if ($this->webdev_key && (preg_replace('/[^A-Za-z0-9]/', '', $this->webdev_key) != $this->webdev_key || strpos($this->webdev_key, "DEV") !== 0 || $this->webdev_key != strtoupper($this->webdev_key) || $this->icrc32($this->left($this->webdev_key, "G", false)) != $this->right($this->webdev_key, "G", false))) die("Invalid webdev_key '".$this->webdev_key."'. You can leave it empty");
 		
 		$c = substr($this->right($this->left($this->public_key, "PUB"), "AA"), 5);
 		$this->coinLabel = $this->right($c, "77");
@@ -264,13 +264,12 @@ class Cryptobox {
 	
 		if ($submit_btn && !$this->paid)
 		{
-			$cryptobox_html .= "<div align='center'>";
 			$cryptobox_html .= "<form action='".$_SERVER["REQUEST_URI"]."#".($anchor?$anchor:"c".$this->iframeID)."' method='post'>";
 			$cryptobox_html .= "<input type='hidden' id='cryptobox_live_' name='cryptobox_live_' value='$val'>";
-			
+			$cryptobox_html .= "<div align='center'>";
 			$cryptobox_html .= "<button style='color:#555;border-color:#ccc;background:#f7f7f7;-webkit-box-shadow:inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.08);box-shadow:inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.08);vertical-align:top;display:inline-block;text-decoration:none;font-size:13px;line-height:26px;height:28px;margin:20px 0 25px 0;padding:0 10px 1px;cursor:pointer;border-width:1px;border-style:solid;-webkit-appearance:none;-webkit-border-radius:3px;border-radius:3px;white-space:nowrap;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;font-family:\"Open Sans\",sans-serif;font-size: 13px;font-weight: normal;text-transform: none;'>&#160; ".str_replace(array("%coinName%", "%coinLabel%"), array($this->coinName, $this->coinLabel), $this->localisation["button"]).($this->language!="ar"?" &#187;":"")." &#160;</button>";
-			$cryptobox_html .= "</form>";
 			$cryptobox_html .= "</div>";
+			$cryptobox_html .= "</form>";
 		}
 	
 		$cryptobox_html .= "<br>";
@@ -622,15 +621,30 @@ class Cryptobox {
 			
 		$res = curl_exec( $ch );
 	
-		if ($res) $res = json_decode($res);
-			
-		if ($res && isset($res->status) && $res->status == "payment_received" && $res->amount && $res->private_key == $this->private_key)
-		{
-			if (!$res->box) $res->box = 0;
-			if (!$res->confirmed) $res->confirmed = 0;
+		if ($res) $res = json_decode($res, true);
+		
+		if ($res) foreach ($res as $k => $v) if (is_string($v)) $res[$k] = trim($v);
 
+		if (isset($res["status"]) && in_array($res["status"], array("payment_received")) &&
+				$res["box"] && is_numeric($res["box"]) && $res["box"] > 0 && $res["amount"] && is_numeric($res["amount"]) && $res["amount"] > 0 &&
+				$res["private_key"] && preg_replace('/[^A-Za-z0-9]/', '', $res["private_key"]) == $res["private_key"] && $res["private_key"] == $this->private_key)
+		{
+			
+			foreach ($res as $k => $v)
+			{
+				if ($k == "datetime") 							$mask = '/[^0-9\ \-\:]/';
+				elseif (in_array($k, array("err", "date")))		$mask = '/[^A-Za-z0-9\.\_\-\ ]/';
+				else											$mask = '/[^A-Za-z0-9\.\_\-]/';
+				if ($v && preg_replace($mask, '', $v) != $v) 	$res[$k] = "";
+			}
+			
+			if (!$res["amountusd"] || !is_numeric($res["amountusd"]))	$res["amountusd"] = 0;
+			if (!$res["confirmed"] || !is_numeric($res["confirmed"]))	$res["confirmed"] = 0;
+				
+
+			
 			$dt  = gmdate('Y-m-d H:i:s');
-			$obj = run_sql("select paymentID, processed from crypto_payments where boxID = $res->box && orderID = '$res->order' && userID = '$res->user' && txID = '$res->tx' limit 1"); 
+			$obj = run_sql("select paymentID, processed from crypto_payments where boxID = ".$res["box"]." && orderID = '".$res["order"]."' && userID = '".$res["user"]."' && txID = '".$res["tx"]."' limit 1"); 
 
 			if ($obj)
 			{ 
@@ -639,15 +653,15 @@ class Cryptobox {
 				
 				// refresh
 				$sql = "UPDATE 		crypto_payments 
-						SET 		boxType 			= '$res->boxtype',
-									amount 				= $res->amount,
-									amountUSD			= $res->amountusd,
-									coinLabel			= '$res->coinlabel',
+						SET 		boxType 			= '".$res["boxtype"]."',
+									amount 				= ".$res["amount"].",
+									amountUSD			= ".$res["amountusd"].",
+									coinLabel			= '".$res["coinlabel"]."',
 						 			unrecognised		= 0,
-						 			addr				= '$res->addr',
-						 			txDate				= '$res->datetime',
-						 			txConfirmed			= $res->confirmed,
-						 			txCheckDate			= '$dt'
+						 			addr				= '".$res["addr"]."',
+						 			txDate				= '".$res["datetime"]."',
+						 			txConfirmed			= ".$res["confirmed"].",
+						 			txCheckDate			= '".$dt."'
 						WHERE 		paymentID 			= $this->paymentID 
 						LIMIT 		1";
 				
@@ -657,20 +671,20 @@ class Cryptobox {
 			{	
 				// Save new payment details in local database
 				$sql = "INSERT INTO crypto_payments (boxID, boxType, orderID, userID, countryID, coinLabel, amount, amountUSD, unrecognised, addr, txID, txDate, txConfirmed, txCheckDate, recordCreated)
-						VALUES ($res->box, '$res->boxtype', '$res->order', '$res->user', '$res->usercountry', '$res->coinlabel', $res->amount, $res->amountusd, 0, '$res->addr', '$res->tx', '$res->datetime', $res->confirmed, '$dt', '$dt')";
+						VALUES (".$res["box"].", '".$res["boxtype"]."', '".$res["order"]."', '".$res["user"]."', '".$res["usercountry"]."', '".$res["coinlabel"]."', ".$res["amount"].", ".$res["amountusd"].", 0, '".$res["addr"]."', '".$res["tx"]."', '".$res["datetime"]."', ".$res["confirmed"].", '$dt', '$dt')";
 	
 				$this->paymentID = run_sql($sql);
 				
 				// User-defined function for new payment - cryptobox_new_payment() - for example, send confirmation email, update user membership, etc.
-				if (function_exists('cryptobox_new_payment')) {$res_arr = (array)$res; cryptobox_new_payment($this->paymentID, $res_arr);}
+				if (function_exists('cryptobox_new_payment')) cryptobox_new_payment($this->paymentID, $res);
 			}
 			
-			$this->paymentDate 		= $res->datetime;
-			$this->amountPaid 		= $res->amount;
-			$this->amountPaidUSD 	= $res->amountusd;
+			$this->paymentDate 		= $res["datetime"];
+			$this->amountPaid 		= $res["amount"];
+			$this->amountPaidUSD 	= $res["amountusd"];
 			$this->paid 			= true;
-			$this->boxType 			= $res->boxtype;
-			$this->confirmed 		= $res->confirmed;
+			$this->boxType 			= $res["boxtype"];
+			$this->confirmed 		= $res["confirmed"];
 				
 			return true;
 		}
@@ -916,7 +930,7 @@ class Cryptobox {
 		$localisation = $localisation[$lan];
 						
 		$id  = "gourlcryptocoins";
-		$tmp = "<div id='$id' align='center' style='".htmlspecialchars($style, ENT_QUOTES)."'><div style='margin-bottom:15px'><b>".$localisation["payment"]." -</b></div>";
+		$tmp = '<div id="'.$id.'" align="center" style="'.htmlspecialchars($style, ENT_COMPAT).'"><div style="margin-bottom:15px"><b>'.$localisation["payment"].' -</b></div>';
 		foreach ($coins as $v)
 		{
 			$v = trim(strtolower($v));
@@ -1090,13 +1104,13 @@ class Cryptobox {
 	
 	if(!defined("CRYPTOBOX_LOCALISATION")) define("CRYPTOBOX_LOCALISATION", json_encode($cryptobox_localisation));
 	unset($cryptobox_localisation);
-	
+
 	if (!CRYPTOBOX_WORDPRESS || defined("CRYPTOBOX_PRIVATE_KEYS"))
 	{
 		$cryptobox_private_keys = explode("^", CRYPTOBOX_PRIVATE_KEYS);
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
-	
+
 		unset($v); unset($cryptobox_private_keys);
-	}
+	}                                  
 ?>
