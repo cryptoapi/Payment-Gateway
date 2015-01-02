@@ -10,7 +10,7 @@
  * @api         https://gourl.io/cryptocoin_payment_api.html
  * @wordpress   https://gourl.io/bitcoin-wordpress-plugin.html
  * @demo        https://gourl.io/bitcoin-payment-gateway-api.html
- * @version     1.4.2
+ * @version     1.5.0
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -52,7 +52,7 @@ if (!CRYPTOBOX_WORDPRESS) require_once( "cryptobox.config.php" );
 elseif (!defined('ABSPATH')) exit; // Exit if accessed directly in wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.4.2");
+define("CRYPTOBOX_VERSION", "1.5.0");
 
 
 class Cryptobox {
@@ -599,7 +599,8 @@ class Cryptobox {
 	{
 		$ip		= $this->ip_address();
 		$hash 	= md5($this->boxID.$this->private_key.$this->userID.$this->orderID.$this->language.$this->period.$ip);
-	
+		$box_status = "";
+		
 		$data = array(
 				"r" 	=> $this->private_key,
 				"b" 	=> $this->boxID,
@@ -644,12 +645,13 @@ class Cryptobox {
 
 			
 			$dt  = gmdate('Y-m-d H:i:s');
-			$obj = run_sql("select paymentID, processed from crypto_payments where boxID = ".$res["box"]." && orderID = '".$res["order"]."' && userID = '".$res["user"]."' && txID = '".$res["tx"]."' limit 1"); 
+			$obj = run_sql("select paymentID, processed, txConfirmed from crypto_payments where boxID = ".$res["box"]." && orderID = '".$res["order"]."' && userID = '".$res["user"]."' && txID = '".$res["tx"]."' limit 1"); 
 
 			if ($obj)
 			{ 
 				$this->paymentID 	= $obj->paymentID; 
 				$this->processed 	= ($obj->processed) ? true : false;
+				$this->confirmed 	= $obj->txConfirmed;
 				
 				// refresh
 				$sql = "UPDATE 		crypto_payments 
@@ -666,6 +668,8 @@ class Cryptobox {
 						LIMIT 		1";
 				
 				run_sql($sql);
+				
+				if ($res["confirmed"] && !$this->confirmed) $box_status = "cryptobox_updated";
 			}
 			else 
 			{	
@@ -675,9 +679,9 @@ class Cryptobox {
 	
 				$this->paymentID = run_sql($sql);
 				
-				// User-defined function for new payment - cryptobox_new_payment() - for example, send confirmation email, update user membership, etc.
-				if (function_exists('cryptobox_new_payment')) cryptobox_new_payment($this->paymentID, $res);
+				$box_status = "cryptobox_newrecord"; 
 			}
+
 			
 			$this->paymentDate 		= $res["datetime"];
 			$this->amountPaid 		= $res["amount"];
@@ -685,7 +689,27 @@ class Cryptobox {
 			$this->paid 			= true;
 			$this->boxType 			= $res["boxtype"];
 			$this->confirmed 		= $res["confirmed"];
+			
+			
+			/**
+			 *  User-defined function for new payment - cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "").
+			 *  You can add function to the bottom of this file cryptobox.class.php or create in a separate file.  
+			 *  For example, send confirmation email, update user membership, etc.
+			 *  
+			 *  The function will automatically appear for each new payment usually two times : 
+			 *  a) when a new payment is received, with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 0
+			 *  b) and a second time when existing payment is confirmed (6+ confirmations) with values: $box_status = cryptobox_updated, $payment_details[confirmed] = 1.
+			 *  
+	 		 *  But sometimes if the payment notification is delayed for 20-30min, the payment/transaction will already be confirmed and the function will
+	 		 *  appear once with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 1
+			 *  
+			 *  If payment received with correct amount, function receive: $payment_details[status] = 'payment_received' and $payment_details[user] = 11, 12, etc (user_id who has made payment)
+			 *  If incorrectly paid amount, the system can not recognize user; function receive: $payment_details[status] = 'payment_received_unrecognised' and $payment_details[user] = ''    
+			 */ 
+
+			if (in_array($box_status, array("cryptobox_newrecord", "cryptobox_updated")) && function_exists('cryptobox_new_payment')) cryptobox_new_payment($this->paymentID, $res, $box_status);
 				
+			
 			return true;
 		}
 		return false;
@@ -1099,9 +1123,9 @@ class Cryptobox {
 									"msg_received2" 	=> "%coinName% &#2325;&#2376;&#2346;&#2381;&#2330;&#2366; &#2346;&#2381;&#2352;&#2366;&#2346;&#2381;&#2340; %amountPaid% %coinLabel% &#2360;&#2347;&#2354;&#2340;&#2366;&#2346;&#2370;&#2352;&#2381;&#2357;&#2325; !",
 									"payment"			=> "&#2330;&#2369;&#2344;&#2375;&#2306; &#2349;&#2369;&#2327;&#2340;&#2366;&#2344; &#2325;&#2366; &#2340;&#2352;&#2368;&#2325;&#2366;",
 									"pay_in"			=> "%coinName% &#2350;&#2375;&#2306; &#2349;&#2369;&#2327;&#2340;&#2366;&#2344;")
-												
+							
 							);
-	
+
 	if(!defined("CRYPTOBOX_LOCALISATION")) define("CRYPTOBOX_LOCALISATION", json_encode($cryptobox_localisation));
 	unset($cryptobox_localisation);
 
@@ -1112,5 +1136,5 @@ class Cryptobox {
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
 		unset($v); unset($cryptobox_private_keys);
-	}                                  
+	}          
 ?>

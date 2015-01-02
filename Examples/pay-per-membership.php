@@ -52,7 +52,7 @@
 	
 	
 	// Successful Cryptocoin Payment received
-	// Please use also IPN function cryptobox_new_payment($paymentID, $arr) for update db records, etc
+	// Please use also IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") for update db records, etc
 	if ($box->is_paid())
 	{
 		// one time action

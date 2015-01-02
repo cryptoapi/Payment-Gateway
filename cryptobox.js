@@ -7,7 +7,7 @@
   * @category    Javascript
   * @website     https://gourl.io
   * @api         https://gourl.io/cryptocoin_payment_api.html
-  * @version     1.4.2
+  * @version     1.5.0
   *
   */
 

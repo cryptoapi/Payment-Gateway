@@ -7,7 +7,7 @@
  * @copyright   2014-2015 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     1.4.2
+ * @version     1.5.0
  *
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
@@ -64,7 +64,11 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	
 	
 	$dt			= gmdate('Y-m-d H:i:s');
-	$paymentID 	= run_sql("select paymentID as nme from crypto_payments where boxID = ".$_POST["box"]." && orderID = '".$_POST["order"]."' && userID = '".$_POST["user"]."' && txID = '".$_POST["tx"]."' limit 1");
+	$obj 		= run_sql("select paymentID, txConfirmed from crypto_payments where boxID = ".$_POST["box"]." && orderID = '".$_POST["order"]."' && userID = '".$_POST["user"]."' && txID = '".$_POST["tx"]."' limit 1");
+	
+	
+	$paymentID		= ($obj) ? $obj->paymentID : 0;
+	$txConfirmed	= ($obj) ? $obj->txConfirmed : 0; 
 	
 	// Save new payment details in local database
 	if (!$paymentID)
@@ -74,27 +78,93 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 
 		$paymentID = run_sql($sql);
 		
-		echo "cryptobox_newrecord";
-		
-		// User-defined function for new payment - cryptobox_new_payment() - for example, send confirmation email, update user membership, etc.
-		if (function_exists('cryptobox_new_payment')) cryptobox_new_payment($paymentID, $_POST);
-		
+		$box_status = "cryptobox_newrecord";
 	}
 	// Update transaction status to confirmed
-	elseif ($_POST["confirmed"])
+	elseif ($_POST["confirmed"] && !$txConfirmed)
 	{
 		$sql = "UPDATE crypto_payments SET txConfirmed = 1, txCheckDate = '$dt' WHERE paymentID = $paymentID LIMIT 1";
 		run_sql($sql);
 		
-		echo "cryptobox_updated";
+		$box_status = "cryptobox_updated";
 	}
 	else 
 	{
-		echo "cryptobox_nochanges";
+		$box_status = "cryptobox_nochanges";
 	}
+	
+	
+	/**
+	 *  User-defined function for new payment - cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "").
+	 *  You can add this function to the bottom of the file cryptobox.class.php or create a separate file.
+	 *  For example, send confirmation email, update user membership, etc.
+	 *  
+	 *  The function will automatically appear for each new payment usually two times : 
+	 *  a) when a new payment is received, with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 0
+	 *  b) and a second time when existing payment is confirmed (6+ confirmations) with values: $box_status = cryptobox_updated, $payment_details[confirmed] = 1.
+	 *  
+	 *  But sometimes if the payment notification is delayed for 20-30min, the payment/transaction will already be confirmed and the function will
+	 *  appear once with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 1
+	 *  
+	 *  If payment received with correct amount, function receive: $payment_details[status] = 'payment_received' and $payment_details[user] = 11, 12, etc (user_id who has made payment)
+	 *  If incorrectly paid amount, the system can not recognize user; function receive: $payment_details[status] = 'payment_received_unrecognised' and $payment_details[user] = ''
+	 *  
+	 *  Function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
+	 *  gets $paymentID from your table crypto_payments, $box_status = 'cryptobox_newrecord' OR 'cryptobox_updated' (description above)
+	 *  and payment details as array -
+	 * 
+	 *  1. EXAMPLE - CORRECT PAYMENT - 
+	 *  $payment_details = array(
+						"status":			"payment_received",
+						"err":				"",
+						"private_key":		"ZnlH0aD8z3YIkhwOKHjK9GmZl",
+						"box":				"7",
+						"boxtype":			"paymentbox",
+						"order":			"91f7c3edc0f86b5953cf1037796a2439",
+						"user":				"115",
+						"usercountry":		"USA",
+						"amount":			"1097.03916195",
+						"amountusd":		"0.2",
+						"coinlabel":		"DOGE",
+						"coinname":			"dogecoin",
+						"addr":				"DBJBibi39M2Zzyk51dJd5EHqdKbDxR11BH",
+						"tx":				"309621c28ced8ba348579b152a0dbcfdc90586818e16e526c2590c35f8ac2e08",
+						"confirmed":		0,
+						"timestamp":		"1420215494",
+						"date":				"02 January 2015",
+						"datetime":			"2015-01-02 16:18:14"
+					);
+						
+	 *  2. EXAMPLE - INCORRECT PAYMENT/WRONG AMOUNT -
+	 *  $payment_details = array(
+						"status":			"payment_received_unrecognised",
+						"err":				"An incorrect dogecoin amount has been received",
+						"private_key":		"ZnlH0aD8z3YIkhwOKHjK9GmZl",
+						"box":				"7",
+						"boxtype":			"paymentbox",
+						"order":			"",
+						"user":				"",
+						"usercountry":		"",
+						"amount":			"12",
+						"amountusd":		"0.002184",
+						"coinlabel":		"DOGE",
+						"coinname":			"dogecoin",
+						"addr":				"DBJBibi39M2Zzyk51dJd5EHqdKbDxR11BH",
+						"tx":				"96dadd51287bb7dea904607f7076e8ce121c8428106dd57b403000b0d0a11c6f",
+						"confirmed":		0,
+						"timestamp":		"1420215388",
+						"date":				"02 January 2015",
+						"datetime":			"2015-01-02 16:16:28"
+					);
+	 */
+
+	if (in_array($box_status, array("cryptobox_newrecord", "cryptobox_updated")) && function_exists('cryptobox_new_payment')) cryptobox_new_payment($paymentID, $_POST, $box_status);
 }   
 
-else 
-	echo "Only POST Data Allowed";
-	             
+else
+	$box_status = "Only POST Data Allowed";
+
+
+	echo $box_status; // don't delete it
+           
 ?>
