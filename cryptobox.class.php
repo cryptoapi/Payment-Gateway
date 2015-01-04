@@ -693,7 +693,7 @@ class Cryptobox {
 			
 			/**
 			 *  User-defined function for new payment - cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "").
-			 *  You can add function to the bottom of this file cryptobox.class.php or create in a separate file.  
+			 *  You can add function to the bottom of this file cryptobox.class.php or create in a separate file.
 			 *  For example, send confirmation email, update user membership, etc.
 			 *  
 			 *  The function will automatically appear for each new payment usually two times : 
@@ -849,14 +849,14 @@ class Cryptobox {
 	* We forward you ALL coins received on your internal wallet address/es 
 	* including all payments with incorrect amounts (unrecognised payments).
 	* 
-	* Therefore if your user contacts us, regarding the incorrect sent payment, 
-	* we will forward your user to you (because our system forwards all received payments 
-	* to your wallet automatically every 30 minutes). We provide a payment gateway only. 
-	* You need to deal with your user directly to resolve the situation or return the incorrect 
-	* payment back to your user. In unrecognised payments statistics table you will see the 
-	* original payment sum and transaction ID - when you click on that transaction's ID 
-	* it will open external blockchain explorer website with wallet address/es showing 
-	* that payment coming in. You can tell your user about your return of that incorrect 
+	* Therefore if your user contacts us, regarding the incorrect sent payment,
+	* we will forward your user to you (because our system forwards all received payments
+	* to your wallet automatically every 30 minutes). We provide a payment gateway only.
+	* You need to deal with your user directly to resolve the situation or return the incorrect
+	* payment back to your user. In unrecognised payments statistics table you will see the
+	* original payment sum and transaction ID - when you click on that transaction's ID
+	* it will open external blockchain explorer website with wallet address/es showing
+	* that payment coming in. You can tell your user about your return of that incorrect
 	* payment to one of their sending address (which will protect you from bad claims).
 	*
 	* You have copy of that statistics on your gourl.io member page
@@ -960,12 +960,12 @@ class Cryptobox {
 			$v = trim(strtolower($v));
 			if (!in_array($v, $available_payments)) die("Invalid your submitted value '$v' in display_currency_box()");
 			if (strpos(CRYPTOBOX_PRIVATE_KEYS, ucfirst($v)."77") === false) die("Please add your Private Key for '$v' in variable \$cryptobox_private_keys, file cryptobox.config.php");
-			$tmp .= "<a href='".$coin_url.$v."#".$anchor."'><img hspace='".round($iconWidth/7)."' vspace='".round($iconWidth/10)."' width='$iconWidth' border='0' title='".str_replace("%coinName%", ucfirst($v), $localisation["pay_in"])."' alt='".str_replace("%coinName%", $v, $localisation["pay_in"])."' src='".$directory."/".$v.($iconWidth>70?"2":"").".png'></a>";
+			$tmp .= "<a href='".$coin_url.$v."#".$anchor."'><img style='box-shadow:none;margin:".round($iconWidth/10)."px ".round($iconWidth/7)."px;border:0;' width='$iconWidth' title='".str_replace("%coinName%", ucfirst($v), $localisation["pay_in"])."' alt='".str_replace("%coinName%", $v, $localisation["pay_in"])."' src='".$directory."/".$v.($iconWidth>70?"2":"").".png'></a>";
 		}
 		$tmp .= "</div>";
 		
 		return $tmp;
-	}	
+	}
 		
 	
 	
@@ -1009,7 +1009,7 @@ class Cryptobox {
 		
 		return $result;
 	}
-
+	
 
 
 
@@ -1128,13 +1128,13 @@ class Cryptobox {
 
 	if(!defined("CRYPTOBOX_LOCALISATION")) define("CRYPTOBOX_LOCALISATION", json_encode($cryptobox_localisation));
 	unset($cryptobox_localisation);
-
+	
 	if (!CRYPTOBOX_WORDPRESS || defined("CRYPTOBOX_PRIVATE_KEYS"))
 	{
 		$cryptobox_private_keys = explode("^", CRYPTOBOX_PRIVATE_KEYS);
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
-
+		
 		unset($v); unset($cryptobox_private_keys);
-	}          
+	} 
 ?>
