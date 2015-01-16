@@ -14,13 +14,16 @@
 	/**** CONFIGURATION VARIABLES ****/ 
 	
 	$userID 		= "";				// place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
-										// if userID is empty, it will autogenerate userID and save in cookies
+										// you don't need to use userID for unregistered website visitors
+										// if userID is empty, system will autogenerate userID and save in cookies
 	$userFormat		= "COOKIE";			// save userID in cookies (or you can use IPADDRESS, SESSION)
 	$orderID 		= "invoice000383";	// invoice number - 000383
 	$amountUSD		= 2.21;				// invoice amount - 2.21 USD
 	$period			= "NOEXPIRY";		// one time payment, not expiry
 	$def_language	= "en";				// default Payment Box Language
 	$def_payment	= "bitcoin";		// Default Coin in Payment Box
+
+	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 

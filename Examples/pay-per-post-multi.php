@@ -14,13 +14,15 @@
 	/**** CONFIGURATION VARIABLES ****/ 
 	
 	$userID 		= "";				// place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
-										// if userID is empty, it will autogenerate userID and save in cookies
+										// if userID is empty, system will autogenerate userID and save in cookies
 	$userFormat		= "COOKIE";			// save userID in cookies (or you can use IPADDRESS, SESSION)
 	$orderID 		= "post1";			// if you manual setup userID, you need to update orderID for users who already paid before: post1, post2, post3  
 	$amountUSD		= 0.5;				// price per one post - 0.5 USD
 	$period			= "NOEXPIRY";		// one time payment for each new user post, not expiry
 	$def_language	= "en";				// default Payment Box Language
 	$def_payment	= "bitcoin";		// Default Coin in Payment Box
+
+	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 

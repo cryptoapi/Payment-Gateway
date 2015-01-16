@@ -15,8 +15,8 @@
 	
 	$filename 		= "my_file1.zip";	// filename for download
 	$dir 			= "protected"; 		// name of your directory with your files; nobody should have direct web access to that directory
-	$userID 		= "";				// place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
-										// if userID is empty, it will autogenerate userID and save in cookies
+	$userID 		= "";				// optional; place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
+										// or leave empty userID - system will autogenerate userID and save in cookies
 	$userFormat		= "COOKIE";			// save userID in cookies (or you can use IPADDRESS, SESSION)
 	$orderID 		= md5($dir.$filename);	// file name hash as order id
 	$amountUSD		= 0.2;				// file download price (0.2 USD)
@@ -25,6 +25,7 @@
 	$public_key		= "-your public key for coin box-"; // from gourl.io
 	$private_key	= "-your private key for coin box-";// from gourl.io
 
+	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
 	
 	/********************************/
 

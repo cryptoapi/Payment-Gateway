@@ -14,7 +14,8 @@
 	/**** CONFIGURATION VARIABLES ****/ 
 	
 	$userID 		= "";				// place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
-										// if userID is empty, it will autogenerate userID and save in cookies
+										// you don't need to use userID for unregistered website visitors
+										// if userID is empty, system will autogenerate userID and save in cookies
 	$userFormat		= "COOKIE";			// save userID in cookies (or you can use IPADDRESS, SESSION)
 	$orderID 		= "invoice000383";	// invoice number - 000383
 	$amountUSD		= 2.21;				// invoice amount - 2.21 USD
@@ -23,6 +24,7 @@
 	$public_key		= "-your public key for coin box-"; // from gourl.io
 	$private_key	= "-your private key for coin box-";// from gourl.io
 
+	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
 	
 	/********************************/
 

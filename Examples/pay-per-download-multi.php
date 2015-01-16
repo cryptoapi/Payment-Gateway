@@ -15,14 +15,16 @@
 	
 	$filename 		= "my_file1.zip";	// filename for download
 	$dir 			= "protected"; 		// name of your directory with your files; nobody should have direct web access to that directory
-	$userID 		= "";				// place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
-										// if userID is empty, it will autogenerate userID and save in cookies
+	$userID 		= "";				// optional; place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
+										// or leave empty userID - system will autogenerate userID and save in cookies
 	$userFormat		= "COOKIE";			// save userID in cookies (or you can use IPADDRESS, SESSION)
 	$orderID 		= md5($dir.$filename);	// file name hash as order id
 	$amountUSD		= 0.2;				// file download price (0.2 USD)
 	$period			= "24 HOURS";		// download link will be valid for 24 hours
 	$def_language	= "en";				// default Payment Box Language
 	$def_payment	= "bitcoin";		// Default Coin in Payment Box
+
+	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 

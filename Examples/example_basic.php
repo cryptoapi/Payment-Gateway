@@ -12,7 +12,8 @@
 	"public_key"  => "", 		// place your public key from gourl.io
 	"private_key" => "", 		// place your private key from gourl.io
 	"webdev_key" => "", 		// optional, gourl affiliate key
-	"orderID"     => "your_product1_or_signuppage1_etc", // few your users can have the same orderID but combination 'orderID'+'userID' should be unique 
+	"orderID"     => "your_product1_or_signuppage1_etc", // few your users can have the same orderID but combination 'orderID'+'userID' should be unique. 
+								// for example, on premium page you can use for all visitors: orderID="premium" and userID="" (empty).
 	"userID" 	  => "", 		// optional; when userID value is empty - system will autogenerate unique identifier for each your user and save it in cookies
 	"userFormat"  => "COOKIE", 	// save your user identifier userID in cookies. Available values: COOKIE, SESSION, IPADDRESS, MANUAL 
 	"amount" 	  => 0,			// convert amountUSD to dogecoin using live exchange rate
@@ -21,7 +22,7 @@
 	"iframeID"    => "",    	// optional; when iframeID value is empty - system will autogenerate iframe html payment box id
 	"language" 	  => "EN" 		// english, please contact us and we can add your language	
 	);  
-	// IMPORTANT: Please read option descriptions here - https://gourl.io/cryptocoin_payment_api.html#options  
+	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
 
 	
 	// Initialise Payment Class

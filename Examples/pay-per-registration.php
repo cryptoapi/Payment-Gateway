@@ -13,7 +13,7 @@
 	
 	/**** CONFIGURATION VARIABLES ****/ 
 	
-	$userID 		= "";				// new user, it will autogenerate userID and save in cookies
+	$userID 		= "";				// you don't need to use userID for unregistered website visitors
 	$userFormat		= "COOKIE";			// save userID in cookies (or you can use IPADDRESS, SESSION)
 	$orderID 		= "signuppage";		// Registration Page   
 	$amountUSD		= 1;				// price per registration - 1 USD
@@ -22,6 +22,7 @@
 	$public_key		= "-your public key for coin box-"; // from gourl.io
 	$private_key	= "-your private key for coin box-";// from gourl.io
 
+	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
 	
 	/********************************/
 

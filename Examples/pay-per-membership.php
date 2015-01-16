@@ -23,6 +23,7 @@
 	$public_key		= "-your public key for coin box-"; // from gourl.io
 	$private_key	= "-your private key for coin box-";// from gourl.io
 
+	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
 	
 	/********************************/
 
