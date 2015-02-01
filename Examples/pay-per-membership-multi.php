@@ -3,7 +3,7 @@
  * @category    Example12 - Pay-Per-Membership (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Speedcoin, Dogecoin, Paycoin, Darkcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p6
  * @live_demo   http://gourl.io/lib/examples/pay-per-membership-multi.php
  */ 
@@ -13,11 +13,12 @@
 	
 	/**** CONFIGURATION VARIABLES ****/ 
 	
-	$userID 		= "-place_your_users_id-";	// place your registered userID or md5(userID) here (user1, user7, ko43DC, etc).
+	$userID 		= "";							// place your registered userID or md5(userID) here (user1, user7, ko43DC, etc).
 												// your user should have already registered on your website before   
 	$userFormat		= "COOKIE";					// this variable ignored when you use $userID 
 	$orderID 		= "premium_membership";		// premium membership order
 	$amountUSD		= 79;						// price per membership - 79 USD
+												// for convert fiat currencies Euro/GBP/etc. to USD, use function convert_currency_live()
 	$period			= "1 MONTH";				// one month membership; after need to pay again
 	$def_language	= "en";						// default Payment Box Language
 	$def_payment	= "bitcoin";				// Default Coin in Payment Box
@@ -26,7 +27,7 @@
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 
-	$available_payments = array('bitcoin', 'litecoin', 'dogecoin', 'speedcoin', 'darkcoin', 'vertcoin', 'reddcoin', 'feathercoin', 'vericoin', 'potcoin');
+	$available_payments = array('bitcoin', 'litecoin', 'speedcoin', 'dogecoin', 'paycoin', 'darkcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin');
 	
 	
 	// Goto  https://gourl.io/info/memberarea/My_Account.html
@@ -155,7 +156,7 @@
 	<br><br>
 	<? if (!$box->is_paid()) echo $coins_list;  ?>
 	<div style='font-size:12px;margin:50px 0 5px 370px'>Language: &#160; <?= $languages_list ?></div>
-	<?= $box->display_cryptobox(true, 520, 230, "padding:3px 6px;margin:10px;border:10px solid #f7f5f2;") ?>
+	<?= $box->display_cryptobox(true, 530, 230, "padding:3px 6px;margin:10px;border:10px solid #f7f5f2;") ?>
 
 	
 </div><br><br><br><br><br><br>

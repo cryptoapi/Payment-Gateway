@@ -3,7 +3,7 @@
  * @category    Example8 - Pay-Per-Registration (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Speedcoin, Dogecoin, Paycoin, Darkcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p4
  * @live_demo   http://gourl.io/lib/examples/pay-per-registration-multi.php
  */ 
@@ -17,6 +17,7 @@
 	$userFormat		= "COOKIE";			// save userID in cookies (or you can use IPADDRESS, SESSION)
 	$orderID 		= "signuppage";		// Registration Page   
 	$amountUSD		= 1;				// price per registration - 1 USD
+										// for convert fiat currencies Euro/GBP/etc. to USD, use function convert_currency_live()
 	$period			= "NOEXPIRY";		// one time payment for each new user, not expiry
 	$def_language	= "en";				// default Payment Box Language
 	$def_payment	= "bitcoin";		// Default Coin in Payment Box
@@ -25,7 +26,7 @@
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 
-	$available_payments = array('bitcoin', 'litecoin', 'dogecoin', 'speedcoin', 'darkcoin', 'vertcoin', 'reddcoin', 'feathercoin', 'vericoin', 'potcoin');
+	$available_payments = array('bitcoin', 'litecoin', 'speedcoin', 'dogecoin', 'paycoin', 'darkcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin');
 	
 	
 	// Goto  https://gourl.io/info/memberarea/My_Account.html
@@ -181,7 +182,7 @@
 	<div style='width:600px;padding-top:10px'>
 			<div style='font-size:12px;<? if ($box->is_paid()) echo "margin:5px 0 5px 390px;"; else echo "margin:5px 0 5px 390px; position:absolute;" ?>'>Language: &#160; <?= $languages_list ?></div>
 			<? if (!$box->is_paid()) echo "<div align='left'>".$coins_list."</div>";  ?>
-			<?= $box->display_cryptobox(true, 520, 230, "border-radius:15px;border:1px solid #eee;padding:3px 6px;margin:10px") ?>
+			<?= $box->display_cryptobox(true, 530, 230, "border-radius:15px;border:1px solid #eee;padding:3px 6px;margin:10px") ?>
 	</div>
 	
 	<?php if (!$box->is_paid()): ?>

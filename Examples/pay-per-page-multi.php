@@ -3,7 +3,7 @@
  * @category    Example10 - Pay-Per-Page Access (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Speedcoin, Dogecoin, Paycoin, Darkcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p5
  * @live_demo   http://gourl.io/lib/examples/pay-per-page-multi.php
  */ 
@@ -19,6 +19,7 @@
 	$userFormat		= "COOKIE";			// save userID in cookies (or you can use IPADDRESS, SESSION)
 	$orderID 		= "page1";			// Separate payments for separate your web page(s); you can receive payments also for page2, page3, section1, etc. 
 	$amountUSD		= 0.6;				// price per page(s) - 0.6 USD
+										// for convert fiat currencies Euro/GBP/etc. to USD, use function convert_currency_live()
 	$period			= "24 HOUR";		// user will get access to page(s) for 24 hours; after need to pay again
 	$def_language	= "en";				// default Payment Box Language
 	$def_payment	= "bitcoin";		// Default Coin in Payment Box
@@ -27,7 +28,7 @@
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 
-	$available_payments = array('bitcoin', 'litecoin', 'dogecoin', 'speedcoin', 'darkcoin', 'vertcoin', 'reddcoin', 'feathercoin', 'vericoin', 'potcoin');
+	$available_payments = array('bitcoin', 'litecoin', 'speedcoin', 'dogecoin', 'paycoin', 'darkcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin');
 	
 	
 	// Goto  https://gourl.io/info/memberarea/My_Account.html
@@ -137,7 +138,7 @@ Price: ~<?= $amountUSD ?> US$ for <?= $period ?> access
 	<br><br><br><br>
 	<? echo $coins_list;  ?>
 	<div style='font-size:12px;margin:30px 0 5px 370px'>Language: &#160; <?= $languages_list ?></div>
-	<?= $box->display_cryptobox(true, 520, 230, "padding:3px 6px;margin:10px") ?>
+	<?= $box->display_cryptobox(true, 530, 230, "padding:3px 6px;margin:10px") ?>
 	
 <? endif; ?> 	
 

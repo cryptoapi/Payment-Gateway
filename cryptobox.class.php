@@ -3,48 +3,55 @@
  *
  * Cryptocurrency Payment Class
  *
- * @package     Cryptocoin Payment Box / Cryptocoin Captcha 
+ * @package     GoUrl Bitcoin/Altcoins Payment Box and Crypto Captcha
  * @copyright   2014-2015 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
  * @api         https://gourl.io/cryptocoin_payment_api.html
+ * @example     https://gourl.io/bitcoin-payment-gateway-api.html
  * @wordpress   https://gourl.io/bitcoin-wordpress-plugin.html
- * @demo        https://gourl.io/bitcoin-payment-gateway-api.html
- * @version     1.5.0
+ * @demo        http://gourl.io/lib/examples/pay-per-product-multi.php
+ * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
+ * @license 	Free GPLv2, http://www.gnu.org/licenses/gpl-2.0.html 
+ * @version     1.6.0
+ *
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
  *  --------------------------------------
- *  1. function display_cryptobox($submit_btn = true)			// Show Cryptocoin Payment Box and automatically displays successful payment message. If $submit_btn = true, display user submit button 'Click Here if you have already sent coins' or not 
- *  2. function is_paid($remotedb = false)	 					// If payment received - return true, otherwise return false
- *  3. function is_confirmed()									// Returns true if transaction/payment have 6+ confirmations. Average transaction/payment confirmation time - 10-20min for 6 confirmations (altcoins)
- *  4. function amount_paid()									// Returns the amount of coins received from the user 
- *  5. function amount_paid_usd()								// Returns the approximate amount in USD received from the user using live cryptocurrency exchange rates on the datetime of payment 
- *  6. function set_status_processed()							// Optional - if payment received, set payment status to 'processed' and save this status in database
- *  7. function is_processed()									// Optional - if payment status in database is 'processed' - return true, otherwise return false
- *  8. function cryptobox_type()								// Returns cryptobox type - paymentbox or captchabox
- *  9. function payment_id()									// Returns current record id in the table crypto_payments. Crypto_payments table stores all payments from your users
- *  10.function payment_date()									// Returns payment/transaction datetime in GMT format
- *  11.function payment_info()									// Returns object with current user payment details - amount, txID, datetime, usercointry, etc
- *  12.function cryptobox_reset()								// Optional, Delete cookies/sessions and new cryptobox with new payment amount will be displayed. This function use only if you not set userID manually
- *  13.function coin_name()										// Returns coin name (dogecoin, bitcoin, etc)  
- *  14.function coin_label()									// Returns coin label (DOGE, BTC, etc)
+ *  1. function display_cryptobox(..)			// Show Cryptocoin Payment Box and automatically displays successful payment message. If $submit_btn = true, display user submit button 'Click Here if you have already sent coins' or not 
+ *  2. function is_paid(..)	 					// If payment received - return true, otherwise return false
+ *  3. function is_confirmed()					// Returns true if transaction/payment have 6+ confirmations. Average transaction/payment confirmation time - 10-20min for 6 confirmations (altcoins)
+ *  4. function amount_paid()					// Returns the amount of coins received from the user 
+ *  5. function amount_paid_usd()				// Returns the approximate amount in USD received from the user using live cryptocurrency exchange rates on the datetime of payment 
+ *  6. function set_status_processed()			// Optional - if payment received, set payment status to 'processed' and save this status in database
+ *  7. function is_processed()					// Optional - if payment status in database is 'processed' - return true, otherwise return false
+ *  8. function cryptobox_type()				// Returns cryptobox type - paymentbox or captchabox
+ *  9. function payment_id()					// Returns current record id in the table crypto_payments. Crypto_payments table stores all payments from your users
+ *  10.function payment_date()					// Returns payment/transaction datetime in GMT format
+ *  11.function payment_info()					// Returns object with current user payment details - amount, txID, datetime, usercointry, etc
+ *  12.function cryptobox_reset()				// Optional, Delete cookies/sessions and new cryptobox with new payment amount will be displayed. This function use only if you not set userID manually
+ *  13.function coin_name()						// Returns coin name (dogecoin, bitcoin, etc)  
+ *  14.function coin_label()					// Returns coin label (DOGE, BTC, etc)
+ *  15.function iframe_id()						// Returns payment box frame id
  *
  *
  *  LIST OF GENERAL FUNCTIONS:
  *  -------------------------------------
- *  A. function payment_history($boxID = "", $orderID = "", $userID = "", $countryID = "", $boxType = "", $period = "7 DAY") // Returns array with history payment details of any of your users / orders / etc.
- *  B. function payment_unrecognised($boxID = "", $period = "7 DAY") 			// Returns array with unrecognised payments for custom period - $time (users paid wrong amount on your internal wallet address).
- *  C. function display_language_box($defLang = "en")							// Language selection dropdown list for cryptocoin payment box 
- *  D. function display_currency_box($coins = array(), $defCoin = "", $defLang = "en")	// Multiple crypto currency selection list. You can accept payments in multiple crypto currencies (for example: bitcoin, litecoin, dogecoin)
- *  E. function cryptobox_selcoin($coins = array(), $defCoin = "")				// Current selected coin by user 
- *  F. function get_country_name($countryID, $reverse = false)					// Get country name by country code or reverse
- *  G. function run_sql($sql)													// Run SQL queries and return result in array/object formats
+ *  A. function payment_history(..) 			// Returns array with history payment details of any of your users / orders / etc.
+ *  B. function payment_unrecognised(..) 		// Returns array with unrecognised payments for custom period - $time (users paid wrong amount on your internal wallet address)
+ *  C. function display_language_box(..)		// Language selection dropdown list for cryptocoin payment box 
+ *  D. function display_currency_box(..)		// Multiple crypto currency selection list. You can accept payments in multiple crypto currencies (for example: bitcoin, litecoin, dogecoin)
+ *  E. function cryptobox_selcoin(..)			// Current selected coin by user (bitcoin, dogecoin, etc. - for multiple coin payment boxes) 
+ *  F. function get_country_name(..)			// Get country name by country code or reverse
+ *  G. function convert_currency_live(..)		// Fiat currency converter using Google Finance live exchange rates 
+ *  H. function run_sql(..)						// Run SQL queries and return result in array/object formats
  *
  *
- *  Note: Complete Description of the Functions, see on the page below 
- *        or here - https://gourl.io/cryptocoin_payment_api.html 
+ *  Note: Complete Description of the Functions, see on the page below or here - https://gourl.io/cryptocoin_payment_api.html
  */
+
+
 
 if(!defined("CRYPTOBOX_WORDPRESS")) define("CRYPTOBOX_WORDPRESS", false);
 
@@ -52,7 +59,8 @@ if (!CRYPTOBOX_WORDPRESS) require_once( "cryptobox.config.php" );
 elseif (!defined('ABSPATH')) exit; // Exit if accessed directly in wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.5.0");
+define("CRYPTOBOX_VERSION", "1.6.0");
+
 
 
 class Cryptobox {
@@ -62,7 +70,7 @@ class Cryptobox {
 	private $public_key 	= "";		// value from your gourl.io member page - https://gourl.io/info/memberarea	
 	private $private_key 	= "";		// value from your gourl.io member page.  Also you setup cryptocoin name on gourl.io member page
 	private $webdev_key 	= "";		// optional, web developer affiliate key
-	private $amount 		= 0;		// amount of cryptocoins which will be used in the payment box/captcha, precision is 3 (number of digits after the decimal), example: 0.001, 2.444, 100, 2455, etc.   
+	private $amount 		= 0;		// amount of cryptocoins which will be used in the payment box/captcha, precision is 4 (number of digits after the decimal), example: 0.0001, 2.444, 100, 2455, etc.   
 										/* we will use this $amount value of cryptocoins in the payment box with a small fraction after the decimal point to uniquely identify each of your users individually
 										 * (for example, if you enter 2455 DOGE, one of your user will see 2455.02308 DOGE, and another will see  2455.07832 DOGE, etc) */
 	private $amountUSD 		= 0;		/* you can specify your price in USD and cryptobox will automatically convert that USD amount to cryptocoin amount using today live cryptocurrency exchange rates.
@@ -79,7 +87,9 @@ class Cryptobox {
 	private $userFormat 	= "COOKIE"; // this variable use only if $userID above is empty - it will save random userID in cookies, sessions or use user IP address as userID. Available values: COOKIE, SESSION, IPADDRESS
 	  
 	/* PLEASE NOTE -
-	 * if you use the same $public_key(boxid), $orderID and $userID on different pages and a user has made payment; a successful result for that user will be returned on all those pages (of course if $period time valid). 
+	 * If you use multiple stores/sites online, please create separate GoUrl Payment Box (with unique payment box public/private keys) for each of your stores/websites. 
+	 * Do not use the same GoUrl Payment Box with the same public/private keys on your different websites/stores.
+	 * if you use the same $public_key, $orderID and $userID on different pages and a user has made payment; a successful result for that user will be returned on all those pages (of course if $period time valid). 
 	 * if you change - $public_key or $orderID or $userID - new cryptocoin payment box will be shown for exisiting paid user. (function $this->is_paid() starts to return 'false'). 
 	 * */
 
@@ -99,6 +109,7 @@ class Cryptobox {
 	private $processed		= false;	// optional - set flag to paid & processed	
 	private $cookieName 	= "";		// user cookie/session name (if cookies/sessions use)
 	private $localisation 	= "";		// localisation; en - English, fr - French, ru - Russian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	
 	
 	public function __construct($options = array()) 
 	{
@@ -127,7 +138,7 @@ class Cryptobox {
 		
 		if (($this->amount <= 0 && $this->amountUSD <= 0) || ($this->amount > 0 && $this->amountUSD > 0)) die("You can use in cryptobox options one of variable only: amount or amountUSD. You cannot place values in that two variables together");
 		 
-		if ($this->amount && (!is_numeric($this->amount) || $this->amount < 0.001 || $this->amount > 50000000)) die("Invalid Amount - $this->amount $this->coinLabel. Allowed range: 0.001 .. 50,000,000");
+		if ($this->amount && (!is_numeric($this->amount) || $this->amount < 0.0001 || $this->amount > 50000000)) die("Invalid Amount - $this->amount $this->coinLabel. Allowed range: 0.0001 .. 50,000,000");
 		if ($this->amountUSD && (!is_numeric($this->amountUSD) || $this->amountUSD < 0.01 || $this->amountUSD > 1000000)) die("Invalid amountUSD - $this->amountUSD USD. Allowed range: 0.01 .. 1,000,000");
 		
 		$this->period = trim(strtoupper(str_replace(" ", "", $this->period)));
@@ -217,9 +228,7 @@ class Cryptobox {
 
 	/* 1. Function display_cryptobox() -
 	 * 
-	 * Display Cryptocoin Payment Box; the cryptobox will
-     * automatically displays successful message 
-     * if payment has been received
+	 * Display Cryptocoin Payment Box; the cryptobox will automatically displays successful message if payment has been received
 	 * 
 	 * Usually user will see on bottom of payment box button 'Click Here if you have already sent coins' (when $submit_btn = true) 
 	 * and when they click on that button, script will connect to our remote cryptocoin payment box server
@@ -231,10 +240,10 @@ class Cryptobox {
 	 * And when your user next time comes on your website/reload page he will automatically will see message 
 	 * that his payment has been received successfully.
 	*/
-	public function display_cryptobox($submit_btn = true, $width = "520", $height = "230", $box_style = "", $message_style = "", $anchor = "")
+	public function display_cryptobox($submit_btn = true, $width = "530", $height = "230", $box_style = "", $message_style = "", $anchor = "")
 	{
 		if (!$box_style) 	 $box_style = "border-radius:15px;box-shadow:0 0 12px #aaa;-moz-box-shadow:0 0 12px #aaa;-webkit-box-shadow:0 0 12px #aaa;padding:3px 6px;margin:10px"; 
-		if (!$message_style) $message_style = "display:inline-block;max-width:570px;padding:15px 20px;box-shadow:0 0 10px #aaa;-moz-box-shadow: 0 0 10px #aaa;margin:7px;font-size:13px;font-weight:normal;line-height:21px;font-family: Verdana, Arial, Helvetica, sans-serif;";
+		if (!$message_style) $message_style = "display:inline-block;max-width:580px;padding:15px 20px;box-shadow:0 0 10px #aaa;-moz-box-shadow: 0 0 10px #aaa;margin:7px;font-size:13px;font-weight:normal;line-height:21px;font-family: Verdana, Arial, Helvetica, sans-serif;";
 		
 		$width = intval($width);
 		$height = intval($height);
@@ -331,7 +340,7 @@ class Cryptobox {
 	 * 
 	 * Returns the amount of coins received from the user
 	 */
-	function amount_paid()
+	public function amount_paid()
 	{
 		if ($this->paid) return $this->amountPaid; 
 		else return 0;
@@ -360,7 +369,7 @@ class Cryptobox {
 	 * It increase your online sales and also use Cryptsy.com AutoSell feature 
 	 * (to trade your cryptocoins to USD/BTC during next 30 minutes after payment received).
 	 */
-	function amount_paid_usd()
+	public function amount_paid_usd()
 	{
 		if ($this->paid) return $this->amountPaidUSD;
 		else return 0;
@@ -542,7 +551,7 @@ class Cryptobox {
 	 *
 	 * Returns coin name (dogecoin, bitcoin, litecoin, etc)   
 	*/
-	function coin_name()
+	public function coin_name()
 	{
 		return $this->coinName;
 	}
@@ -554,11 +563,21 @@ class Cryptobox {
 	 *
 	 * Returns coin label (DOGE, BTC, LTC, etc)   
 	*/
-	function coin_label()
+	public function coin_label()
 	{
 		return $this->coinLabel;
 	}
 
+	
+	
+	/* 15. Function coin_label()
+	 *
+	 * Returns payment box frame id   
+	*/
+	public function iframe_id()
+	{
+		return "box".$this->icrc32($this->boxID."__".$this->orderID."__".$this->userID."__".$this->private_key);
+	}
 	
 
 	
@@ -714,25 +733,21 @@ class Cryptobox {
 		}
 		return false;
 	}
-	public function iframe_id()
-	{
-		return "box".$this->icrc32($this->boxID."__".$this->orderID."__".$this->userID."__".$this->private_key);
-	}
-	private function left($str, $findme, $firstpos = true)
+	public function left($str, $findme, $firstpos = true)
 	{
 		$pos = ($firstpos)? stripos($str, $findme) : strripos($str, $findme);
 	
 		if ($pos === false) return $str;
 		else return substr($str, 0, $pos);
 	}
-	private function right($str, $findme, $firstpos = true)
+	public function right($str, $findme, $firstpos = true)
 	{
 		$pos = ($firstpos)? stripos($str, $findme) : strripos($str, $findme);
 	
 		if ($pos === false) return $str;
 		else return substr($str, $pos + strlen($findme));
 	}
-	private function icrc32($str)
+	public function icrc32($str)
 	{
 		$in = crc32($str);
 		$int_max = pow(2, 31)-1;
@@ -742,7 +757,7 @@ class Cryptobox {
 		 
 		return $out;
 	}
-	private function ip_address()
+	public function ip_address()
 	{
 		static $ip_address;
 	
@@ -927,7 +942,7 @@ class Cryptobox {
 		
 		$defCoin 			= strtolower($defCoin);
 		$defLang 			= strtolower($defLang);
-		$available_payments = array('bitcoin', 'litecoin', 'dogecoin', 'speedcoin', 'darkcoin', 'vertcoin', 'reddcoin', 'feathercoin', 'vericoin', 'potcoin'); // GoUrl supported crypto currencies
+		$available_payments = array('bitcoin', 'litecoin', 'speedcoin', 'dogecoin', 'paycoin', 'darkcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin'); // GoUrl supported crypto currencies
 		$arr 	 			= $_GET;
 		
 		if (!in_array($defCoin, $available_payments)) die("Invalid your default value '$defCoin' in display_currency_box()");
@@ -978,7 +993,7 @@ class Cryptobox {
 		if (!$coins) return "";
 	
 		$defCoin 			= strtolower($defCoin);
-		$available_payments = array('bitcoin', 'litecoin', 'dogecoin', 'speedcoin', 'darkcoin', 'vertcoin', 'reddcoin', 'feathercoin', 'vericoin', 'potcoin'); // GoUrl supported crypto currencies
+		$available_payments = array('bitcoin', 'litecoin', 'speedcoin', 'dogecoin', 'paycoin', 'darkcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin'); // GoUrl supported crypto currencies
 		$id 	 			= "gourlcryptocoin";
 	
 		if (!in_array($defCoin, $coins)) $coins[] = $defCoin;
@@ -1011,9 +1026,41 @@ class Cryptobox {
 	}
 	
 
+	/* G. Function convert_currency_live()
+	 * 
+	 * Currency Converter using Google Finance live exchange rates
+	 * Example - convert_currency_live("EUR", "USD", 22.37) - convert 22.37euro to usd
+	 */
+	function convert_currency_live($from_Currency, $to_Currency, $amount)
+	{
+		if ($from_Currency == "TRL") $from_Currency = "TRY"; // fix for Turkish Lyra
+		if ($from_Currency == "ZWD") $from_Currency = "ZWL"; // fix for Zimbabwe Dollar
+	
+		$amount = urlencode($amount);
+		$from_Currency = urlencode($from_Currency);
+		$to_Currency = urlencode($to_Currency);
+	
+		$url = "https://www.google.com/finance/converter?a=".$amount."&from=".$from_Currency."&to=".$to_Currency;
+	
+		$ch = curl_init();
+		$timeout = 20;
+		curl_setopt ($ch, CURLOPT_URL, $url);
+		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
+		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+		curl_setopt ($ch, CURLOPT_TIMEOUT, $timeout);
+		$rawdata = curl_exec($ch);
+		curl_close($ch);
+		$data = explode('bld>', $rawdata);
+		$data = explode($to_Currency, $data[1]);
+	
+		return round($data[0], 2);
+	}
+	
+	
 
-
-	/* G. Function run_sql()
+	/* H. Function run_sql()
 	 *
 	 * Run SQL queries and return result in array/object formats
 	 */
@@ -1030,7 +1077,9 @@ class Cryptobox {
 			$mysqli = @mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 			if (mysqli_connect_errno())
 			{
-				printf("<br /><b>Please check DB username/password" . (CRYPTOBOX_WORDPRESS ? ". File: " . __FILE__ . ", line " . __LINE__ : " in file cryptobox.config.php") . "</b>. Connect failed: %s\n", mysqli_connect_errno());
+				echo "<br /><b>Error. Can't connect to your MySQL server.</b> You need to have PHP 5.2+ and MySQL 5.5+ with mysqli extension activated. <a href='http://crybit.com/how-to-enable-mysqli-extension-on-web-server/'>Instruction &#187;</a>\n";
+				if (!CRYPTOBOX_WORDPRESS) echo "<br />Also <b>please check DB username/password in file cryptobox.config.php</b>\n";
+				echo "<br />Server has returned error - <b>".mysqli_connect_error()."</b>\n";
 				die();
 			}
 			$mysqli->query("SET NAMES utf8");
@@ -1048,7 +1097,7 @@ class Cryptobox {
 					if (property_exists($row, "idx")) $x = true;
 					$c = count(get_object_vars($row));
 					if ($c > 2 || ($c == 2 && !$x)) $g = true;
-					elseif (!property_exists($row, "nme")) die("sqli() - 'nme' not exists! SQL: $sql");
+					elseif (!property_exists($row, "nme")) die("Error in run_sql() - 'nme' not exists! SQL: $sql");
 					$f = false;
 				}
 	
@@ -1058,10 +1107,10 @@ class Cryptobox {
 			}
 		}
 		elseif (stripos($sql, "insert ") !== false) $res = $mysqli->insert_id;
-	
+
 		if (is_object($query)) $query->close();
 		if (is_array($res) && count($res) == 1 && isset($res[0]) && is_object($res[0])) $res = $res[0];
-	
+
 		return $res;
 	}
 	
@@ -1070,7 +1119,7 @@ class Cryptobox {
 	$cryptobox_localisation	= array(
 							"en" => array("name"		=> "English", 
 							/*19*/	"button"			=> "Click Here if you have already sent %coinName%s",
-							/*29*/	"msg_not_received" 	=> "<b>%coinName%s have not yet been received.</b><br>If you have already sent %coinName%s (the exact %coinName% sum in one payment as shown in the box below), please wait a few minutes to receive them by %coinName% Payment System. If you send any other sum, Payment System will ignore the transaction and you will need to send the correct sum again.",
+							/*29*/	"msg_not_received" 	=> "<b>%coinName%s have not yet been received.</b><br>If you have already sent %coinName%s (the exact %coinName% sum in one payment as shown in the box below), please wait a few minutes to receive them by %coinName% Payment System. If you send any other sum, Payment System will ignore the transaction and you will need to send the correct sum again, or contact the site owner for assistance.",
 							/*30*/	"msg_received" 	 	=> "%coinName% Payment System received %amountPaid% %coinLabel% successfully !",
 							/*31*/	"msg_received2" 	=> "%coinName% Captcha received %amountPaid% %coinLabel% successfully !",
 							/*95*/	"payment"			=> "Select Payment Method",
@@ -1086,7 +1135,7 @@ class Cryptobox {
 												
 							"ru" => array("name"		=> "Russian",
 									"button"			=> "&#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1079;&#1076;&#1077;&#1089;&#1100; &#1077;&#1089;&#1083;&#1080; &#1074;&#1099; &#1091;&#1078;&#1077; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; %coinName%",
-									"msg_not_received" 	=> "<b>%coinName% &#1085;&#1077; &#1087;&#1086;&#1083;&#1091;&#1095;&#1077;&#1085;&#1099; &#1077;&#1097;&#1105;.</b><br>&#1045;&#1089;&#1083;&#1080; &#1074;&#1099; &#1091;&#1078;&#1077; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; %coinName% (&#1090;&#1086;&#1095;&#1085;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091; %coinName% &#1086;&#1076;&#1085;&#1080;&#1084; &#1087;&#1083;&#1072;&#1090;&#1077;&#1078;&#1105;&#1084; &#1082;&#1072;&#1082; &#1087;&#1086;&#1082;&#1072;&#1079;&#1072;&#1085;&#1086; &#1085;&#1080;&#1078;&#1077;), &#1087;&#1086;&#1078;&#1072;&#1083;&#1091;&#1081;&#1089;&#1090;&#1072; &#1087;&#1086;&#1076;&#1086;&#1078;&#1076;&#1080;&#1090;&#1077; &#1085;&#1077;&#1089;&#1082;&#1086;&#1083;&#1100;&#1082;&#1086; &#1084;&#1080;&#1085;&#1091;&#1090; &#1076;&#1083;&#1103; &#1087;&#1086;&#1083;&#1091;&#1095;&#1077;&#1085;&#1080;&#1103; &#1080;&#1093; %coinName% &#1087;&#1083;&#1072;&#1090;&#1105;&#1078;&#1085;&#1086;&#1081; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1086;&#1081;. &#1045;&#1089;&#1083;&#1080; &#1074;&#1099; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; &#1083;&#1102;&#1073;&#1091;&#1102; &#1076;&#1088;&#1091;&#1075;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091;, &#1087;&#1083;&#1072;&#1090;&#1105;&#1078;&#1085;&#1072;&#1103; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1072; &#1073;&#1091;&#1076;&#1077;&#1090; &#1080;&#1075;&#1085;&#1086;&#1088;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; &#1101;&#1090;&#1086; &#1080; &#1074;&#1072;&#1084; &#1085;&#1091;&#1078;&#1085;&#1086; &#1073;&#1091;&#1076;&#1077;&#1090; &#1087;&#1086;&#1089;&#1083;&#1072;&#1090;&#1100; &#1087;&#1088;&#1072;&#1074;&#1080;&#1083;&#1100;&#1085;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091; &#1086;&#1087;&#1103;&#1090;&#1100;",
+									"msg_not_received" 	=> "<b>%coinName% &#1085;&#1077; &#1087;&#1086;&#1083;&#1091;&#1095;&#1077;&#1085;&#1099; &#1077;&#1097;&#1105;.</b><br>&#1045;&#1089;&#1083;&#1080; &#1074;&#1099; &#1091;&#1078;&#1077; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; %coinName% (&#1090;&#1086;&#1095;&#1085;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091; %coinName% &#1086;&#1076;&#1085;&#1080;&#1084; &#1087;&#1083;&#1072;&#1090;&#1077;&#1078;&#1105;&#1084; &#1082;&#1072;&#1082; &#1087;&#1086;&#1082;&#1072;&#1079;&#1072;&#1085;&#1086; &#1085;&#1080;&#1078;&#1077;), &#1087;&#1086;&#1078;&#1072;&#1083;&#1091;&#1081;&#1089;&#1090;&#1072; &#1087;&#1086;&#1076;&#1086;&#1078;&#1076;&#1080;&#1090;&#1077; &#1085;&#1077;&#1089;&#1082;&#1086;&#1083;&#1100;&#1082;&#1086; &#1084;&#1080;&#1085;&#1091;&#1090; &#1076;&#1083;&#1103; &#1087;&#1086;&#1083;&#1091;&#1095;&#1077;&#1085;&#1080;&#1103; &#1080;&#1093; %coinName% &#1087;&#1083;&#1072;&#1090;&#1105;&#1078;&#1085;&#1086;&#1081; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1086;&#1081;. &#1045;&#1089;&#1083;&#1080; &#1074;&#1099; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; &#1083;&#1102;&#1073;&#1091;&#1102; &#1076;&#1088;&#1091;&#1075;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091;, &#1087;&#1083;&#1072;&#1090;&#1105;&#1078;&#1085;&#1072;&#1103; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1072; &#1073;&#1091;&#1076;&#1077;&#1090; &#1080;&#1075;&#1085;&#1086;&#1088;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; &#1101;&#1090;&#1086; &#1080; &#1074;&#1072;&#1084; &#1085;&#1091;&#1078;&#1085;&#1086; &#1073;&#1091;&#1076;&#1077;&#1090; &#1087;&#1086;&#1089;&#1083;&#1072;&#1090;&#1100; &#1087;&#1088;&#1072;&#1074;&#1080;&#1083;&#1100;&#1085;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091; &#1086;&#1087;&#1103;&#1090;&#1100;, &#1080;&#1083;&#1080; &#1089;&#1074;&#1103;&#1078;&#1080;&#1090;&#1077;&#1089;&#1100; &#1089; &#1074;&#1083;&#1072;&#1076;&#1077;&#1083;&#1100;&#1094;&#1077;&#1084; &#1089;&#1072;&#1081;&#1090;&#1072; &#1076;&#1083;&#1103; &#1087;&#1086;&#1084;&#1086;&#1097;&#1080;",
 									"msg_received" 	 	=> "%coinName% &#1087;&#1083;&#1072;&#1090;&#1105;&#1078;&#1085;&#1072;&#1103; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1072; &#1087;&#1086;&#1083;&#1091;&#1095;&#1080;&#1083;&#1072; %amountPaid% %coinLabel% &#1091;&#1089;&#1087;&#1077;&#1096;&#1085;&#1086; !",
 									"msg_received2" 	=> "%coinName% &#1082;&#1072;&#1087;&#1095;&#1072; &#1087;&#1086;&#1083;&#1091;&#1095;&#1080;&#1083;&#1072; %amountPaid% %coinLabel% &#1091;&#1089;&#1087;&#1077;&#1096;&#1085;&#1086; !",
 									"payment"			=> "&#1042;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; &#1089;&#1087;&#1086;&#1089;&#1086;&#1073; &#1086;&#1087;&#1083;&#1072;&#1090;&#1099;",
@@ -1123,7 +1172,6 @@ class Cryptobox {
 									"msg_received2" 	=> "%coinName% &#2325;&#2376;&#2346;&#2381;&#2330;&#2366; &#2346;&#2381;&#2352;&#2366;&#2346;&#2381;&#2340; %amountPaid% %coinLabel% &#2360;&#2347;&#2354;&#2340;&#2366;&#2346;&#2370;&#2352;&#2381;&#2357;&#2325; !",
 									"payment"			=> "&#2330;&#2369;&#2344;&#2375;&#2306; &#2349;&#2369;&#2327;&#2340;&#2366;&#2344; &#2325;&#2366; &#2340;&#2352;&#2368;&#2325;&#2366;",
 									"pay_in"			=> "%coinName% &#2350;&#2375;&#2306; &#2349;&#2369;&#2327;&#2340;&#2366;&#2344;")
-							
 							);
 
 	if(!defined("CRYPTOBOX_LOCALISATION")) define("CRYPTOBOX_LOCALISATION", json_encode($cryptobox_localisation));
@@ -1136,5 +1184,5 @@ class Cryptobox {
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
 		unset($v); unset($cryptobox_private_keys);
-	} 
+	}
 ?>

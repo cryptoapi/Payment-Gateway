@@ -2,12 +2,12 @@
   *
   * Cryptocoin Payment Box Javascript
   *
-  * @package     Cryptocoin Payment Box / Cryptocoin Captcha 
-  * @copyright   2014-2015 Delta Consultants
+  * @package     GoUrl Bitcoin/Altcoins Payment Box and Crypto Captcha
+  * @copyright   2014-2015 Delta Consultants 
   * @category    Javascript
   * @website     https://gourl.io
   * @api         https://gourl.io/cryptocoin_payment_api.html
-  * @version     1.5.0
+  * @version     1.6.0
   *
   */
 
@@ -26,7 +26,7 @@
 		var id = public_key.substr(0, public_key.indexOf("AA"));
 		if (id == '' || boxID != id || public_key.indexOf("PUB") == -1) alert('Invalid payment box public_key');
 		else if ((amount <= 0 && amountUSD <= 0) || (amount > 0 && amountUSD > 0)) alert('You can use in payment box options one of variable only: amount or amountUSD. You cannot place values in that two variables together');
-		else if (amount != 0 && ((amount - 0) != amount || amount < 0.001)) alert('Invalid payment box amount');
+		else if (amount != 0 && ((amount - 0) != amount || amount < 0.0001)) alert('Invalid payment box amount');
 		else if (amountUSD != 0 && ((amountUSD - 0) != amountUSD || amountUSD < 0.01)) alert('Invalid payment box amountUSD');
 		else if (userFormat != 'COOKIE' && userFormat != 'SESSION' && userFormat != 'IPADDRESS' && userFormat != 'MANUAL') alert('Invalid payment box userFormat value');
 		else if (userFormat == 'COOKIE' && cookieName == '') alert('Invalid payment box cookie name');
@@ -62,4 +62,4 @@
 	{ 
 		setTimeout(function(){ document.getElementById(id).style.display='none';}, 15000 ); 
 	}	
- 
+

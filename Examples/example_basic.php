@@ -3,7 +3,7 @@
  * @category    Basic Example
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Speedcoin, Dogecoin, Paycoin, Darkcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin
  * @website     https://gourl.io/cryptocoin_payment_api.html
  */ 
 	require_once( "../cryptobox.class.php" );
@@ -16,8 +16,9 @@
 								// for example, on premium page you can use for all visitors: orderID="premium" and userID="" (empty).
 	"userID" 	  => "", 		// optional; when userID value is empty - system will autogenerate unique identifier for each your user and save it in cookies
 	"userFormat"  => "COOKIE", 	// save your user identifier userID in cookies. Available values: COOKIE, SESSION, IPADDRESS, MANUAL 
-	"amount" 	  => 0,			// convert amountUSD to dogecoin using live exchange rate
-	"amountUSD"   => 2,  		// 2 USD
+	"amount" 	  => 0,			// amount in cryptocurrency or in USD below
+	"amountUSD"   => 2,  		// price is 2 USD; it will convert to cryptocoins amount, using Live Exchange Rates
+								// For convert fiat currencies Euro/GBP/etc. to USD, use function convert_currency_live() 
 	"period"      => "24 HOUR",	// payment valid period, after 1 day user need to pay again
 	"iframeID"    => "",    	// optional; when iframeID value is empty - system will autogenerate iframe html payment box id
 	"language" 	  => "EN" 		// english, please contact us and we can add your language	
@@ -168,6 +169,6 @@
 
 <?= $paymentbox ?>
 <?= $message ?>
-    
+  
 </body>
 </html>

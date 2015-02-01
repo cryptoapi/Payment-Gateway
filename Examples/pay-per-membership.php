@@ -3,7 +3,7 @@
  * @category    Example11 - Pay-Per-Membership (single crypto currency in payment box)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Speedcoin, Dogecoin, Paycoin, Darkcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p6
  * @live_demo   http://gourl.io/lib/examples/pay-per-membership.php
  */ 
@@ -13,7 +13,7 @@
 	
 	/**** CONFIGURATION VARIABLES ****/ 
 	
-	$userID 		= "-place_your_users_id-";	// place your registered userID or md5(userID) here (user1, user7, ko43DC, etc).
+	$userID 		= "";							// place your registered userID or md5(userID) here (user1, user7, ko43DC, etc).
 													// your user should have already registered on your website before   
 	$userFormat		= "COOKIE";						// this variable ignored when you use $userID 
 	$orderID 		= "premium_membership";			// premium membership order
@@ -116,7 +116,7 @@
 <? endif; ?> 	
 
 	<div style='font-size:12px;margin:50px 0 5px 370px'>Language: &#160; <?= $languages_list ?></div>
-	<?= $box->display_cryptobox(true, 520, 230, "padding:3px 6px;margin:10px;border:10px solid #f7f5f2;") ?>
+	<?= $box->display_cryptobox(true, 530, 230, "padding:3px 6px;margin:10px;border:10px solid #f7f5f2;") ?>
 
 	
 </div><br><br><br><br><br><br>

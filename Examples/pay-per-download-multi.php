@@ -3,7 +3,7 @@
  * @category    Example4 - Pay-Per-Download (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Speedcoin, Dogecoin, Paycoin, Darkcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p2
  * @live_demo   http://gourl.io/lib/examples/pay-per-download-multi.php
  */ 
@@ -20,6 +20,7 @@
 	$userFormat		= "COOKIE";			// save userID in cookies (or you can use IPADDRESS, SESSION)
 	$orderID 		= md5($dir.$filename);	// file name hash as order id
 	$amountUSD		= 0.2;				// file download price (0.2 USD)
+										// for convert fiat currencies Euro/GBP/etc. to USD, use function convert_currency_live() 
 	$period			= "24 HOURS";		// download link will be valid for 24 hours
 	$def_language	= "en";				// default Payment Box Language
 	$def_payment	= "bitcoin";		// Default Coin in Payment Box
@@ -28,7 +29,7 @@
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 
-	$available_payments = array('bitcoin', 'litecoin', 'dogecoin', 'speedcoin', 'darkcoin', 'vertcoin', 'reddcoin', 'feathercoin', 'vericoin', 'potcoin');
+	$available_payments = array('bitcoin', 'litecoin', 'speedcoin', 'dogecoin', 'paycoin', 'darkcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin');
 	
 	
 	// Goto  https://gourl.io/info/memberarea/My_Account.html

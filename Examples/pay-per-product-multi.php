@@ -3,7 +3,7 @@
  * @category    Example2 - Pay-Per-Product (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Speedcoin, Dogecoin, Paycoin, Darkcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p1
  * @live_demo   http://gourl.io/lib/examples/pay-per-product-multi.php
  */ 
@@ -19,6 +19,7 @@
 	$userFormat		= "COOKIE";			// save userID in cookies (or you can use IPADDRESS, SESSION)
 	$orderID 		= "invoice000383";	// invoice number - 000383
 	$amountUSD		= 2.21;				// invoice amount - 2.21 USD
+										// for convert fiat currencies Euro/GBP/etc. to USD, use function convert_currency_live()
 	$period			= "NOEXPIRY";		// one time payment, not expiry
 	$def_language	= "en";				// default Payment Box Language
 	$def_payment	= "bitcoin";		// Default Coin in Payment Box
@@ -27,7 +28,7 @@
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 
-	$available_payments = array('bitcoin', 'litecoin', 'dogecoin', 'speedcoin', 'darkcoin', 'vertcoin', 'reddcoin', 'feathercoin', 'vericoin', 'potcoin');
+	$available_payments = array('bitcoin', 'litecoin', 'speedcoin', 'dogecoin', 'paycoin', 'darkcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin');
 	
 	
 	// Goto  https://gourl.io/info/memberarea/My_Account.html

@@ -2,9 +2,9 @@
 GoUrl.io Cryptocoin Payment Gateway API
 -----------------------------------------
 
-Version 1.5.0
+Version 1.6.0
 
-**Accept Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin Payments Online on your website**
+**Accept Bitcoin, Litecoin, Speedcoin, Dogecoin, Paycoin, Darkcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin Payments Online on your website**
 
 # ![Payment-Gateway](https://gourl.io/images/gateway.jpg)
 
@@ -173,13 +173,14 @@ Payment API List :
 
 * [Bitcoin Payment API](https://gourl.io/bitcoin-payment-gateway-api.html)
 * [Litecoin Payment API](https://gourl.io/litecoin-payment-gateway-api.html)
-* [Dogecoin Payment API](https://gourl.io/dogecoin-payment-gateway-api.html)
 * [Speedcoin Payment API](https://gourl.io/speedcoin-payment-gateway-api.html)
+* [Dogecoin Payment API](https://gourl.io/dogecoin-payment-gateway-api.html)
+* [Paycoin Payment API](https://gourl.io/paycoin-payment-gateway-api.html)
 * [Darkcoin Payment API](https://gourl.io/darkcoin-payment-gateway-api.html)
-* [Vertcoin Payment API](https://gourl.io/vertcoin-payment-gateway-api.html)
 * [Reddcoin Payment API](https://gourl.io/reddcoin-payment-gateway-api.html)
-* [Feathercoin Payment API](https://gourl.io/feathercoin-payment-gateway-api.html)
 * [Potcoin Payment API](https://gourl.io/potcoin-payment-gateway-api.html)
+* [Feathercoin Payment API](https://gourl.io/feathercoin-payment-gateway-api.html)
+* [Vertcoin Payment API](https://gourl.io/vertcoin-payment-gateway-api.html)
 * [Vericoin Payment API](https://gourl.io/vericoin-payment-gateway-api.html)
 
 

@@ -3,7 +3,7 @@
  * @category    Example9 - Pay-Per-Page Access (single crypto currency in payment box)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Dogecoin, Speedcoin, Darkcoin, Vertcoin, Reddcoin, Feathercoin, Vericoin, Potcoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Speedcoin, Dogecoin, Paycoin, Darkcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p5
  * @live_demo   http://gourl.io/lib/examples/pay-per-page.php
  */ 
@@ -98,7 +98,7 @@ Price: ~<?= $amountUSD ?> US$ for <?= $period ?> access
 	 <!-- Awaiting Payment -->
 	<img alt='Awaiting Payment - Cryptocoin Pay Per Page Access' border='0' src='https://gourl.io/images/example9.jpg'>
 	<div style='font-size:12px;margin:30px 0 5px 370px'>Language: &#160; <?= $languages_list ?></div>
-	<?= $box->display_cryptobox(true, 520, 230, "padding:3px 6px;margin:10px") ?>
+	<?= $box->display_cryptobox(true, 530, 230, "padding:3px 6px;margin:10px") ?>
 	
 <? endif; ?> 	
 
