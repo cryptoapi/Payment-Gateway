@@ -570,7 +570,7 @@ class Cryptobox {
 
 	
 	
-	/* 15. Function coin_label()
+	/* 15. Function iframe_id()
 	 *
 	 * Returns payment box frame id   
 	*/
@@ -1074,7 +1074,19 @@ class Cryptobox {
 	
 		if (!$mysqli)
 		{
-			$mysqli = @mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+			$dbhost = DB_HOST;
+			$port = NULL; $socket = NULL; 
+			if (strpos(DB_HOST, ":"))
+			{ 
+				list($dbhost, $port) = explode(':', DB_HOST);
+				if (is_numeric($port)) $port = (int) $port;
+				else
+				{
+					$socket = $port;
+					$port = NULL;
+				}
+			}
+			$mysqli = @mysqli_connect($dbhost, DB_USER, DB_PASSWORD, DB_NAME, $port, $socket);			
 			if (mysqli_connect_errno())
 			{
 				echo "<br /><b>Error. Can't connect to your MySQL server.</b> You need to have PHP 5.2+ and MySQL 5.5+ with mysqli extension activated. <a href='http://crybit.com/how-to-enable-mysqli-extension-on-web-server/'>Instruction &#187;</a>\n";
@@ -1184,5 +1196,5 @@ class Cryptobox {
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
 		unset($v); unset($cryptobox_private_keys);
-	}
+	}              
 ?>
