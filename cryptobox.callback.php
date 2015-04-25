@@ -7,7 +7,7 @@
  * @copyright   2014-2015 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     1.6.0
+ * @version     1.7.0
  *
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
@@ -38,7 +38,7 @@ if ($_POST) foreach ($_POST as $k => $v) if (is_string($v)) $_POST[$k] = trim($v
 
 
 // b.
-if (isset($_POST["plugin_ver"]) && !isset($_POST["status"]) && isset($_POST["private_key"]) && in_array($_POST["private_key"], explode("^", CRYPTOBOX_PRIVATE_KEYS)))
+if (isset($_POST["plugin_ver"]) && !isset($_POST["status"]) && isset($_POST["private_key"]) && strlen($_POST["private_key"]) == 50 && in_array($_POST["private_key"], explode("^", CRYPTOBOX_PRIVATE_KEYS)))
 {
 	echo "cryptoboxver_" . (CRYPTOBOX_WORDPRESS ? "wordpress_" . GOURL_VERSION : "php_" . CRYPTOBOX_VERSION);
 	die; 
@@ -46,9 +46,9 @@ if (isset($_POST["plugin_ver"]) && !isset($_POST["status"]) && isset($_POST["pri
 
 
 // c.
-if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_received", "payment_received_unrecognised")) && 
+if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_received", "payment_received_unrecognised")) &&
 		$_POST["box"] && is_numeric($_POST["box"]) && $_POST["box"] > 0 && $_POST["amount"] && is_numeric($_POST["amount"]) && $_POST["amount"] > 0 &&
-		$_POST["private_key"] && preg_replace('/[^A-Za-z0-9]/', '', $_POST["private_key"]) == $_POST["private_key"] && in_array($_POST["private_key"], explode("^", CRYPTOBOX_PRIVATE_KEYS)))
+		strlen($_POST["private_key"]) == 50 && preg_replace('/[^A-Za-z0-9]/', '', $_POST["private_key"]) == $_POST["private_key"] && in_array($_POST["private_key"], explode("^", CRYPTOBOX_PRIVATE_KEYS)))
 {
 	
 	foreach ($_POST as $k => $v)
@@ -108,7 +108,7 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	 *  
 	 *  If payment received with correct amount, function receive: $payment_details[status] = 'payment_received' and $payment_details[user] = 11, 12, etc (user_id who has made payment)
 	 *  If incorrectly paid amount, the system can not recognize user; function receive: $payment_details[status] = 'payment_received_unrecognised' and $payment_details[user] = ''
-	 *  
+	 *
 	 *  Function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
 	 *  gets $paymentID from your table crypto_payments, $box_status = 'cryptobox_newrecord' OR 'cryptobox_updated' (description above)
 	 *  and payment details as array -

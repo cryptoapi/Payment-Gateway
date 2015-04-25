@@ -3,7 +3,7 @@
  * @category    Example2 - Pay-Per-Product (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Speedcoin, Dogecoin, Paycoin, Darkcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p1
  * @live_demo   http://gourl.io/lib/examples/pay-per-product-multi.php
  */ 
@@ -28,7 +28,7 @@
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 
-	$available_payments = array('bitcoin', 'litecoin', 'speedcoin', 'dogecoin', 'paycoin', 'darkcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin');
+	$available_payments = array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin');
 	
 	
 	// Goto  https://gourl.io/info/memberarea/My_Account.html
@@ -152,7 +152,7 @@
 <? if (!$box->is_paid()) echo $coins_list . "<br><br><h2>Pay Invoice Now - </h2>";  ?>
 <br><br>
 <div style='margin:30px 0 5px 300px'>Language: &#160; <?= $languages_list ?></div>
-<?= $box->display_cryptobox() ?>
+<?= $box->display_cryptobox(true, 560, 230, "border-radius:15px;border:1px solid #eee;padding:3px 6px;margin:10px;", "display:inline-block;max-width:580px;padding:15px 20px;border:1px solid #eee;margin:7px;line-height:25px;") ?>
 <br><br><br>
 <h3>Message :</h3>
 <h2 style='color:#999'><?= $message ?></h2>

@@ -2,12 +2,12 @@
   *
   * Cryptocoin Payment Box Javascript
   *
-  * @package     GoUrl Bitcoin/Altcoins Payment Box and Crypto Captcha
+  * @package     GoUrl Bitcoin/Altcoin Payment Box and Crypto Captcha
   * @copyright   2014-2015 Delta Consultants 
   * @category    Javascript
   * @website     https://gourl.io
   * @api         https://gourl.io/cryptocoin_payment_api.html
-  * @version     1.6.0
+  * @version     1.7.0
   *
   */
 
@@ -34,6 +34,7 @@
 		else if (userFormat == 'COOKIE' && cryptobox_cookie(cookieName) != userID) alert('Invalid cookie value. It may be you are viewing an older copy of the page that is stored in the website cache. Please contact with website owner, need to disable/turn-off caching for current page');
 		else if (orderID == '') alert('Invalid orderID');
 		else if (period == '') alert('Invalid period');
+		else if (public_key.length != 50) alert('Invalid public key');
 		else if (webdev_key != '' && (webdev_key.indexOf("DEV") == -1 || webdev_key.length < 20)) alert('Invalid webdev_key, leave it empty');
 		else if (hash == '') alert('Invalid payment box hash');
 		else 
