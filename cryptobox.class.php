@@ -126,7 +126,7 @@ class Cryptobox {
 		
 		if (!defined("CRYPTOBOX_PRIVATE_KEYS") || !in_array($this->private_key, explode("^", CRYPTOBOX_PRIVATE_KEYS))) die("Error. Please add your Cryptobox Private Key ".(CRYPTOBOX_WORDPRESS ? "on your plugin settings page" : "to \$cryptobox_private_keys in file cryptobox.config.php"));
 
-		if ($this->webdev_key && (preg_replace('/[^A-Za-z0-9]/', '', $this->webdev_key) != $this->webdev_key || strpos($this->webdev_key, "DEV") !== 0 || $this->webdev_key != strtoupper($this->webdev_key) || $this->icrc32($this->left($this->webdev_key, "G", false)) != $this->right($this->webdev_key, "G", false))) die("Invalid webdev_key '".$this->webdev_key."'. You can leave it empty");
+		if ($this->webdev_key && (preg_replace('/[^A-Za-z0-9]/', '', $this->webdev_key) != $this->webdev_key || strpos($this->webdev_key, "DEV") !== 0 || $this->webdev_key != strtoupper($this->webdev_key) || $this->icrc32($this->left($this->webdev_key, "G", false)) != $this->right($this->webdev_key, "G", false))) $this->webdev_key = "";
 		
 		$c = substr($this->right($this->left($this->public_key, "PUB"), "AA"), 5);
 		$this->coinLabel = $this->right($c, "77");
@@ -1205,6 +1205,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys);
+		unset($v); unset($cryptobox_private_keys);           
 	}
 ?>
