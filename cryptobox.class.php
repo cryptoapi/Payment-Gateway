@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * PHP Cryptocurrency Payment Class 
+ * PHP Cryptocurrency Payment Class
  *
  * @package     GoUrl PHP Bitcoin/Altcoin Payments and Crypto Captcha
  * @copyright   2014-2015 Delta Consultants
@@ -44,8 +44,9 @@
  *  D. function display_currency_box(..)		// Multiple crypto currency selection list. You can accept payments in multiple crypto currencies (for example: bitcoin, litecoin, dogecoin)
  *  E. function cryptobox_selcoin(..)			// Current selected coin by user (bitcoin, dogecoin, etc. - for multiple coin payment boxes) 
  *  F. function get_country_name(..)			// Get country name by country code or reverse
- *  G. function convert_currency_live(..)		// Fiat currency converter using Google Finance live exchange rates 
- *  H. function run_sql(..)						// Run SQL queries and return result in array/object formats
+ *  G. function convert_currency_live(..)		// Fiat currency converter using Google Finance live exchange rates
+ *  H. function validate_gourlkey(..)			// Validate gourl private/public/affiliate keys 
+ *  I. function run_sql(..)						// Run SQL queries and return result in array/object formats
  *
  *
  *  Note: Complete Description of the Functions, see on the page below or here - https://gourl.io/cryptocoin_payment_api.html
@@ -1061,8 +1062,49 @@ class Cryptobox {
 	}
 	
 	
+	
+	/* H. Function validate_gourlkey()
+	 *
+	* Validate gourl private/public/affiliate keys
+	* $key 	 	- gourl payment box key
+	* $type 	- public, private, affiliate
+	* @return 	- true or false 
+	*/
+	function validate_gourlkey ( $key, $type )
+	{
+		if (!$key || !in_array($type, array('public', 'private', 'affiliate'))) return false;
+		
+		$valid = false;
+		if ($type == 'public' && strpos($key, 'AA') && strlen($key) == 50)
+		{
+			$boxID = substr($key, 0, strpos($key, 'AA'));
+			if (preg_replace('/[^A-Za-z0-9]/', '', $key) == $key &&
+				$boxID && is_numeric($boxID) &&
+				strpos($key, "77") !== false &&
+				strpos($key, "PUB")) $valid = true;
+		}
+		elseif ($type == 'private' && strpos($key, 'AA') && strlen($key) == 50)
+		{
+			$boxID = substr($key, 0, strpos($key, 'AA'));
+			if (preg_replace('/[^A-Za-z0-9]/', '', $key) == $key &&
+				$boxID && is_numeric($boxID) &&
+				strpos($key, "77") !== false &&
+				strpos($key, "PRV")) $valid = true;
+		}
+		elseif ($type == 'affiliate')
+		{
+			if (preg_replace('/[^A-Z0-9]/', '', $key) == $key &&
+				strpos($key, "DEV") === 0 &&
+				strpos($key, "G") &&
+				is_numeric(substr($key, -2))) $valid = true;
+		}
+		
+		return $valid;
+	}
+	
+	
 
-	/* H. Function run_sql()
+	/* I. Function run_sql()
 	 *
 	 * Run SQL queries and return result in array/object formats
 	 */
@@ -1205,6 +1247,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys);           
+		unset($v); unset($cryptobox_private_keys);
 	}
 ?>
