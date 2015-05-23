@@ -1183,9 +1183,9 @@ class Cryptobox {
 
 							"es" => array("name"		=> "Spanish", 
 									"button"			=> "Click aqui si ya has mandado %coinNames%",
-									"msg_not_received" 	=> "<b>%coinNames% no a sido recivida.</b><br>Si ya has enviado %coinNames% (la cantidad exacta de %coinName% en un solo pago como se muestra abajo), porfavor espera unos minutos para recibirlas del %coinName% sistema de pagos. Si has enviado otra cantidad, el sistema de pagos ignorara la transaccion y necesitaras mandar la cantidad correcta de nuevo, o contactar al propietario del sitio para recibir asistencia.",
-									"msg_received" 	 	=> "%coinName% Sistema de pago recivio %amountPaid% %coinLabel% Satisfactoriamente !",
-									"msg_received2" 	=> "%coinName% Captcha recivido %amountPaid% %coinLabel% Satisfactoriamente !",
+									"msg_not_received" 	=> "<b>%coinNames% no a sido recibido.</b><br>Si ya has enviado %coinNames% (la cantidad exacta de %coinName% en un solo pago como se muestra abajo), porfavor espera unos minutos para recibirlas del %coinName% sistema de pagos. Si has enviado otra cantidad, el sistema de pagos ignorara la transaccion y necesitaras mandar la cantidad correcta de nuevo, o contactar al propietario del sitio para recibir asistencia.",
+									"msg_received" 	 	=> "%coinName% Sistema de pago recibi&oacute; %amountPaid% %coinLabel% Satisfactoriamente !",
+									"msg_received2" 	=> "%coinName% Captcha recibido %amountPaid% %coinLabel% Satisfactoriamente !",
 									"payment"			=> "Seleccionar metodo de pago",
 									"pay_in"			=> "Pago en %coinName%"),
 							
@@ -1239,7 +1239,7 @@ class Cryptobox {
 							);
 
 	if(!defined("CRYPTOBOX_LOCALISATION")) define("CRYPTOBOX_LOCALISATION", json_encode($cryptobox_localisation));
-	unset($cryptobox_localisation);
+	unset($cryptobox_localisation);   
 	
 	if (!CRYPTOBOX_WORDPRESS || defined("CRYPTOBOX_PRIVATE_KEYS"))
 	{
