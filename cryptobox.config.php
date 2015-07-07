@@ -23,6 +23,6 @@
 
  
  define("CRYPTOBOX_PRIVATE_KEYS", implode("^", $cryptobox_private_keys));
- unset($cryptobox_private_keys); 
-
+ unset($cryptobox_private_keys);
+ 
 ?>

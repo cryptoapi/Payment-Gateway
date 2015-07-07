@@ -3,7 +3,7 @@
  * @category    Example5 - Pay-Per-Post (single crypto currency in payment box)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p3
  * @live_demo   http://gourl.io/lib/examples/pay-per-post.php
  */ 
@@ -23,7 +23,7 @@
 	$public_key		= "-your public key for coin box-"; // from gourl.io
 	$private_key	= "-your private key for coin box-";// from gourl.io
 
-	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
+	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options  
 	
 	/********************************/
 
@@ -38,7 +38,7 @@
 			"private_key" => $private_key, 	// your private key from gourl.io
 			"webdev_key"  => "", 		// optional, gourl affiliate key
 			"orderID"     => $orderID, 		// order id
-			"userID"      => $userID, 		// unique identifier for each your user
+			"userID"      => $userID, 		// unique identifier for every user
 			"userFormat"  => $userFormat, 	// save userID in COOKIE, IPADDRESS or SESSION
 			"amount"   	  => 0,				// post price in coins OR in USD below
 			"amountUSD"   => $amountUSD,	// we use post price in USD

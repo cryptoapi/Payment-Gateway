@@ -3,8 +3,8 @@
  * @category    Basic Example
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin
- * @website     https://gourl.io/cryptocoin_payment_api.html
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit
+ * @website     https://gourl.io/api-php.html
  */ 
 	require_once( "../cryptobox.class.php" );
 
@@ -14,7 +14,7 @@
 	"webdev_key" => "", 		// optional, gourl affiliate key
 	"orderID"     => "your_product1_or_signuppage1_etc", // few your users can have the same orderID but combination 'orderID'+'userID' should be unique. 
 								// for example, on premium page you can use for all visitors: orderID="premium" and userID="" (empty).
-	"userID" 	  => "", 		// optional; when userID value is empty - system will autogenerate unique identifier for each your user and save it in cookies
+	"userID" 	  => "", 		// optional; when userID value is empty - system will autogenerate unique identifier for every user and save it in cookies
 	"userFormat"  => "COOKIE", 	// save your user identifier userID in cookies. Available values: COOKIE, SESSION, IPADDRESS, MANUAL 
 	"amount" 	  => 0,			// amount in cryptocurrency or in USD below
 	"amountUSD"   => 2,  		// price is 2 USD; it will convert to cryptocoins amount, using Live Exchange Rates
@@ -23,7 +23,7 @@
 	"iframeID"    => "",    	// optional; when iframeID value is empty - system will autogenerate iframe html payment box id
 	"language" 	  => "EN" 		// english, please contact us and we can add your language	
 	);  
-	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
+	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options  
 
 	
 	// Initialise Payment Class

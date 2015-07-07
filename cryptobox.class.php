@@ -7,13 +7,11 @@
  * @copyright   2014-2015 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @api         https://gourl.io/cryptocoin_payment_api.html
+ * @api         https://gourl.io/api-php.html
  * @example     https://gourl.io/bitcoin-payment-gateway-api.html
- * @wordpress   https://gourl.io/bitcoin-wordpress-plugin.html
- * @demo        http://gourl.io/lib/examples/pay-per-product-multi.php
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
- * @license 	Free GPLv2, http://www.gnu.org/licenses/gpl-2.0.html 
- * @version     1.7.0
+ * @license 	Free GPLv2
+ * @version     1.7.1
  *
  *
  *
@@ -30,7 +28,7 @@
  *  9. function payment_id()					// Returns current record id in the table crypto_payments. Crypto_payments table stores all payments from your users
  *  10.function payment_date()					// Returns payment/transaction datetime in GMT format
  *  11.function payment_info()					// Returns object with current user payment details - amount, txID, datetime, usercointry, etc
- *  12.function cryptobox_reset()				// Optional, Delete cookies/sessions and new cryptobox with new payment amount will be displayed. This function use only if you not set userID manually
+ *  12.function cryptobox_reset()				// Optional, Delete cookies/sessions and new cryptobox with new payment amount will be displayed. Use this function only if you have not set userID manually.
  *  13.function coin_name()						// Returns coin name (dogecoin, bitcoin, etc)
  *  14.function coin_label()					// Returns coin label (DOGE, BTC, etc)
  *  15.function iframe_id()						// Returns payment box frame id
@@ -49,7 +47,7 @@
  *  I. function run_sql(..)						// Run SQL queries and return result in array/object formats
  *
  *
- *  Note: Complete Description of the Functions, see on the page below or here - https://gourl.io/cryptocoin_payment_api.html
+ *  Note: Complete Description of the Functions, see on the page below or here - https://gourl.io/api-php.html
  */
 
 
@@ -60,10 +58,10 @@ if (!CRYPTOBOX_WORDPRESS) require_once( "cryptobox.config.php" ); // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.7.0");
+define("CRYPTOBOX_VERSION", "1.7.1");
 
 // GoUrl supported crypto currencies
-define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin')));
+define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit')));
 
 
 class Cryptobox {
@@ -84,15 +82,15 @@ class Cryptobox {
 	private $language		= "en";		// cryptobox localisation; en - English, es - Spanish, fr - French, ru - Russian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	private $iframeID		= "";		// optional, html iframe element id; allow symbols: a..Z0..9
 	private $orderID 		= "";		// your page name / product name or order name (not unique); allow symbols: a..Z0..9_-.; max size: 50 symbols 
-	private $userID 		= "";		// optional, manual setup unique identifier for each your user; allow symbols: a..Z0..9_-.; max size: 50 symbols.  
+	private $userID 		= "";		// optional, manual setup unique identifier for each of your users; allow symbols: a..Z0..9_-.; max size: 50 symbols.  
 										/* IMPORTANT - If you use Payment Box/Captcha for registered users on your website, you need to set userID manually with 
-										 * an unique value for each of your registered user. It is better than use cookies by default. Examples: 'user1', 'user2', '3vIh9MjEis' */
+										 * an unique value for each of your registered user. It is better than to use cookies by default. Examples: 'user1', 'user2', '3vIh9MjEis' */
 	private $userFormat 	= "COOKIE"; // this variable use only if $userID above is empty - it will save random userID in cookies, sessions or use user IP address as userID. Available values: COOKIE, SESSION, IPADDRESS
 	  
 	/* PLEASE NOTE -
 	 * If you use multiple stores/sites online, please create separate GoUrl Payment Box (with unique payment box public/private keys) for each of your stores/websites. 
 	 * Do not use the same GoUrl Payment Box with the same public/private keys on your different websites/stores.
-	 * if you use the same $public_key, $orderID and $userID on different pages and a user has made payment; a successful result for that user will be returned on all those pages (of course if $period time valid). 
+	 * if you use the same $public_key, $orderID and $userID in your multiple cryptocoin payment boxes on different website pages and a user has made payment; a successful result for that user will be returned on all those pages (if $period time valid). 
 	 * if you change - $public_key or $orderID or $userID - new cryptocoin payment box will be shown for exisiting paid user. (function $this->is_paid() starts to return 'false'). 
 	 * */
 
@@ -237,11 +235,11 @@ class Cryptobox {
 	 * and when they click on that button, script will connect to our remote cryptocoin payment box server
 	 * and check user payment.
 	 *  
-	 * As backup, our server will also inform your server automatically through IPN every time when payment is received 
-	 * (file cryptobox.callback.php). I.e. if the user does not click on button or you not display that button, 
-	 * your website anyway will receive notification about a given user and save it in your database. 
-	 * And when your user next time comes on your website/reload page he will automatically will see message 
-	 * that his payment has been received successfully.
+	 * As backup, our server will also inform your server automatically through IPN every time a payment is received
+	 * (file cryptobox.callback.php). I.e. if the user does not click on the button or you have not displayed the button, 
+	 * your website will receive a notification about a given user anyway and save it to your database. 
+	 * Next time your user goes to your website/reloads page they will automatically see the message 
+	 * that their payment has been received successfully.
 	*/
 	public function display_cryptobox($submit_btn = true, $width = "530", $height = "230", $box_style = "", $message_style = "", $anchor = "")
 	{
@@ -324,8 +322,8 @@ class Cryptobox {
 
 	/* 3. Function is_confirmed() -
 	*
-	* Function return true if transaction/payment have 6+ confirmations
-	* It connects with payment server and get current transaction status (confirmed/unconfirmed)
+	* Function return is true if transaction/payment has 6+ confirmations. 
+	* It connects with our payment server and gets the current transaction status (confirmed/unconfirmed). 
 	* Some merchants wait until this transaction has been confirmed.  
 	* Average transaction confirmation time - 10-20min for 6+ confirmations (altcoins)
 	*/
@@ -384,14 +382,13 @@ class Cryptobox {
 	
 	/* 6. Functions set_status_processed() and is_processed() 
 	 * 
-	 * You can use these functions when user payment has been received 
-	 * (function is_paid() returns true) and want one time make some action, 
-	 * for example  to update your database records or to send user email 
-	 * with 'thank you', etc. These functions helps you to exclude duplicate 
-	 * processing.
+	 * You can use this function when user payment has been received
+	 * (function is_paid() returns true) and want to make one time action,
+	 * for example  display 'thank you' message to user, etc.
+	 * These functions helps you to exclude duplicate processing.
 	 * 
-	 * Please note that user will continue see successful payment result in 
-	 * his crypto Payment box during all the period which you specify in value $period
+	 * Please note that the user will continue to see a successful payment result in 
+	 * their crypto Payment box during the period/timeframe you specify in cryptobox option $period
 	 */	 
 	public function set_status_processed()
 	{
@@ -433,7 +430,7 @@ class Cryptobox {
 	 * Returns 'paymentbox' or 'captchabox'
 	 * 
 	 * The Cryptocoin Payment Box and Crypto Captcha are 
-	 * absolutely identical technically except their visual effect.
+	 * absolutely identical technically except for their visual effect.
 	 *
 	 * It uses the same code to get your user payment, to process that  
 	 * payment and to forward received coins to you. They have only two 
@@ -443,9 +440,8 @@ class Cryptobox {
 	 * 'Dogecoin Captcha' logos and when payment is received we will publish 
 	 * 'Payment received successfully' or 'Captcha Passed successfully'.
 	 *  
-	 * We have made it for more easy you adopt our payment gateway
-	 * on your website. On signup page you can use 'Dogecoin Captcha' and 
-	 * on sell products page - 'Dogecoin Payment'. 
+	 * We have made it easier for you to adapt our payment system to your website. 
+	 * On signup page you can use 'Bitcoin Captcha' and on sell products page - 'Bitcoin Payment'. 
 	*/
 	public function cryptobox_type()
 	{
@@ -495,7 +491,7 @@ class Cryptobox {
 	 * txConfirmed		- 0 - unconfirmed transaction/payment or 1 - confirmed transaction/payment 
 	 * processed		- true/false. True if you called function set_status_processed() for that payment before  
 	 * processedDate	- GMT time when you called function set_status_processed()  
-	 * recordCreated	- GMT time when payment record created in your database  
+	 * recordCreated	- GMT time a payment record was created in your database  
 	 * etc.
 	*/
 	public function payment_info()
@@ -514,7 +510,7 @@ class Cryptobox {
 	 * Optional, It will delete cookies/sessions with userID and new cryptobox with new payment amount
 	 * will be displayed after page reload. Cryptobox will recognize user as a new one with new generated userID.
 	 * For example, after you have successfully received the cryptocoin payment and had processed it, you can call
-	 * one-time cryptobox_reset() in end of your script. This function use only if you not set userID manually
+	 * one-time cryptobox_reset() in end of your script. Use this function only if you have not set userID manually.
 	*/
 	public function cryptobox_reset()
 	{
@@ -824,8 +820,8 @@ class Cryptobox {
 	* boxID 	 		- your cryptobox id, the same as on gourl.io member page
 	* boxType			- 'paymentbox' or 'captchabox'
 	* orderID			- your order id / page name / etc.
-	* userID 	 		- identifier for each your user
-	* countryID 	 	- your user location country, 3 letter ISO country code
+	* userID 	 		- your user identifier
+	* countryID 	 	- your user's location (country) , 3 letter ISO country code
 	* coinLabel 	 	- cryptocurrency label
 	* amount 		 	- paid cryptocurrency amount
 	* amountUSD 	 	- approximate paid amount in USD with exchange rate on datetime of payment made
@@ -836,7 +832,7 @@ class Cryptobox {
 	* 					  you can use function is_confirmed() above, it will connect with payment server and get transaction status (confirmed/unconfirmed)
 	* processed			- true/false. True if you called function set_status_processed() before
 	* processedDate		- GMT time when you called function set_status_processed()
-	* recordCreated		- GMT time when payment record created in your database
+	* recordCreated		- GMT time a payment record was created in your database
 	*/
 	function payment_history($boxID = "", $orderID = "", $userID = "", $countryID = "", $boxType = "", $period = "7 DAY")
 	{
@@ -861,11 +857,12 @@ class Cryptobox {
 	/* B. Function payment_unrecognised()
 	*
 	* Returns array with unrecognised payments for custom period - $period.
-	* (users paid wrong amount on your internal wallet address).
-	* You need to process that unrecognised payments manually.
+	* (users paid wrong amount to your internal wallet address). 
+	* You will need to process unrecognised payments manually.
 	*
-	* We forward you ALL coins received on your internal wallet address/es 
-	* including all payments with incorrect amounts (unrecognised payments).
+	* We forward you ALL coins received to your internal wallet address 
+	* including all possible incorrect amount/unrecognised payments 
+	* automatically every 30 minutes. 
 	* 
 	* Therefore if your user contacts us, regarding the incorrect sent payment,
 	* we will forward your user to you (because our system forwards all received payments
@@ -877,7 +874,7 @@ class Cryptobox {
 	* that payment coming in. You can tell your user about your return of that incorrect
 	* payment to one of their sending address (which will protect you from bad claims).
 	*
-	* You have copy of that statistics on your gourl.io member page
+	* You will have a copy of the statistics on your gourl.io member page
 	* with details of incorrect received payments.
 	* 
 	* It includes -
@@ -890,7 +887,7 @@ class Cryptobox {
 	* addr			 	- your internal wallet address on gourl.io which received this payment
 	* txID 				- transaction id
 	* txDate 			- transaction date (GMT time)
-	* recordCreated		- GMT time when payment record created in your database
+	* recordCreated		- GMT time a payment record was created in your database
 	*/
 	function payment_unrecognised($boxID = "", $period = "7 DAY")
 	{
@@ -1239,7 +1236,7 @@ class Cryptobox {
 							);
 
 	if(!defined("CRYPTOBOX_LOCALISATION")) define("CRYPTOBOX_LOCALISATION", json_encode($cryptobox_localisation));
-	unset($cryptobox_localisation);   
+	unset($cryptobox_localisation);
 	
 	if (!CRYPTOBOX_WORDPRESS || defined("CRYPTOBOX_PRIVATE_KEYS"))
 	{
@@ -1247,6 +1244,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys);  
+		unset($v); unset($cryptobox_private_keys);
 	}
 ?>

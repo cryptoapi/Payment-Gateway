@@ -3,7 +3,7 @@
  * @category    Example2 - Pay-Per-Product (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2015 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p1
  * @live_demo   http://gourl.io/lib/examples/pay-per-product-multi.php
  */ 
@@ -24,11 +24,11 @@
 	$def_language	= "en";				// default Payment Box Language
 	$def_payment	= "bitcoin";		// Default Coin in Payment Box
 
-	// IMPORTANT: Please read description of options here - https://gourl.io/cryptocoin_payment_api.html#options  
+	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options  
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 
-	$available_payments = array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin');
+	$available_payments = array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit');
 	
 	
 	// Goto  https://gourl.io/info/memberarea/My_Account.html
@@ -73,7 +73,7 @@
 			"private_key" => $private_key, 	// your private key from gourl.io
 			"webdev_key"  => "", 		// optional, gourl affiliate key
 			"orderID"     => $orderID, 		// order id or product name
-			"userID"      => $userID, 		// unique identifier for each your user
+			"userID"      => $userID, 		// unique identifier for every user
 			"userFormat"  => $userFormat, 	// save userID in COOKIE, IPADDRESS or SESSION
 			"amount"   	  => 0,				// product price in coins OR in USD below
 			"amountUSD"   => $amountUSD,	// we use product price in USD
