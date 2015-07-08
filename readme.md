@@ -13,6 +13,8 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 
 * 100% Free Open Source on Github.com
 * No Monthly Fee, Transaction Fee from 0%
+* No ID Required, No Bank Account Needed
+* Get payments straight to your bitcoin/altcoin wallets and convert to [USD/EUR/etc](https://gourl.io/#usd) later
 * [Pay-Per-Product](http://gourl.io/lib/examples/pay-per-product-multi.php) - sell your products for bitcoin, dogecoin, litecoin, etc. online on your website. It is easy!
 * [Pay-Per-Download](http://gourl.io/lib/examples/pay-per-download-multi.php) -  make money on file downloads/other digital content from your website online
 * [Pay-Per-Post](http://gourl.io/lib/examples/pay-per-post-multi.php) - get separate payments for each post/article published on your website
@@ -23,7 +25,7 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 * Direct Integration on your website (iframe), no external payment pages opens (as other payment gateways offer)
 * User will see successful payment result typically within 5 seconds after the payment has been sent
 * Your website users and visitors will see GoUrl payment box on your website in their own native languages
-* Our Payment Gateway supports the following interface languages: [English](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=en#gourlcryptolang), [Spanish](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=es#gourlcryptolang), [French](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=fr#gourlcryptolang), [Russian](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ru#gourlcryptolang), [Arabic](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ar#gourlcryptolang), [Simplified Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=cn#gourlcryptolang), [Traditional Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=zh#gourlcryptolang), [Hindi](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=hi#gourlcryptolang). We can also add any new language to payment system on [request](http://gourl.local/api-php.html#lan)
+* Our Payment Gateway supports the following interface languages: [English](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=en#gourlcryptolang), [Spanish](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=es#gourlcryptolang), [French](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=fr#gourlcryptolang), [Russian](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ru#gourlcryptolang), [Arabic](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ar#gourlcryptolang), [Simplified Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=cn#gourlcryptolang), [Traditional Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=zh#gourlcryptolang), [Hindi](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=hi#gourlcryptolang). We can also add any new language to payment system on [request](https://gourl.io/api-php.html#lan)
 * [Affiliate Program for Web Developers](https://gourl.io/affiliates.html) - Earn 0.50% Lifetime from each cryptocoin payment made by users through GoUrl Payment Gateway
 * Global, Anonymous, Secure, Zero Risk, No Chargebacks, No visitor registration is needed.
 * GoUrl Bitcoin Official [Wordpress Plugin](https://gourl.io/bitcoin-wordpress-plugin.html) - easy to use on your website
