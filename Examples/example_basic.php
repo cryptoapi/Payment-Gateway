@@ -92,7 +92,7 @@
 	 *  If payment received with correct amount, function receive: $payment_details[status] = 'payment_received' and $payment_details[user] = 11, 12, etc (user_id who has made payment)
 	 *  If incorrectly paid amount, the system can not recognize user; function receive: $payment_details[status] = 'payment_received_unrecognised' and $payment_details[user] = ''    
 	 *
-	 *  **** Move this function to the bottom of the file cryptobox.class.php or create a separate file ****
+	 *  Read more - https://gourl.io/api-php.html
 	 *  
 	 *  Function gets $paymentID from your table crypto_payments,
 	 *  $box_status = 'cryptobox_newrecord' OR 'cryptobox_updated' (description above)
@@ -101,50 +101,51 @@
 	 *  
 	 *  1. EXAMPLE - CORRECT PAYMENT - 
 	 *  $payment_details = array(
-						"status":			"payment_received",
-						"err":				"",
-						"private_key":		"ZnlH0aD8z3YIkhwOKHjK9GmZl",
-						"box":				"7",
-						"boxtype":			"paymentbox",
-						"order":			"91f7c3edc0f86b5953cf1037796a2439",
-						"user":				"115",
-						"usercountry":		"USA",
-						"amount":			"1097.03916195",
-						"amountusd":		"0.2",
-						"coinlabel":		"DOGE",
-						"coinname":			"dogecoin",
-						"addr":				"DBJBibi39M2Zzyk51dJd5EHqdKbDxR11BH",
-						"tx":				"309621c28ced8ba348579b152a0dbcfdc90586818e16e526c2590c35f8ac2e08",
-						"confirmed":		0,
-						"timestamp":		"1420215494",
-						"date":				"02 January 2015",
-						"datetime":			"2015-01-02 16:18:14"
-					);
-						
+	 *  				"status":			"payment_received",
+	 *  				"err":				"",
+	 *  				"private_key":		"ZnlH0aD8z3YIkhwOKHjK9GmZl",
+	 *  				"box":				"7",
+	 *  				"boxtype":			"paymentbox",
+	 *  				"order":			"91f7c3edc0f86b5953cf1037796a2439",
+	 *  				"user":				"115",
+	 *  				"usercountry":		"USA",
+	 *  				"amount":			"1097.03916195",
+	 *  				"amountusd":		"0.2",
+	 *  				"coinlabel":		"DOGE",
+	 *  				"coinname":			"dogecoin",
+	 *  				"addr":				"DBJBibi39M2Zzyk51dJd5EHqdKbDxR11BH",
+	 *  				"tx":				"309621c28ced8ba348579b152a0dbcfdc90586818e16e526c2590c35f8ac2e08",
+	 *  				"confirmed":		0,
+	 *  				"timestamp":		"1420215494",
+	 *  				"date":				"02 January 2015",
+	 *  				"datetime":			"2015-01-02 16:18:14"
+	 *  			);
+	 *						
 	 *  2. EXAMPLE - INCORRECT PAYMENT/WRONG AMOUNT - 
 	 *  $payment_details = array(
-						"status":			"payment_received_unrecognised",
-						"err":				"An incorrect dogecoin amount has been received",
-						"private_key":		"ZnlH0aD8z3YIkhwOKHjK9GmZl",
-						"box":				"7",
-						"boxtype":			"paymentbox",
-						"order":			"",
-						"user":				"",
-						"usercountry":		"",
-						"amount":			"12",
-						"amountusd":		"0.002184",
-						"coinlabel":		"DOGE",
-						"coinname":			"dogecoin",
-						"addr":				"DBJBibi39M2Zzyk51dJd5EHqdKbDxR11BH",
-						"tx":				"96dadd51287bb7dea904607f7076e8ce121c8428106dd57b403000b0d0a11c6f",
-						"confirmed":		0,
-						"timestamp":		"1420215388",
-						"date":				"02 January 2015",
-						"datetime":			"2015-01-02 16:16:28"
-					);	
+	 *  				"status":			"payment_received_unrecognised",
+	 *  				"err":				"An incorrect dogecoin amount has been received",
+	 *  				"private_key":		"ZnlH0aD8z3YIkhwOKHjK9GmZl",
+	 *  				"box":				"7",
+	 *  				"boxtype":			"paymentbox",
+	 *  				"order":			"",
+	 *  				"user":				"",
+	 *  				"usercountry":		"",
+	 *  				"amount":			"12",
+	 *  				"amountusd":		"0.002184",
+	 *  				"coinlabel":		"DOGE",
+	 *  				"coinname":			"dogecoin",
+	 *  				"addr":				"DBJBibi39M2Zzyk51dJd5EHqdKbDxR11BH",
+	 *  				"tx":				"96dadd51287bb7dea904607f7076e8ce121c8428106dd57b403000b0d0a11c6f",
+	 *  				"confirmed":		0,
+	 *  				"timestamp":		"1420215388",
+	 *  				"date":				"02 January 2015",
+	 *  				"datetime":			"2015-01-02 16:16:28"
+	 *  			);	
 	*/
 	function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
 	{
+		/**** Move this function to the bottom of the file cryptobox.class.php or create a separate file ****/
 
 		// Your code here to handle a successful cryptocoin payment/captcha verification
 		// for example, send confirmation email to user
@@ -167,8 +168,8 @@
 </head>
 <body>
 
-<?= $paymentbox ?>
-<?= $message ?>
-  
+<?php echo $paymentbox; ?>
+<?php echo $message; ?>
+
 </body>
 </html>
