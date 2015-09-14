@@ -148,25 +148,25 @@
 <div align='center'>
 <div style='width:100%;height:auto;line-height:50px;background-color:#f1f1f1;border-bottom:1px solid #ddd;color:#49abe9;font-size:18px;'>
 	4. GoUrl <b>Pay-Per-Download</b> Example (multiple cryptocurrencies). Use it on your website. 
-	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html#p2'>View Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?= "//".$_SERVER["HTTP_HOST"].str_replace("-multi.php", ".php", $_SERVER["REQUEST_URI"]); ?>'>Single Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
+	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?php echo strtolower($coinName); ?>-payment-gateway-api.html#p2'>View Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?php echo "//".$_SERVER["HTTP_HOST"].str_replace("-multi.php", ".php", $_SERVER["REQUEST_URI"]); ?>'>Single Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?php echo strtolower($coinName); ?>-payment-gateway-api.html'>Other Examples</a></div>
 </div>
 
 <h2>Example - Paid File Downloads (multi coins below)</h2>
 
-<br><h1>File: <?= $filename ?></h1>
+<br><h1>File: <?php echo $filename; ?></h1>
 
-Price: ~<?= $amountUSD ?> US$<br>
+Price: ~<?php echo $amountUSD; ?> US$<br>
 
-<a <?= $download_link ?>><img alt='Download File' border='0' src='https://gourl.io/images/zip.png'></a><br>
-<a <?= $download_link ?>>Download File</a>
+<a <?php echo $download_link; ?>><img alt='Download File' border='0' src='https://gourl.io/images/zip.png'></a><br>
+<a <?php echo $download_link; ?>>Download File</a>
 
-<? if (!$box->is_paid()) echo $coins_list; else echo "<br><br><br><br>" ?>
+<?php if (!$box->is_paid()) echo $coins_list; else echo "<br><br><br><br>" ?>
 
-<div style='margin:30px 0 5px 300px'>Language: &#160; <?= $languages_list ?></div>
-<?= $box->display_cryptobox() ?>
+<div style='margin:30px 0 5px 300px'>Language: &#160; <?php echo $languages_list; ?></div>
+<?php echo $box->display_cryptobox(); ?>
 
 
 </div><br><br><br><br><br><br>
-<div style='position:absolute;left:0;'><a target="_blank" href="http://validator.w3.org/check?uri=<?= "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>"><img src="https://gourl.io/images/w3c.png" alt="Valid HTML 4.01 Transitional"></a></div>
+<div style='position:absolute;left:0;'><a target="_blank" href="http://validator.w3.org/check?uri=<?php echo "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>"><img src="https://gourl.io/images/w3c.png" alt="Valid HTML 4.01 Transitional"></a></div>
 </body>
 </html>

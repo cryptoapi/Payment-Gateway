@@ -98,7 +98,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <html><head>
-<title><?= $coinName ?> Pay-Per-Download Cryptocoin Payment Example</title>
+<title><?php echo $coinName; ?> Pay-Per-Download Cryptocoin Payment Example</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='Expires' content='-1'>
@@ -108,24 +108,24 @@
 <body style='font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#666;margin:0'>
 <div align='center'>
 <div style='width:100%;height:auto;line-height:50px;background-color:#f1f1f1;border-bottom:1px solid #ddd;color:#49abe9;font-size:18px;'>
-	3. GoUrl <b>Pay-Per-Download</b> Example (<?= $coinName ?> payments). Use it on your website. 
-	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/Examples/pay-per-download.php'>View Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?= "//".$_SERVER["HTTP_HOST"].str_replace(".php", "-multi.php", $_SERVER["REQUEST_URI"]); ?>'>Multiple Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
+	3. GoUrl <b>Pay-Per-Download</b> Example (<?php echo $coinName; ?> payments). Use it on your website. 
+	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/Examples/pay-per-download.php'>View Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?php echo "//".$_SERVER["HTTP_HOST"].str_replace(".php", "-multi.php", $_SERVER["REQUEST_URI"]); ?>'>Multiple Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?php echo strtolower($coinName); ?>-payment-gateway-api.html'>Other Examples</a></div>
 </div>
 
 <h2>Example - Paid File Downloads</h2>
 
-<br><h1>File: <?= $filename ?></h1>
+<br><h1>File: <?php echo $filename; ?></h1>
 
-Price: ~<?= $amountUSD ?> US$<br>
+Price: ~<?php echo $amountUSD; ?> US$<br>
 
-<a <?= $download_link ?>><img alt='Download File' border='0' src='https://gourl.io/images/zip.png'></a><br>
-<a <?= $download_link ?>>Download File</a>
+<a <?php echo $download_link; ?>><img alt='Download File' border='0' src='https://gourl.io/images/zip.png'></a><br>
+<a <?php echo $download_link; ?>>Download File</a>
 
-<div style='margin:70px 0 5px 300px'>Language: &#160; <?= $languages_list ?></div>
-<?= $box->display_cryptobox() ?>
+<div style='margin:70px 0 5px 300px'>Language: &#160; <?php echo $languages_list; ?></div>
+<?php echo $box->display_cryptobox(); ?>
 
 
 </div><br><br><br><br><br><br>
-<div style='position:absolute;left:0;'><a target="_blank" href="http://validator.w3.org/check?uri=<?= "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>"><img src="https://gourl.io/images/w3c.png" alt="Valid HTML 4.01 Transitional"></a></div>
+<div style='position:absolute;left:0;'><a target="_blank" href="http://validator.w3.org/check?uri=<?php echo "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>"><img src="https://gourl.io/images/w3c.png" alt="Valid HTML 4.01 Transitional"></a></div>
 </body>
 </html>

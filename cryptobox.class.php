@@ -11,7 +11,7 @@
  * @example     https://gourl.io/bitcoin-payment-gateway-api.html
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     1.7.2
+ * @version     1.7.3
  *
  *
  *
@@ -58,7 +58,7 @@ if (!CRYPTOBOX_WORDPRESS) require_once( "cryptobox.config.php" ); // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.7.2");
+define("CRYPTOBOX_VERSION", "1.7.3");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit')));
@@ -80,9 +80,9 @@ class Cryptobox {
 										 * You can use in cryptobox options one variable only: amount or amountUSD. You cannot place values of those two variables together. */
 	private $period 		= "";		// period after which the payment becomes obsolete and new cryptobox will be shown; allow values: NOEXPIRY, 1 MINUTE..90 MINUTE, 1 HOUR..90 HOURS, 1 DAY..90 DAYS, 1 WEEK..90 WEEKS, 1 MONTH..90 MONTHS  
 	private $language		= "en";		// cryptobox localisation; en - English, es - Spanish, fr - French, ru - Russian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
-	private $iframeID		= "";		// optional, html iframe element id; allow symbols: a..Z0..9
-	private $orderID 		= "";		// your page name / product name or order name (not unique); allow symbols: a..Z0..9_-.; max size: 50 symbols 
-	private $userID 		= "";		// optional, manual setup unique identifier for each of your users; allow symbols: a..Z0..9_-.; max size: 50 symbols.  
+	private $iframeID		= "";		// optional, html iframe element id; allow symbols: a..Z0..9_-
+	private $orderID 		= "";		// your page name / product name or order name (not unique); allow symbols: a..Z0..9_-@.; max size: 50 symbols
+	private $userID 		= "";		// optional, manual setup unique identifier for each of your users; allow symbols: a..Z0..9_-@.; max size: 50 symbols
 										/* IMPORTANT - If you use Payment Box/Captcha for registered users on your website, you need to set userID manually with 
 										 * an unique value for each of your registered user. It is better than to use cookies by default. Examples: 'user1', 'user2', '3vIh9MjEis' */
 	private $userFormat 	= "COOKIE"; // this variable use only if $userID above is empty - it will save random userID in cookies, sessions or use user IP address as userID. Available values: COOKIE, SESSION, IPADDRESS
@@ -114,6 +114,14 @@ class Cryptobox {
 	
 	public function __construct($options = array()) 
 	{
+		
+		// Min requirements
+		if (!function_exists( 'mb_stripos' ) || !function_exists( 'mb_strripos' ))  die(sprintf("Error. Please enable <a target='_blank' href='%s'>MBSTRING extension</a> in PHP. <a target='_blank' href='%s'>Read here &#187;</a>", "http://php.net/manual/en/book.mbstring.php", "http://www.knowledgebase-script.com/kb/article/how-to-enable-mbstring-in-php-46.html"));
+		if (!function_exists( 'curl_init' )) 										die(sprintf("Error. Please enable <a target='_blank' href='%s'>CURL extension</a> in PHP. <a target='_blank' href='%s'>Read here &#187;</a>", "http://php.net/manual/en/book.curl.php", "http://stackoverflow.com/questions/1347146/how-to-enable-curl-in-php-xampp"));
+		if (!function_exists( 'mysqli_connect' )) 									die(sprintf("Error. Please enable <a target='_blank' href='%s'>MySQLi extension</a> in PHP. <a target='_blank' href='%s'>Read here &#187;</a>", "http://php.net/manual/en/book.mysqli.php", "http://crybit.com/how-to-enable-mysqli-extension-on-web-server/"));
+		if (version_compare(phpversion(), '5.4.0', '<')) 							die(sprintf("Error. You need PHP 5.4.0 (or greater). Current php version: %s", phpversion()));
+		
+		
 		foreach($options as $key => $value) 
 			if (in_array($key, array("public_key", "private_key", "webdev_key", "amount", "amountUSD", "period", "language", "iframeID", "orderID", "userID", "userFormat"))) $this->$key = (is_string($value)) ? trim($value) : $value;
 
@@ -160,11 +168,11 @@ class Cryptobox {
 		if ($this->iframeID && preg_replace('/[^A-Za-z0-9\_\-]/', '', $this->iframeID) != $this->iframeID || $this->iframeID == "cryptobox_live_") die("Invalid iframe ID - $this->iframeID. Allowed symbols: a..Z0..9_-");
 		
 		$this->userID = trim($this->userID);
-		if ($this->userID && preg_replace('/[^A-Za-z0-9\.\_\-]/', '', $this->userID) != $this->userID) die("Invalid User ID - $this->userID. Allowed symbols: a..Z0..9_-.");
+		if ($this->userID && preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $this->userID) != $this->userID) die("Invalid User ID - $this->userID. Allowed symbols: a..Z0..9_-@.");
 		if (strlen($this->userID) > 50) die("Invalid User ID - $this->userID. Max: 50 symbols");
 		
 		$this->orderID = trim($this->orderID);
-		if ($this->orderID && preg_replace('/[^A-Za-z0-9\.\_\-]/', '', $this->orderID) != $this->orderID) die("Invalid Order ID - $this->orderID. Allowed symbols: a..Z0..9_-.");
+		if ($this->orderID && preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $this->orderID) != $this->orderID) die("Invalid Order ID - $this->orderID. Allowed symbols: a..Z0..9_-@.");
 		if (!$this->orderID || strlen($this->orderID) > 50) die("Invalid Order ID - $this->orderID. Max: 50 symbols");
 		
 		if ($this->userID) 
@@ -266,7 +274,8 @@ class Cryptobox {
 			$cryptobox_html .= "</div></div><br>";
 		}
 	
-		$hash = md5($this->boxID.$this->coinName.$this->public_key.$this->private_key.$this->webdev_key.$this->amount.$this->period.$this->amountUSD.$this->language.$this->amount.$this->iframeID.$this->amountUSD.$this->userID.$this->userFormat.$this->orderID.$width.$height);
+		$hash_str = $this->boxID.$this->coinName.$this->public_key.$this->private_key.$this->webdev_key.$this->amount.$this->period.$this->amountUSD.$this->language.$this->amount.$this->iframeID.$this->amountUSD.$this->userID.$this->userFormat.$this->orderID.$width.$height;
+		$hash = md5($hash_str);
 		$cryptobox_html .= "<div align='center' style='min-width:".$width."px'><iframe id='$this->iframeID' ".($box_style?'style="'.htmlspecialchars($box_style, ENT_COMPAT).'"':'')." scrolling='no' marginheight='0' marginwidth='0' frameborder='0' width='$width' height='$height'></iframe></div>";
 		$cryptobox_html .= "<div><script type='text/javascript'>";
 		$cryptobox_html .= "cryptobox_show($this->boxID, '$this->coinName', '$this->public_key', $this->amount, $this->amountUSD, '$this->period', '$this->language', '$this->iframeID', '$this->userID', '$this->userFormat', '$this->orderID', '$this->cookieName', '$this->webdev_key', '$hash', $width, $height);";
@@ -291,7 +300,6 @@ class Cryptobox {
 		
 	
 	
-
 	/* 2. Function is_paid($remotedb = false) -
 	 * 
 	 * This Checks your local database whether payment has been received and is stored on your local database. 
@@ -652,8 +660,8 @@ class Cryptobox {
 			foreach ($res as $k => $v)
 			{
 				if ($k == "datetime") 							$mask = '/[^0-9\ \-\:]/';
-				elseif (in_array($k, array("err", "date")))		$mask = '/[^A-Za-z0-9\.\_\-\ ]/';
-				else											$mask = '/[^A-Za-z0-9\.\_\-]/';
+				elseif (in_array($k, array("err", "date")))		$mask = '/[^A-Za-z0-9\.\_\-\@\ ]/';
+				else											$mask = '/[^A-Za-z0-9\.\_\-\@]/';
 				if ($v && preg_replace($mask, '', $v) != $v) 	$res[$k] = "";
 			}
 			
@@ -837,8 +845,8 @@ class Cryptobox {
 	function payment_history($boxID = "", $orderID = "", $userID = "", $countryID = "", $boxType = "", $period = "7 DAY")
 	{
 		if ($boxID 		&& (!is_numeric($boxID) || $boxID < 1 || round($boxID) != $boxID))		return false;
-		if ($orderID 	&& preg_replace('/[^A-Za-z0-9\.\_\-]/', '', $orderID) != $orderID) 		return false;
-		if ($userID  	&& preg_replace('/[^A-Za-z0-9\.\_\-]/', '', $userID)  != $userID)  		return false;
+		if ($orderID 	&& preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $orderID) != $orderID) 		return false;
+		if ($userID  	&& preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $userID)  != $userID)  		return false;
 		if ($countryID  && (preg_replace('/[^A-Za-z]/', '', $countryID)  != $countryID || strlen($countryID) != 3)) return false;
 		if ($boxType 	&& !in_array($boxType, array('paymentbox','captchabox')))  				return false;
 		if ($period  	&& preg_replace('/[^A-Za-z0-9\ ]/', '', $period)  	!= $period)  		return false;
@@ -1132,8 +1140,7 @@ class Cryptobox {
 			{
 				echo "<br /><b>Error. Can't connect to your MySQL server.</b> You need to have PHP 5.2+ and MySQL 5.5+ with mysqli extension activated. <a href='http://crybit.com/how-to-enable-mysqli-extension-on-web-server/'>Instruction &#187;</a>\n";
 				if (!CRYPTOBOX_WORDPRESS) echo "<br />Also <b>please check DB username/password in file cryptobox.config.php</b>\n";
-				echo "<br />Server has returned error - <b>".mysqli_connect_error()."</b>\n";
-				die();
+				die("<br />Server has returned error - <b>".mysqli_connect_error()."</b>");
 			}
 			$mysqli->query("SET NAMES utf8");
 		}
@@ -1252,6 +1259,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys); 
+		unset($v); unset($cryptobox_private_keys);  
 	}
 ?>

@@ -152,7 +152,7 @@
 <div align='center'>
 <div style='width:100%;height:auto;line-height:50px;background-color:#f1f1f1;border-bottom:1px solid #ddd;color:#49abe9;font-size:18px;'>
 	6. GoUrl <b>Pay-Per-Post</b> Example (multiple cryptocurrencies). Use it on your website. 
-	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html#p3'>View Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?= "//".$_SERVER["HTTP_HOST"].str_replace("-multi.php", ".php", $_SERVER["REQUEST_URI"]); ?>'>Single Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
+	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?php echo strtolower($coinName); ?>-payment-gateway-api.html#p3'>View Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?php echo "//".$_SERVER["HTTP_HOST"].str_replace("-multi.php", ".php", $_SERVER["REQUEST_URI"]); ?>'>Single Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?php echo strtolower($coinName); ?>-payment-gateway-api.html'>Other Examples</a></div>
 </div>
 <h1>Example - Paid Posts (multi coins below)</h1>
 You can sell right to publish new posts on your website
@@ -169,32 +169,32 @@ You can sell right to publish new posts on your website
 		<a href='pay-per-post-multi.php'>Publish new posts &#187;</a>
 	</div>	
 	
-<? else: ?>
+<?php else: ?>
 
 	<form name='form1' style='font-size:14px;color:#444' action="pay-per-post-multi.php#i" method="post">
 		<table cellspacing='20'>
-			<tr><td colspan='2'><img alt='New Post' border='0' src='https://gourl.io/images/example7.png'><?= $error ?></td></tr>
-			<tr><td width='100'>Title: </td><td width='300'><input style='padding:6px;font-size:18px;' size='40' type="text" name="ftitle" value="<?= $ftitle ?>"></td></tr>
-			<tr><td>Text: </td><td><textarea style='padding:6px;font-size:18px;' rows="4" cols="40" name="ftext"><?= $ftext ?></textarea></td></tr>
+			<tr><td colspan='2'><img alt='New Post' border='0' src='https://gourl.io/images/example7.png'><?php echo $error; ?></td></tr>
+			<tr><td width='100'>Title: </td><td width='300'><input style='padding:6px;font-size:18px;' size='40' type="text" name="ftitle" value="<?php echo $ftitle; ?>"></td></tr>
+			<tr><td>Text: </td><td><textarea style='padding:6px;font-size:18px;' rows="4" cols="40" name="ftext"><?php echo $ftext; ?></textarea></td></tr>
 			<?php if (!$box->is_paid()): ?>
-				<tr><td colspan='2'>* You need to pay <?= $coinName ?>s (~<?= $amountUSD ?> US$) for posting your text on our website</td></tr>
-			<? endif; ?>
+				<tr><td colspan='2'>* You need to pay <?php echo $coinName; ?>s (~<?php echo $amountUSD; ?> US$) for posting your text on our website</td></tr>
+			<?php endif; ?>
 		</table>
 	</form>
 
 	<div style='width:600px;background-color:#f9f9f9;padding-top:10px'>
-			<div style='font-size:12px;<? if ($box->is_paid()) echo "margin:5px 0 5px 390px;"; else echo "margin:5px 0 5px 390px; position:absolute;" ?>'>Language: &#160; <?= $languages_list ?></div>
-			<? if (!$box->is_paid()) echo "<div align='left'>".$coins_list."</div>";  ?>
-			<?= $box->display_cryptobox() ?>
+			<div style='font-size:12px;<?php if ($box->is_paid()) echo "margin:5px 0 5px 390px;"; else echo "margin:5px 0 5px 390px; position:absolute;"; ?>'>Language: &#160; <?php echo $languages_list; ?></div>
+			<?php if (!$box->is_paid()) echo "<div align='left'>".$coins_list."</div>"; ?>
+			<?php echo $box->display_cryptobox(); ?>
 	</div>
 	
 	<br><br><br>
 	<button onclick='document.form1.submit()' style='padding:6px 20px;font-size:18px;'>Post Your Article/Comment</button>
 	
-<? endif; ?> 	
+<?php endif; ?> 	
 
 
 </div><br><br><br><br><br><br>
-<div style='position:absolute;left:0;'><a target="_blank" href="http://validator.w3.org/check?uri=<?= "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>"><img src="https://gourl.io/images/w3c.png" alt="Valid HTML 4.01 Transitional"></a></div>
+<div style='position:absolute;left:0;'><a target="_blank" href="http://validator.w3.org/check?uri=<?php echo "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>"><img src="https://gourl.io/images/w3c.png" alt="Valid HTML 4.01 Transitional"></a></div>
 </body>
 </html>

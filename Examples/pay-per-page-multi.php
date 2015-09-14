@@ -112,13 +112,13 @@
 <div align='center'>
 <div style='width:100%;height:auto;line-height:50px;background-color:#f1f1f1;border-bottom:1px solid #ddd;color:#49abe9;font-size:18px;'>
 	10. GoUrl <b>Pay-Per-View/Page</b> Example (multiple cryptocurrencies). Use it on your website. 
-	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html#p5'>View Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?= "//".$_SERVER["HTTP_HOST"].str_replace("-multi.php", ".php", $_SERVER["REQUEST_URI"]); ?>'>Single Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
+	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?php echo strtolower($coinName); ?>-payment-gateway-api.html#p5'>View Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?php echo "//".$_SERVER["HTTP_HOST"].str_replace("-multi.php", ".php", $_SERVER["REQUEST_URI"]); ?>'>Single Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?php echo strtolower($coinName); ?>-payment-gateway-api.html'>Other Examples</a></div>
 </div>
 <br>
 <h1>Example - Pay Per View - Video/Page Access for Unregistered Visitors (multi coins below)</h1>
 <h3>Your Website Visitors have to pay for access to your premium video/webpage(s)</h3>
 <br>
-Price: ~<?= $amountUSD ?> US$ for <?= $period ?> access 
+Price: ~<?php echo $amountUSD; ?> US$ for <?php echo $period; ?> access 
 <br><br>
 
 <?php if ($box->is_paid()): ?>
@@ -127,23 +127,23 @@ Price: ~<?= $amountUSD ?> US$ for <?= $period ?> access
 	<!-- You can use the same payment gateway code for few your pages (section1) -->	 
 	<!-- Your Premium Page(s) Code  -->
 	 
-	<h2 style='color:#339e2e;'>Cryptocoin Payment received<br>Successful Access to Premium Page (during <?= $period ?>)</h2>
+	<h2 style='color:#339e2e;'>Cryptocoin Payment received<br>Successful Access to Premium Page (during <?php echo $period; ?>)</h2>
 	<img alt='Pay Per View Access' border='0' src='https://gourl.io/images/example9_2.jpg'>
 	
 	
-<? else: ?>
+<?php else: ?>
 
 	 <!-- Awaiting Payment -->
 	<a href='#gourlcryptocoins'><img alt='Awaiting Payment - Pay Per View' border='0' src='https://gourl.io/images/example9.jpg'></a>
 	<br><br><br><br>
-	<? echo $coins_list;  ?>
-	<div style='font-size:12px;margin:30px 0 5px 370px'>Language: &#160; <?= $languages_list ?></div>
-	<?= $box->display_cryptobox(true, 530, 230, "padding:3px 6px;margin:10px") ?>
+	<?php echo $coins_list;  ?>
+	<div style='font-size:12px;margin:30px 0 5px 370px'>Language: &#160; <?php echo $languages_list; ?></div>
+	<?php echo $box->display_cryptobox(true, 530, 230, "padding:3px 6px;margin:10px"); ?>
 	
-<? endif; ?> 	
+<?php endif; ?> 	
 
 
 </div><br><br><br><br><br><br>
-<div style='position:absolute;left:0;'><a target="_blank" href="http://validator.w3.org/check?uri=<?= "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>"><img src="https://gourl.io/images/w3c.png" alt="Valid HTML 4.01 Transitional"></a></div>
+<div style='position:absolute;left:0;'><a target="_blank" href="http://validator.w3.org/check?uri=<?php echo "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>"><img src="https://gourl.io/images/w3c.png" alt="Valid HTML 4.01 Transitional"></a></div>
 </body>
 </html>

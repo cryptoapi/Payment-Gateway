@@ -7,7 +7,7 @@
  * @copyright   2014-2015 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     1.7.2
+ * @version     1.7.3
  *
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
@@ -54,8 +54,8 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	foreach ($_POST as $k => $v)
 	{
 		if ($k == "datetime") 							$mask = '/[^0-9\ \-\:]/';
-		elseif (in_array($k, array("err", "date")))		$mask = '/[^A-Za-z0-9\.\_\-\ ]/';
-		else											$mask = '/[^A-Za-z0-9\.\_\-]/';
+		elseif (in_array($k, array("err", "date")))		$mask = '/[^A-Za-z0-9\.\_\-\@\ ]/';
+		else											$mask = '/[^A-Za-z0-9\.\_\-\@]/';
 		if ($v && preg_replace($mask, '', $v) != $v) 	$_POST[$k] = "";
 	}
 	
@@ -114,49 +114,55 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	 *  and payment details as array -
 	 * 
 	 *  1. EXAMPLE - CORRECT PAYMENT - 
-	 *  $payment_details = array(
-						"status":			"payment_received",
-						"err":				"",
-						"private_key":		"ZnlH0aD8z3YIkhwOKHjK9GmZl",
-						"box":				"7",
-						"boxtype":			"paymentbox",
-						"order":			"91f7c3edc0f86b5953cf1037796a2439",
-						"user":				"115",
-						"usercountry":		"USA",
-						"amount":			"1097.03916195",
-						"amountusd":		"0.2",
-						"coinlabel":		"DOGE",
-						"coinname":			"dogecoin",
-						"addr":				"DBJBibi39M2Zzyk51dJd5EHqdKbDxR11BH",
-						"tx":				"309621c28ced8ba348579b152a0dbcfdc90586818e16e526c2590c35f8ac2e08",
-						"confirmed":		0,
-						"timestamp":		"1420215494",
-						"date":				"02 January 2015",
-						"datetime":			"2015-01-02 16:18:14"
-					);
-						
+	 *  -----------------------------------------------------
+	 *  $payment_details = Array
+	 *        {
+	 *            "status":"payment_received"
+	 *            "err":""
+	 *            "private_key":"1206lO6HX76cw9Bitcoin77DOGED82Y8eyBExZ9kZpX"
+	 *            "box":"120"
+	 *            "boxtype":"paymentbox"
+	 *            "order":"order15620A"
+	 *            "user":"user26"
+	 *            "usercountry":"USA"
+	 *            "amount":"0.0479166"
+	 *            "amountusd":"11.5"
+	 *            "coinlabel":"BTC"
+	 *            "coinname":"bitcoin"
+	 *            "addr":"14dt2cSbvwghDcETJDuvFGHe5bCsCPR9jW"
+	 *            "tx":"95ed924c215f2945e75acfb5650e28384deac382c9629cf0d3f31d0ec23db08d"
+	 *            "confirmed":0
+	 *            "timestamp":"1422624765 "
+	 *            "date":"30 January 2015"
+	 *            "datetime":"2015-01-30 13:32:45"
+	 *        }
+	 *         						
 	 *  2. EXAMPLE - INCORRECT PAYMENT/WRONG AMOUNT -
-	 *  $payment_details = array(
-						"status":			"payment_received_unrecognised",
-						"err":				"An incorrect dogecoin amount has been received",
-						"private_key":		"ZnlH0aD8z3YIkhwOKHjK9GmZl",
-						"box":				"7",
-						"boxtype":			"paymentbox",
-						"order":			"",
-						"user":				"",
-						"usercountry":		"",
-						"amount":			"12",
-						"amountusd":		"0.002184",
-						"coinlabel":		"DOGE",
-						"coinname":			"dogecoin",
-						"addr":				"DBJBibi39M2Zzyk51dJd5EHqdKbDxR11BH",
-						"tx":				"96dadd51287bb7dea904607f7076e8ce121c8428106dd57b403000b0d0a11c6f",
-						"confirmed":		0,
-						"timestamp":		"1420215388",
-						"date":				"02 January 2015",
-						"datetime":			"2015-01-02 16:16:28"
-					);
-	 */
+	 *  -----------------------------------------------------
+	 *     $payment_details = Array 
+	 *        {
+	 *            "status":"payment_received_unrecognised"
+	 *            "err":"An incorrect dogecoin amount has been received"
+	 *            "private_key":"1206lO6HX76cw9Bitcoin77DOGED82Y8eyBExZ9kZpX"
+	 *            "box":"120"
+	 *            "boxtype":"paymentbox"
+	 *            "order":""
+	 *            "user":""
+	 *            "usercountry":""
+	 *            "amount":"12.26"
+	 *            "amountusd":"0.05"
+	 *            "coinlabel":"BTC"
+	 *            "coinname":"bitcoin"
+	 *            "addr":"14dt2cSbvwghDcETJDuvFGHe5bCsCPR9jW"
+	 *            "tx":"6f1c6f34189a27446d18e25b9c79db78be55b0bb775b1768b5aa4520f27d71a8"
+	 *            "confirmed":0
+	 *            "timestamp":"1422623712"
+	 *            "date":"30 January 2015"
+	 *            "datetime":"2015-01-30 13:15:12"
+	 *        }	 
+	 *        
+	 *        See more - https://gourl.io/api-php.html#ipn
+     */
 
 	if (in_array($box_status, array("cryptobox_newrecord", "cryptobox_updated")) && function_exists('cryptobox_new_payment')) cryptobox_new_payment($paymentID, $_POST, $box_status);
 }   
@@ -165,6 +171,6 @@ else
 	$box_status = "Only POST Data Allowed";
 
 
-	echo $box_status; // don't delete it
+	echo $box_status; // don't delete it  
            
 ?>
