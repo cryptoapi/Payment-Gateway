@@ -142,7 +142,7 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	 *     $payment_details = Array 
 	 *        {
 	 *            "status":"payment_received_unrecognised"
-	 *            "err":"An incorrect dogecoin amount has been received"
+	 *            "err":"An incorrect bitcoin amount has been received"
 	 *            "private_key":"1206lO6HX76cw9Bitcoin77DOGED82Y8eyBExZ9kZpX"
 	 *            "box":"120"
 	 *            "boxtype":"paymentbox"
@@ -168,7 +168,7 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 }   
 
 else
-	$box_status = "Only POST Data Allowed";
+	$box_status = "Only POST Data Allowed"; 
 
 
 	echo $box_status; // don't delete it  

@@ -5,7 +5,7 @@
  * copyright 	(c) 2014-2015 Delta Consultants
  * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p4
- * @live_demo   http://gourl.io/lib/examples/pay-per-registration.php
+ * @live_demo   https://gourl.io/lib/examples/pay-per-registration.php
  */ 
 	
 	require_once( "../cryptobox.class.php" );
@@ -96,6 +96,32 @@
 		}
 	}
 	// --------------------------
+
+
+
+
+
+
+        /********************************************************************************************************/
+        /**  This IPN function is used every time a new payment from any user is received successfully         **/
+        /**  Function receives paymentID - current payment ID (record id in your mysql table crypto_payments), **/
+        /**  payment details as array and box_status - 'cryptobox_newrecord' OR 'cryptobox_updated'.           **/
+        /**                                                                                                    **/
+        /**  Move this function to the bottom of the file cryptobox.class.php or create a separate file        **/
+        /**  More info: https://gourl.io/api-php.html#ipn                                                      **/
+        /********************************************************************************************************/
+        function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
+        {
+		// Your php code here to handle a successful cryptocoin payment/captcha verification
+		// for example, send confirmation email to user
+		// update user membership, etc - https://gourl.io/api-php.html#ipn
+
+		// .... ....
+		
+		return true;
+         }
+		
+	
 	
 ?>
 
