@@ -3,11 +3,11 @@
   * Cryptocoin Payment Box Javascript
   *
   * @package     GoUrl Bitcoin/Altcoin Payment Box and Crypto Captcha
-  * @copyright   2014-2015 Delta Consultants
+  * @copyright   2014-2016 Delta Consultants
   * @category    Javascript
   * @website     https://gourl.io
   * @api         https://gourl.io/api.html
-  * @version     1.7.3
+  * @version     1.7.4
   *
   */
 

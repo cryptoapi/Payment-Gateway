@@ -2,7 +2,7 @@
 /**
  * @category    Example7 - Pay-Per-Registration (single crypto currency in payment box)
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014-2015 Delta Consultants
+ * copyright 	(c) 2014-2016 Delta Consultants
  * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p4
  * @live_demo   https://gourl.io/lib/examples/pay-per-registration.php

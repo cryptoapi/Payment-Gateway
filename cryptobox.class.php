@@ -1,17 +1,17 @@
 <?php
 /**
  *
- * PHP Cryptocurrency Payment Class
+ * PHP Cryptocurrency Payment Class 
  *
  * @package     GoUrl PHP Bitcoin/Altcoin Payments and Crypto Captcha
- * @copyright   2014-2015 Delta Consultants
+ * @copyright   2014-2016 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
  * @api         https://gourl.io/api-php.html
  * @example     https://gourl.io/bitcoin-payment-gateway-api.html
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     1.7.3
+ * @version     1.7.4
  *
  *
  *
@@ -58,7 +58,7 @@ if (!CRYPTOBOX_WORDPRESS) require_once( "cryptobox.config.php" ); // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.7.3");
+define("CRYPTOBOX_VERSION", "1.7.4");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit')));
@@ -594,7 +594,7 @@ class Cryptobox {
 	*/
 	private function check_payment($remotedb = false)
 	{
-		$this->paymentID = $diff = $diff2 = 0;
+		$this->paymentID = $diff = 0;
 		
 		$obj = run_sql("SELECT paymentID, amount, amountUSD, txConfirmed, txCheckDate, txDate, processed, boxType FROM crypto_payments WHERE boxID = $this->boxID && orderID = '$this->orderID' && userID = '$this->userID' ".($this->period=="NOEXPIRY"?"":"&& txDate >= DATE_SUB('".gmdate("Y-m-d H:i:s")."', INTERVAL ".$this->period.")")." ORDER BY txDate DESC LIMIT 1");
 	
@@ -609,12 +609,11 @@ class Cryptobox {
 			$this->boxType 	= $obj->boxType;
 			$this->processed 		= ($obj->processed) ? true : false;
 			$diff					=  strtotime(gmdate('Y-m-d H:i:s')) - strtotime($obj->txCheckDate);
-			$diff2					=  strtotime($obj->txCheckDate) - strtotime($obj->txDate);
 		}
 		
 		if (!$obj && isset($_POST["cryptobox_live_"]) && $_POST["cryptobox_live_"] == md5($this->iframeID.$this->private_key.$this->userID)) $remotedb = true;
 		
-		if ((!$obj && $remotedb) || ($obj && !$this->confirmed && $diff > ($this->coinLabel=='BTC'?35:12)*60 && $diff2 < 44*60*60))
+		if ((!$obj && $remotedb) || ($obj && !$this->confirmed && ($diff > (($this->coinLabel=='BTC'?35:12)*60) || $diff < 0))) // if $diff < 0 - user have incorrect time on local computer
 		{
 			$this->check_payment_live();
 		}
@@ -1259,6 +1258,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys);  
+		unset($v); unset($cryptobox_private_keys);
 	}
 ?>

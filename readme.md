@@ -2,7 +2,7 @@
 GoUrl.io Cryptocoin Payment Gateway API
 -----------------------------------------
 
-Version 1.7.3
+Version 1.7.4
 
 **Accept Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit Payments Online on your website**
 
@@ -35,7 +35,7 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 Information
 ------------------------------------
 
-Copyright &copy; 2014-2015 [Delta Consultants](https://gourl.io)
+Copyright &copy; 2014-2016 [Delta Consultants](https://gourl.io)
 
 Website: [https://gourl.io](https://gourl.io)
 
