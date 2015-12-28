@@ -139,12 +139,12 @@ in that one table :
 	  `unrecognised` tinyint(1) unsigned NOT NULL DEFAULT '0',
 	  `addr` varchar(34) NOT NULL DEFAULT '',
 	  `txID` char(64) NOT NULL DEFAULT '',
-	  `txDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+	  `txDate` datetime DEFAULT NULL,
 	  `txConfirmed` tinyint(1) unsigned NOT NULL DEFAULT '0',
-	  `txCheckDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+	  `txCheckDate` datetime DEFAULT NULL,
 	  `processed` tinyint(1) unsigned NOT NULL DEFAULT '0',
-	  `processedDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-	  `recordCreated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+	  `processedDate` datetime DEFAULT NULL,
+	  `recordCreated` datetime DEFAULT NULL,
 	  PRIMARY KEY (`paymentID`),
 	  KEY `boxID` (`boxID`),
 	  KEY `boxType` (`boxType`),
@@ -202,4 +202,5 @@ PHP Examples / Live Demo :
 * **Pay-Per-Registration**: Example7 - [multiple crypto](http://gourl.io/lib/examples/pay-per-registration-multi.php), Example8 - [bitcoin](http://gourl.io/lib/examples/pay-per-registration.php)
 * **Pay-Per-Page-Access**: Example19 - [multiple crypto](http://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](http://gourl.io/lib/examples/pay-per-page.php)
 * **Pay-Per-Membership**: Example11 - [multiple crypto](http://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](http://gourl.io/lib/examples/pay-per-membership.php)
-   
+        
+       
