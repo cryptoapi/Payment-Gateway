@@ -2,7 +2,7 @@
 GoUrl.io Cryptocoin Payment Gateway API
 -----------------------------------------
 
-Version 1.7.4
+Version 1.7.5
 
 **Accept Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit Payments Online on your website**
 
@@ -21,11 +21,11 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 * [Pay-Per-Registration](http://gourl.io/lib/examples/pay-per-registration-multi.php) - earn money on user registration on your website; stop spam
 * [Pay-Per-Page-Access](http://gourl.io/lib/examples/pay-per-page-multi.php) - sell paid access to selected web page(es) to unregistered visitors online
 * [Pay-Per-Membership](http://gourl.io/lib/examples/pay-per-membership-multi.php) - sell monthly/daily membership of your website to members online
-* Set your own Prices in USD. It will automatically convert usd to cryptocoins using Live [exchange rates](https://cryptsy.com/)
+* Set your own Prices in USD. It will automatically convert usd to cryptocoins using Live [exchange rates](https://poloniex.com/)
 * Direct Integration on your website (iframe), no external payment pages opens (as other payment gateways offer)
 * User will see successful payment result typically within 5 seconds after the payment has been sent
 * Your website users and visitors will see GoUrl payment box on your website in their own native languages
-* Our Payment Gateway supports the following interface languages: [English](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=en#gourlcryptolang), [Spanish](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=es#gourlcryptolang), [French](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=fr#gourlcryptolang), [Russian](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ru#gourlcryptolang), [Arabic](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ar#gourlcryptolang), [Simplified Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=cn#gourlcryptolang), [Traditional Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=zh#gourlcryptolang), [Hindi](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=hi#gourlcryptolang). We can also add any new language to payment system on [request](https://gourl.io/api-php.html#lan)
+* Our Payment Gateway supports the following interface languages: [English](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=en#gourlcryptolang), [Spanish](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=es#gourlcryptolang), [French](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=fr#gourlcryptolang), [German](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=de#gourlcryptolang), [Russian](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ru#gourlcryptolang), [Dutch](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=nl#gourlcryptolang), [Persian](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=fa#gourlcryptolang), [Arabic](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=ar#gourlcryptolang), [Simplified Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=cn#gourlcryptolang), [Traditional Chinese](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=zh#gourlcryptolang), [Hindi](https://gourl.io/bitcoin-payment-gateway-api.html?gourlcryptolang=hi#gourlcryptolang). We can also add any new language to payment system on [request](https://gourl.io/api-php.html#lan)
 * [Affiliate Program for Web Developers](https://gourl.io/affiliates.html) - Earn 0.50% Lifetime from each cryptocoin payment made by users through GoUrl Payment Gateway
 * Global, Anonymous, Secure, Zero Risk, No Chargebacks, No visitor registration is needed.
 * GoUrl Bitcoin Official [Wordpress Plugin](https://gourl.io/bitcoin-wordpress-plugin.html) - easy to use on your website
@@ -76,10 +76,10 @@ You can use the following steps to sell your products on your website for crypto
 * [Install](https://gourl.io/api-php.html#installation) GoUrl crypto Payment Box on your website and dynamically configure order id, currency, amount to pay, etc. Or use [Monetiser Online](https://gourl.io/view/newurl/Cryptocoin_Monetiser_Make_Money_Online.html) if you don't have your own website.
 * You can accept payments in Bitcoins only or you can accept other coins - Dogecoin, Litecoin, Reddcoin, etc also. See [Demo1](http://gourl.io/lib/examples/pay-per-product-multi.php) (multiple coins) or [Demo2](http://gourl.io/lib/examples/pay-per-membership.php?gourlcryptocoin=bitcoin) (Bitcoin only)
 * When you [setup](https://gourl.io/editrecord/coin_boxes/0) Cryptocoin Payment Box, you can enter the [original amount](https://gourl.io/images/instruction-config2.png) in USD or in cryptocoins. The USD amount will be automatically converted to cryptocoin amount using today's LIVE cryptocurrency exchange rates (updated every 30 minutes) and the cryptocoin amount will be displayed in the payment box. For example, if you entered 20 USD, it will display 0.059 BTC in the payment box.
-* You will need to create an account on [Cryptsy.com](https://www.cryptsy.com/) or on [Bitstamp.net](https://www.bitstamp.net/) (trading platforms)
-* [Setup](https://gourl.io/images/instruction-config3.png) so that all your received payments are automatically forwarded from your GoUrl.io account to your account on Cryptsy / Bitstamp (enter your Cryptsy/Bitstamp coin wallet address in gourl [payment box settings](https://gourl.io/images/instruction-config3.png)). And use the "autosell" feature (auto trade your cryptocoins to USD) on Cryptsy/Bitstamp.
-* Using that functionality you don't need to worry if cryptocurrency prices go down or up. Within 1-2 hours after a cryptocoin payment has been received by you, your payment will be automatically converted to USD on Cryptsy/Bitstamp and will be kept on your Cryptsy/Bitstamp USD account.
-* Later you can withdraw your USD from Cryptsy/Bitstamp to your own USA/UK/France/etc bank account
+* You will need to create an account on [Poloniex.com](https://poloniex.com/) or on [Bitstamp.net](https://www.bitstamp.net/) (trading platforms)
+* [Setup](https://gourl.io/images/instruction-config3.png) so that all your received payments are automatically forwarded from your GoUrl.io account to your account on Poloniex / Bitstamp (enter your Poloniex/Bitstamp coin wallet address in gourl [payment box settings](https://gourl.io/images/instruction-config3.png)). And use the "autosell" feature (auto trade your cryptocoins to USD) on Poloniex/Bitstamp.
+* Using that functionality you don't need to worry if cryptocurrency prices go down or up. Within 1-2 hours after a cryptocoin payment has been received by you, your payment will be automatically converted to USD on Poloniex/Bitstamp and will be kept on your Poloniex/Bitstamp USD account.
+* Later you can withdraw your USD from Poloniex/Bitstamp to your own USA/UK/France/etc bank account
 
 
 **B. End User / Buyer Side**
@@ -203,4 +203,4 @@ PHP Examples / Live Demo :
 * **Pay-Per-Page-Access**: Example19 - [multiple crypto](http://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](http://gourl.io/lib/examples/pay-per-page.php)
 * **Pay-Per-Membership**: Example11 - [multiple crypto](http://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](http://gourl.io/lib/examples/pay-per-membership.php)
         
-       
+              

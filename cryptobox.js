@@ -7,7 +7,7 @@
   * @category    Javascript
   * @website     https://gourl.io
   * @api         https://gourl.io/api.html
-  * @version     1.7.4
+  * @version     1.7.5
   *
   */
 
@@ -30,7 +30,7 @@
 		else if (amountUSD != 0 && ((amountUSD - 0) != amountUSD || amountUSD < 0.01)) alert('Invalid payment box amountUSD');
 		else if (userFormat != 'COOKIE' && userFormat != 'SESSION' && userFormat != 'IPADDRESS' && userFormat != 'MANUAL') alert('Invalid payment box userFormat value');
 		else if (userFormat == 'COOKIE' && cookieName == '') alert('Invalid payment box cookie name');
-		else if (userFormat == 'COOKIE' && cryptobox_cookie(cookieName) == '') alert('Please enable Cookies in your browser !');
+		else if (userFormat == 'COOKIE' && cryptobox_cookie(cookieName) == '') { if (document.getElementById(iframeID).src != null) document.getElementById(iframeID).src = 'https://gourl.io/images/crypto_cookies.png'; alert('Please enable Cookies in your Browser !'); }
 		else if (userFormat == 'COOKIE' && cryptobox_cookie(cookieName) != userID) alert('Invalid cookie value. It may be you are viewing an older copy of the page that is stored in the website cache. Please contact with website owner, need to disable/turn-off caching for current page');
 		else if (orderID == '') alert('Invalid orderID');
 		else if (period == '') alert('Invalid period');
@@ -62,5 +62,5 @@
 	function cryptobox_msghide (id)
 	{ 
 		setTimeout(function(){ document.getElementById(id).style.display='none';}, 15000 ); 
-	}	
+	}
 

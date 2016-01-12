@@ -1,6 +1,6 @@
 <?php
 /**
- *  YOUR MYSQL DATABASE DETAILS
+ *  YOUR MYSQL DATABASE DETAILS 
  */
 
  define("DB_HOST", 	"localhost");				// hostname
@@ -18,7 +18,7 @@
  */
  
  $cryptobox_private_keys = array();
- 
+
 
 
 
