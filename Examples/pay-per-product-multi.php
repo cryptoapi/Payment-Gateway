@@ -176,7 +176,7 @@
 <?php if (!$box->is_paid()) echo $coins_list . "<br><br><h2>Pay Invoice Now - </h2>"; ?>
 <br><br>
 <div style='margin:30px 0 5px 300px'>Language: &#160; <?php echo $languages_list; ?></div>
-<?php echo $box->display_cryptobox(true, 570, 230, "border-radius:15px;border:1px solid #eee;padding:3px 6px;margin:10px;", "display:inline-block;max-width:580px;padding:15px 20px;border:1px solid #eee;margin:7px;line-height:25px;"); ?>
+<?php echo $box->display_cryptobox(true, 580, 230, "border-radius:15px;border:1px solid #eee;padding:3px 6px;margin:10px;", "display:inline-block;max-width:580px;padding:15px 20px;border:1px solid #eee;margin:7px;line-height:25px;"); ?>
 <br><br><br>
 <h3>Message :</h3>
 <h2 style='color:#999'><?php echo $message; ?></h2>

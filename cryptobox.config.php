@@ -1,6 +1,6 @@
 <?php
 /**
- *  YOUR MYSQL DATABASE DETAILS 
+ *  YOUR MYSQL DATABASE DETAILS
  */
 
  define("DB_HOST", 	"localhost");				// hostname
@@ -23,6 +23,6 @@
 
 
  define("CRYPTOBOX_PRIVATE_KEYS", implode("^", $cryptobox_private_keys));
- unset($cryptobox_private_keys);
+ unset($cryptobox_private_keys); 
 
 ?>

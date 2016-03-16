@@ -136,7 +136,7 @@
 <br><br>
 <?php if (!$box->is_paid()) echo "<h2>Pay Invoice Now - </h2>"; else echo "<br><br>";  ?>
 <div style='margin:30px 0 5px 300px'>Language: &#160; <?php echo $languages_list; ?></div>
-<?php echo $box->display_cryptobox(true, 570, 230); ?>
+<?php echo $box->display_cryptobox(true, 580, 230); ?>
 <br><br><br>
 <h3>Message :</h3>
 <h2 style='color:#999'><?php echo $message; ?></h2>

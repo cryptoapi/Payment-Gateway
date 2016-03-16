@@ -11,7 +11,7 @@
  * @example     https://gourl.io/bitcoin-payment-gateway-api.html
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     1.7.5
+ * @version     1.7.6
  *
  *
  *
@@ -58,7 +58,7 @@ if (!CRYPTOBOX_WORDPRESS) require_once( "cryptobox.config.php" ); // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.7.5");
+define("CRYPTOBOX_VERSION", "1.7.6");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit')));
@@ -79,7 +79,7 @@ class Cryptobox {
 										 * User will pay you all times the actual price which is linked on current exchange price in USD on the datetime of purchase.      
 										 * You can use in cryptobox options one variable only: amount or amountUSD. You cannot place values of those two variables together. */
 	private $period 		= "";		// period after which the payment becomes obsolete and new cryptobox will be shown; allow values: NOEXPIRY, 1 MINUTE..90 MINUTE, 1 HOUR..90 HOURS, 1 DAY..90 DAYS, 1 WEEK..90 WEEKS, 1 MONTH..90 MONTHS  
-	private $language		= "en";		// cryptobox localisation; en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, fa - Persian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	private $language		= "en";		// cryptobox localisation; en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	private $iframeID		= "";		// optional, html iframe element id; allow symbols: a..Z0..9_-
 	private $orderID 		= "";		// your page name / product name or order name (not unique); allow symbols: a..Z0..9_-@.; max size: 50 symbols
 	private $userID 		= "";		// optional, manual setup unique identifier for each of your users; allow symbols: a..Z0..9_-@.; max size: 50 symbols
@@ -109,7 +109,7 @@ class Cryptobox {
 	private $boxType		= "";		// cryptobox type - 'paymentbox' or 'captchabox'
 	private $processed		= false;	// optional - set flag to paid & processed	
 	private $cookieName 	= "";		// user cookie/session name (if cookies/sessions use)
-	private $localisation 	= "";		// localisation; en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, fa - Persian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	private $localisation 	= "";		// localisation; en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	
 	
 	public function __construct($options = array()) 
@@ -643,6 +643,7 @@ class Cryptobox {
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query($data));
 		curl_setopt( $ch, CURLOPT_HEADER, 0);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 20);
 		curl_setopt( $ch, CURLOPT_TIMEOUT, 20);
 			
 		$res = curl_exec( $ch );
@@ -1038,13 +1039,12 @@ class Cryptobox {
 		$url = "https://www.google.com/finance/converter?a=".$amount."&from=".$from_Currency."&to=".$to_Currency;
 	
 		$ch = curl_init();
-		$timeout = 20;
 		curl_setopt ($ch, CURLOPT_URL, $url);
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
-		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-		curl_setopt ($ch, CURLOPT_TIMEOUT, $timeout);
+		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 20);
+		curl_setopt ($ch, CURLOPT_TIMEOUT, 20);
 		$rawdata = curl_exec($ch);
 		curl_close($ch);
 		$data = explode('bld>', $rawdata);
@@ -1162,15 +1162,15 @@ class Cryptobox {
 	}
 	
 	
-	// en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, fa - Persian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	// en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	$cryptobox_localisation	= array(
 							"en" => array("name"		=> "English", 
-							/*19*/	"button"			=> "Click Here if you have already sent %coinNames%",
-							/*29*/	"msg_not_received" 	=> "<b>%coinNames% have not yet been received.</b><br>If you have already sent %coinNames% (the exact %coinName% sum in one payment as shown in the box below), please wait a few minutes to receive them by %coinName% Payment System. If you send any other sum, Payment System will ignore the transaction and you will need to send the correct sum again, or contact the site owner for assistance.",
-							/*30*/	"msg_received" 	 	=> "%coinName% Payment System received %amountPaid% %coinLabel% successfully !",
-							/*31*/	"msg_received2" 	=> "%coinName% Captcha received %amountPaid% %coinLabel% successfully !",
-							/*95*/	"payment"			=> "Select Payment Method",
-							/*96*/	"pay_in"			=> "Payment in %coinName%"),
+							/*36*/	"button"			=> "Click Here if you have already sent %coinNames%",
+							/*37*/	"msg_not_received" 	=> "<b>%coinNames% have not yet been received.</b><br>If you have already sent %coinNames% (the exact %coinName% sum in one payment as shown in the box below), please wait a few minutes to receive them by %coinName% Payment System. If you send any other sum, Payment System will ignore the transaction and you will need to send the correct sum again, or contact the site owner for assistance.",
+							/*38*/	"msg_received" 	 	=> "%coinName% Payment System received %amountPaid% %coinLabel% successfully !",
+							/*39*/	"msg_received2" 	=> "%coinName% Captcha received %amountPaid% %coinLabel% successfully !",
+							/*40*/	"payment"			=> "Select Payment Method",
+							/*42*/	"pay_in"			=> "Payment in %coinName%"),
 
 							"es" => array("name"		=> "Spanish", 
 									"button"			=> "Click aqui si ya has mandado %coinNames%",
@@ -1211,7 +1211,15 @@ class Cryptobox {
 									"msg_received2" 	=> "%coinName% Captcha Systeem heeft %amountPaid% %coinLabel% succesvol ontvangen !",
 									"payment"			=> "Kies uw betaalmethode",
 									"pay_in"			=> "Betaling in %coinName%"),
-												
+
+							"pt" => array("name"		=> "Portuguese",
+									"button"			=> "Se ja enviou %coinNames% clique aqui",
+									"msg_not_received" 	=> "<b>Os %coinNames% ainda n&#227;o foram recebidos.</b><br>Se j&#225; enviou %coinNames% (a soma exata de %coinName% num s&#243; pagamento, como mostrado na caixa abaixo), por favor, espere alguns minutos para o sistema de pagamentos %coinName% os receber. Se enviar qualquer outro montante, o sistema de pagamentos ir&#225; ignorar a transa&#231;&#227;o e ter&#225; que enviar a soma correta novamente; ou entre em contato com o propriet&#225;rio do site para assist&#234;ncia.",
+									"msg_received" 	 	=> "O sistema de pagamentos %coinName% recebeu %amountPaid% %coinLabel% com sucesso !",
+									"msg_received2" 	=> "%coinName% Captcha recebeu %amountPaid% %coinLabel% com sucesso !",
+									"payment"			=> "Selecione o metodo de pagamento",
+									"pay_in"			=> "Pagamento em %coinName%"),
+                	         
 							"fa" => array("name"		=> "Persian",
 									"button"			=> "&#1575;&#1711;&#1585; &#1588;&#1605;&#1575; &#1575;&#1586; &#1602;&#1576;&#1604; &#1575;&#1585;&#1587;&#1575;&#1604; %coinName% &#1575;&#1610;&#1606;&#1580;&#1575; &#1585;&#1575; &#1705;&#1604;&#1610;&#1705; &#1705;&#1606;&#1610;&#1583;",
 									"msg_not_received" 	=> "<b>%coinNames% &#1607;&#1606;&#1608;&#1586; &#1583;&#1585;&#1610;&#1575;&#1601;&#1578; &#1606;&#1588;&#1583;&#1607; &#1575;&#1587;&#1578; </b><br> &#1575;&#1711;&#1585; &#1588;&#1605;&#1575; &#1602;&#1576;&#1604;&#1575; &#1575;&#1585;&#1587;&#1575;&#1604; &#1705;&#1585;&#1583;&#1610;&#1583; %coinNames% ,&#1576;&#1607; &#1589;&#1608;&#1585;&#1578; &#1583;&#1602;&#1610;&#1602; %coinName% &#1605;&#1580;&#1605;&#1608;&#1593; &#1583;&#1585; &#1610;&#1705; &#1662;&#1585;&#1583;&#1575;&#1582;&#1578; &#1607;&#1605;&#1575;&#1606;&#1711;&#1608;&#1606;&#1607; &#1705;&#1607; &#1583;&#1585; &#1705;&#1575;&#1583;&#1585; &#1586;&#1610;&#1585; &#1606;&#1588;&#1575;&#1606; &#1583;&#1575;&#1583;&#1607; &#1588;&#1583;&#1607; &#1575;&#1587;&#1578; , &#1604;&#1591;&#1601;&#1575; &#1670;&#1606;&#1583; &#1583;&#1602;&#1610;&#1602;&#1607; &#1576;&#1585;&#1575;&#1610; &#1583;&#1585;&#1610;&#1575;&#1601;&#1578; &#1575;&#1586; &#1591;&#1585;&#1601; %coinName% &#1662;&#1585;&#1583;&#1575;&#1582;&#1578; &#1587;&#1610;&#1587;&#1578;&#1605; &#1589;&#1576;&#1585; &#1705;&#1606;&#1610;&#1583;. &#1575;&#1711;&#1585; &#1588;&#1605;&#1575; &#1607;&#1585; &#1711;&#1608;&#1606;&#1607; &#1605;&#1580;&#1605;&#1608;&#1593; &#1583;&#1610;&#1711;&#1585;&#1610; &#1575;&#1586; &#1662;&#1585;&#1583;&#1575;&#1582;&#1578; &#1585;&#1575; &#1601;&#1585;&#1587;&#1578;&#1575;&#1583;&#1607; &#1575;&#1610;&#1583;, &#1587;&#1610;&#1587;&#1578;&#1605; &#1662;&#1585;&#1583;&#1575;&#1582;&#1578; &#1605;&#1593;&#1575;&#1605;&#1604;&#1607; &#1585;&#1575; &#1606;&#1575;&#1583;&#1610;&#1583;&#1607; &#1605;&#1610; &#1711;&#1610;&#1585;&#1583; &#1608; &#1588;&#1605;&#1575; &#1606;&#1610;&#1575;&#1586; &#1576;&#1607; &#1575;&#1585;&#1587;&#1575;&#1604; &#1605;&#1580;&#1605;&#1608;&#1593; &#1583;&#1585;&#1587;&#1578;&#1610; &#1705;&#1607; &#1584;&#1705;&#1585; &#1588;&#1583; &#1583;&#1575;&#1585;&#1610;&#1583;, &#1610;&#1575; &#1576;&#1575; &#1583;&#1575;&#1585;&#1606;&#1583;&#1607; &#1587;&#1575;&#1610;&#1578; &#1576;&#1585;&#1575;&#1610; &#1705;&#1605;&#1705; &#1608; &#1578;&#1608;&#1590;&#1610;&#1581;&#1575;&#1578; &#1576;&#1610;&#1588;&#1578;&#1585; &#1578;&#1605;&#1575;&#1587; &#1576;&#1711;&#1610;&#1585;&#1610;&#1583;.",
@@ -1262,6 +1270,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys);  
+		unset($v); unset($cryptobox_private_keys);                        
 	}
 ?>
