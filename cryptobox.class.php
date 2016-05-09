@@ -87,7 +87,7 @@ class Cryptobox {
 										 * User will pay you all times the actual price which is linked on current exchange price in USD on the datetime of purchase.      
 										 * You can use in cryptobox options one variable only: amount or amountUSD. You cannot place values of those two variables together. */
 	private $period 		= "";		// period after which the payment becomes obsolete and new cryptobox will be shown; allow values: NOEXPIRY, 1 MINUTE..90 MINUTE, 1 HOUR..90 HOURS, 1 DAY..90 DAYS, 1 WEEK..90 WEEKS, 1 MONTH..90 MONTHS  
-	private $language		= "en";		// cryptobox localisation; en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	private $language		= "en";		// cryptobox localisation; en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ko - Korean, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	private $iframeID		= "";		// optional, html iframe element id; allow symbols: a..Z0..9_-
 	private $orderID 		= "";		// your page name / product name or order name (not unique); allow symbols: a..Z0..9_-@.; max size: 50 symbols
 	private $userID 		= "";		// optional, manual setup unique identifier for each of your users; allow symbols: a..Z0..9_-@.; max size: 50 symbols
@@ -117,7 +117,7 @@ class Cryptobox {
 	private $boxType		= "";		// cryptobox type - 'paymentbox' or 'captchabox'
 	private $processed		= false;	// optional - set flag to paid & processed	
 	private $cookieName 	= "";		// user cookie/session name (if cookies/sessions use)
-	private $localisation 	= "";		// localisation; en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	private $localisation 	= "";		// localisation; en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ko - Korean, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	
 	
 	public function __construct($options = array()) 
@@ -1161,7 +1161,7 @@ class Cryptobox {
 	}
 	
 	
-	// en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	// en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ko - Korean, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	$cryptobox_localisation	= array(
 							"en" => array("name"		=> "English", 
 							/*36*/	"button"			=> "Click Here if you have already sent %coinNames%",
@@ -1277,6 +1277,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys);                        
+		unset($v); unset($cryptobox_private_keys);     
 	}
 ?>
