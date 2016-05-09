@@ -44,8 +44,8 @@
 		
 		// Your code here to handle a successful cryptocoin payment/captcha verification
 		// For example, give user 24 hour access to your member pages
-		// Please use also IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") for update db records, etc
-		// ...
+	
+
 	}  
 	else $message .= "The payment has not been made yet";
 
@@ -73,98 +73,14 @@
 	
 	
 	
-	
 
-	/*
-	 *  IPN - User Instant Payment Notification Function 
-	 *  function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
-	 *  
-	 *  This user-defined function called every time when a new payment from any user is received successfully.
-	 *  For example, send confirmation email, update user membership, etc.
-	 *  
-	 *  The function will automatically appear for each new payment usually two times : 
-	 *  a) when a new payment is received, with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 0
-	 *  b) and a second time when existing payment is confirmed (6+ confirmations) with values: $box_status = cryptobox_updated, $payment_details[confirmed] = 1.
-	 *  
-	 *  But sometimes if the payment notification is delayed for 20-30min, the payment/transaction will already be confirmed and the function will
-	 *  appear once with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 1
-	 *  
-	 *  If payment received with correct amount, function receive: $payment_details[status] = 'payment_received' and $payment_details[user] = 11, 12, etc (user_id who has made payment)
-	 *  If incorrectly paid amount, the system can not recognize user; function receive: $payment_details[status] = 'payment_received_unrecognised' and $payment_details[user] = ''    
-	 *
-	 *  Read more - https://gourl.io/api-php.html
-	 *  
-	 *  Function gets $paymentID from your table crypto_payments,
-	 *  $box_status = 'cryptobox_newrecord' OR 'cryptobox_updated' (description above)
-	 *  
-	 *  and payment details as array -
-	 *  
-	 *  1. EXAMPLE - CORRECT PAYMENT - 
-	 *  $payment_details = array(
-	 *  				"status":			"payment_received",
-	 *  				"err":				"",
-	 *  				"private_key":		"ZnlH0aD8z3YIkhwOKHjK9GmZl",
-	 *  				"box":				"7",
-	 *  				"boxtype":			"paymentbox",
-	 *  				"order":			"91f7c3edc0f86b5953cf1037796a2439",
-	 *  				"user":				"115",
-	 *  				"usercountry":		"USA",
-	 *  				"amount":			"1097.03916195",
-	 *  				"amountusd":		"0.2",
-	 *  				"coinlabel":		"DOGE",
-	 *  				"coinname":			"dogecoin",
-	 *  				"addr":				"DBJBibi39M2Zzyk51dJd5EHqdKbDxR11BH",
-	 *  				"tx":				"309621c28ced8ba348579b152a0dbcfdc90586818e16e526c2590c35f8ac2e08",
-	 *  				"confirmed":		0,
-	 *  				"timestamp":		"1420215494",
-	 *  				"date":				"02 January 2015",
-	 *  				"datetime":			"2015-01-02 16:18:14"
-	 *  			);
-	 *						
-	 *  2. EXAMPLE - INCORRECT PAYMENT/WRONG AMOUNT - 
-	 *  $payment_details = array(
-	 *  				"status":			"payment_received_unrecognised",
-	 *  				"err":				"An incorrect dogecoin amount has been received",
-	 *  				"private_key":		"ZnlH0aD8z3YIkhwOKHjK9GmZl",
-	 *  				"box":				"7",
-	 *  				"boxtype":			"paymentbox",
-	 *  				"order":			"",
-	 *  				"user":				"",
-	 *  				"usercountry":		"",
-	 *  				"amount":			"12",
-	 *  				"amountusd":		"0.002184",
-	 *  				"coinlabel":		"DOGE",
-	 *  				"coinname":			"dogecoin",
-	 *  				"addr":				"DBJBibi39M2Zzyk51dJd5EHqdKbDxR11BH",
-	 *  				"tx":				"96dadd51287bb7dea904607f7076e8ce121c8428106dd57b403000b0d0a11c6f",
-	 *  				"confirmed":		0,
-	 *  				"timestamp":		"1420215388",
-	 *  				"date":				"02 January 2015",
-	 *  				"datetime":			"2015-01-02 16:16:28"
-	 *  			);	
-	*/
+	// ...
+	// Also you can use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
+	// for send confirmation email, update database, update user membership, etc.
+	// You need to modify file - cryptobox.newpayment.php, read more - https://gourl.io/api-php.html#ipn
+	// ...
 
-        /********************************************************************************************************/
-        /**  This IPN function is used every time a new payment from any user is received successfully         **/
-        /**  Function receives paymentID - current payment ID (record id in your mysql table crypto_payments), **/
-        /**  payment details as array and box_status - 'cryptobox_newrecord' OR 'cryptobox_updated'.           **/
-        /**                                                                                                    **/
-        /**  Move this function to the bottom of the file cryptobox.class.php or create a separate file        **/
-        /**  More info: https://gourl.io/api-php.html#ipn                                                      **/
-        /********************************************************************************************************/
-        function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
-        {
-		// Your php code here to handle a successful cryptocoin payment/captcha verification
-		// for example, send confirmation email to user
-		// update user membership, etc - https://gourl.io/api-php.html#ipn
 
-		// .... ....
-		
-		return true;
-         }
-		
-	
-	
 	
 ?>
 

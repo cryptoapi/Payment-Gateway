@@ -1,6 +1,10 @@
 <?php
 /**
+ *  ... Please MODIFY this file ... 
+ *
+ *
  *  YOUR MYSQL DATABASE DETAILS
+ *
  */
 
  define("DB_HOST", 	"localhost");				// hostname

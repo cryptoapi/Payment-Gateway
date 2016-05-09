@@ -1,14 +1,18 @@
 <?php
 /**
+ * ##########################################
+ * ###  PLEASE DO NOT MODIFY THIS FILE !  ###
+ * ##########################################
  *
- * Cryptobox Server Callbacks
+ *
+ * Cryptobox Server Callbacks      
  *
  * @package     Cryptobox callbacks
  * @copyright   2014-2016 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     1.7.6
- *
+ * @version     1.7.7
+ * 
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
  * from your users comes in. Please link this file in your cryptobox configuration on   
@@ -23,6 +27,7 @@
  * will receive notification about a given user and save it in your database. And when your user next time 
  * comes on your website/reload page he will automatically will see message that his payment has been 
  * received successfully.
+ *
  *
  */
 
@@ -95,74 +100,11 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	
 	
 	/**
-	 *  User-defined function for new payment - cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "").
-	 *  You can add this function to the bottom of the file cryptobox.class.php or create a separate file.
-	 *  For example, send confirmation email, update user membership, etc.
-	 *  
-	 *  The function will automatically appear for each new payment usually two times : 
-	 *  a) when a new payment is received, with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 0
-	 *  b) and a second time when existing payment is confirmed (6+ confirmations) with values: $box_status = cryptobox_updated, $payment_details[confirmed] = 1.
-	 *  
-	 *  But sometimes if the payment notification is delayed for 20-30min, the payment/transaction will already be confirmed and the function will
-	 *  appear once with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 1
-	 *  
-	 *  If payment received with correct amount, function receive: $payment_details[status] = 'payment_received' and $payment_details[user] = 11, 12, etc (user_id who has made payment)
-	 *  If incorrectly paid amount, the system can not recognize user; function receive: $payment_details[status] = 'payment_received_unrecognised' and $payment_details[user] = ''
-	 *
-	 *  Function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
-	 *  gets $paymentID from your table crypto_payments, $box_status = 'cryptobox_newrecord' OR 'cryptobox_updated' (description above)
-	 *  and payment details as array -
-	 * 
-	 *  1. EXAMPLE - CORRECT PAYMENT - 
-	 *  -----------------------------------------------------
-	 *  $payment_details = Array
-	 *        {
-	 *            "status":"payment_received"
-	 *            "err":""
-	 *            "private_key":"1206lO6HX76cw9Bitcoin77DOGED82Y8eyBExZ9kZpX"
-	 *            "box":"120"
-	 *            "boxtype":"paymentbox"
-	 *            "order":"order15620A"
-	 *            "user":"user26"
-	 *            "usercountry":"USA"
-	 *            "amount":"0.0479166"
-	 *            "amountusd":"11.5"
-	 *            "coinlabel":"BTC"
-	 *            "coinname":"bitcoin"
-	 *            "addr":"14dt2cSbvwghDcETJDuvFGHe5bCsCPR9jW"
-	 *            "tx":"95ed924c215f2945e75acfb5650e28384deac382c9629cf0d3f31d0ec23db08d"
-	 *            "confirmed":0
-	 *            "timestamp":"1422624765 "
-	 *            "date":"30 January 2015"
-	 *            "datetime":"2015-01-30 13:32:45"
-	 *        }
-	 *         						
-	 *  2. EXAMPLE - INCORRECT PAYMENT/WRONG AMOUNT -
-	 *  -----------------------------------------------------
-	 *     $payment_details = Array 
-	 *        {
-	 *            "status":"payment_received_unrecognised"
-	 *            "err":"An incorrect bitcoin amount has been received"
-	 *            "private_key":"1206lO6HX76cw9Bitcoin77DOGED82Y8eyBExZ9kZpX"
-	 *            "box":"120"
-	 *            "boxtype":"paymentbox"
-	 *            "order":""
-	 *            "user":""
-	 *            "usercountry":""
-	 *            "amount":"12.26"
-	 *            "amountusd":"0.05"
-	 *            "coinlabel":"BTC"
-	 *            "coinname":"bitcoin"
-	 *            "addr":"14dt2cSbvwghDcETJDuvFGHe5bCsCPR9jW"
-	 *            "tx":"6f1c6f34189a27446d18e25b9c79db78be55b0bb775b1768b5aa4520f27d71a8"
-	 *            "confirmed":0
-	 *            "timestamp":"1422623712"
-	 *            "date":"30 January 2015"
-	 *            "datetime":"2015-01-30 13:15:12"
-	 *        }	 
-	 *        
-	 *        See more - https://gourl.io/api-php.html#ipn
-     */
+	 *  User-defined function for new payment - cryptobox_new_payment(...)
+	 *  For example, send confirmation email, update database, update user membership, etc.
+	 *  You need to modify file - cryptobox.newpayment.php
+	 *  Read more - https://gourl.io/api-php.html#ipn
+         */
 
 	if (in_array($box_status, array("cryptobox_newrecord", "cryptobox_updated")) && function_exists('cryptobox_new_payment')) cryptobox_new_payment($paymentID, $_POST, $box_status);
 }   
