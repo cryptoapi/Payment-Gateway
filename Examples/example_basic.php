@@ -18,7 +18,9 @@
 	"userFormat"  => "COOKIE", 	// save your user identifier userID in cookies. Available values: COOKIE, SESSION, IPADDRESS, MANUAL 
 	"amount" 	  => 0,			// amount in cryptocurrency or in USD below
 	"amountUSD"   => 2,  		// price is 2 USD; it will convert to cryptocoins amount, using Live Exchange Rates
-								// For convert fiat currencies Euro/GBP/etc. to USD, use function convert_currency_live() 
+								// *** For convert Euro/GBP/etc. to USD/Bitcoin, use function convert_currency_live() with Google Finance
+								// *** examples: convert_currency_live("EUR", "BTC", 22.37) - convert 22.37 Euro to Bitcoin
+								// *** convert_currency_live("EUR", "USD", 22.37) - convert 22.37 Euro to USD
 	"period"      => "24 HOUR",	// payment valid period, after 1 day user need to pay again
 	"iframeID"    => "",    	// optional; when iframeID value is empty - system will autogenerate iframe html payment box id
 	"language" 	  => "EN" 		// english, please contact us and we can add your language	

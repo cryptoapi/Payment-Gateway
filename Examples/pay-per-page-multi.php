@@ -149,7 +149,7 @@ Price: ~<?php echo $amountUSD; ?> US$ for <?php echo $period; ?> access
 	<br><br><br><br>
 	<?php echo $coins_list;  ?>
 	<div style='font-size:12px;margin:30px 0 5px 370px'>Language: &#160; <?php echo $languages_list; ?></div>
-	<?php echo $box->display_cryptobox(true, 530, 230, "padding:3px 6px;margin:10px"); ?>
+	<?php echo $box->display_cryptobox(true, 540, 230, "padding:3px 6px;margin:10px"); ?>
 	
 <?php endif; ?> 	
 

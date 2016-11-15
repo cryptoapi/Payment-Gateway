@@ -194,7 +194,7 @@
 	<div style='width:600px;padding-top:10px'>
 			<div style='font-size:12px;<?php if ($box->is_paid()) echo "margin:5px 0 5px 390px;"; else echo "margin:5px 0 5px 390px; position:absolute;"; ?>'>Language: &#160; <?php echo $languages_list; ?></div>
 			<?php if (!$box->is_paid()) echo "<div align='left'>".$coins_list."</div>"; ?>
-			<?php echo $box->display_cryptobox(true, 530, 230, "border-radius:15px;border:1px solid #eee;padding:3px 6px;margin:10px"); ?>
+			<?php echo $box->display_cryptobox(true, 540, 230, "border-radius:15px;border:1px solid #eee;padding:3px 6px;margin:10px"); ?>
 	</div>
 	
 	<?php if (!$box->is_paid()): ?>

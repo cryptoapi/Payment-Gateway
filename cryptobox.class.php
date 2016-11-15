@@ -15,7 +15,7 @@
  * @example     https://gourl.io/bitcoin-payment-gateway-api.html
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     1.7.7
+ * @version     1.7.8
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -66,7 +66,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.7.7");
+define("CRYPTOBOX_VERSION", "1.7.8");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit')));
@@ -257,7 +257,7 @@ class Cryptobox {
 	 * Next time your user goes to your website/reloads page they will automatically see the message 
 	 * that their payment has been received successfully.
 	*/
-	public function display_cryptobox($submit_btn = true, $width = "530", $height = "230", $box_style = "", $message_style = "", $anchor = "")
+	public function display_cryptobox($submit_btn = true, $width = "540", $height = "230", $box_style = "", $message_style = "", $anchor = "")
 	{
 		if (!$box_style) 	 $box_style = "border-radius:15px;box-shadow:0 0 12px #aaa;-moz-box-shadow:0 0 12px #aaa;-webkit-box-shadow:0 0 12px #aaa;padding:3px 6px;margin:10px"; 
 		if (!$message_style) $message_style = "display:inline-block;max-width:580px;padding:15px 20px;box-shadow:0 0 10px #aaa;-moz-box-shadow: 0 0 10px #aaa;margin:7px;font-size:13px;font-weight:normal;line-height:21px;font-family: Verdana, Arial, Helvetica, sans-serif;";
@@ -1025,16 +1025,18 @@ class Cryptobox {
 	 * 
 	 * Currency Converter using Google Finance live exchange rates
 	 * Example - convert_currency_live("EUR", "USD", 22.37) - convert 22.37euro to usd
+				 convert_currency_live("EUR", "BTC", 22.37) - convert 22.37euro to bitcoin
 	 */
 	function convert_currency_live($from_Currency, $to_Currency, $amount)
 	{
-		if ($from_Currency == "TRL") $from_Currency = "TRY"; // fix for Turkish Lyra
-		if ($from_Currency == "ZWD") $from_Currency = "ZWL"; // fix for Zimbabwe Dollar
-	
 		$amount = urlencode($amount);
-		$from_Currency = urlencode($from_Currency);
-		$to_Currency = urlencode($to_Currency);
-	
+		$from_Currency = trim(strtoupper(urlencode($from_Currency)));
+		$to_Currency = trim(strtoupper(urlencode($to_Currency)));
+
+		if ($from_Currency == "TRL")  $from_Currency = "TRY"; // fix for Turkish Lyra
+		if ($from_Currency == "ZWD")  $from_Currency = "ZWL"; // fix for Zimbabwe Dollar
+		if ($from_Currency == "RIAL") $from_Currency = "IRR"; // fix for Iranian Rial
+		
 		$url = "https://www.google.com/finance/converter?a=".$amount."&from=".$from_Currency."&to=".$to_Currency;
 	
 		$ch = curl_init();
@@ -1049,7 +1051,7 @@ class Cryptobox {
 		$data = explode('bld>', $rawdata);
 		$data = explode($to_Currency, $data[1]);
 	
-		return round($data[0], 2);
+		return round($data[0], ($to_Currency=="BTC"?5:2));
 	}
 	
 	
@@ -1203,6 +1205,14 @@ class Cryptobox {
 									"payment"			=> "&#1042;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; &#1089;&#1087;&#1086;&#1089;&#1086;&#1073; &#1086;&#1087;&#1083;&#1072;&#1090;&#1099;",
 									"pay_in"			=> "&#1054;&#1087;&#1083;&#1072;&#1090;&#1072; &#1074; %coinName%"),
 									
+							"pl" => array("name"		=> "Polish", 
+									"button"			=> "Kliknij tutaj, je&#347;li ju&#380; wys&#322;ane %coinNames%",
+									"msg_not_received" 	=> "<b>%coinNames% nie zosta&#322;y jeszcze otrzymane.</b><br>Je&#347;li ju&#380; wys&#322;a&#322;e&#347; %coinNames% (dok&#322;adn&#261; sum&#281; %coinName% w jednej p&#322;atno&#347;ci, jak pokazano w poni&#380;szym polu), prosz&#281; poczeka&#263; kilka minut, aby system p&#322;atno&#347;ci %coinName% m&#243;g&#322; j&#261; otrzyma&#263;. Je&#347;li wy&#347;lesz jak&#261;kolwiek inn&#261; sum&#281;, system p&#322;atno&#347;ci zignoruje transakcje i trzeba b&#281;dzie wys&#322;a&#263; poprawn&#261; sum&#281; ponownie lub skontaktowa&#263; si&#281; z w&#322;a&#347;cicielem witryny w celu uzyskania pomocy.",
+									"msg_received" 	 	=> "System p&#322;atno&#347;ci %coinName% otrzyma&#322; %amountPaid% %coinLabel% pomy&#347;lnie !",
+									"msg_received2" 	=> "%coinName% Captcha otrzyma&#322; %amountPaid% %coinLabel% pomy&#347;lnie !",
+									"payment"			=> "Wybierz metod&#281; p&#322;atno&#347;&#263;i",
+									"pay_in"			=> "P&#322;atno&#347;&#263; w %coinName%"),
+
 							"nl" => array("name"		=> "Dutch",
 									"button"			=> "Klik hier als je al %coinNames% hebt verstuurd",
 									"msg_not_received" 	=> "<b>%coinNames% zijn nog niet ontvangen.</b><br>Als je al %coinNames% verstuurd hebt, (het exacte bedrag in %coinName% staat in het vak hieronder), wacht dan a.u.b. een paar minuten tot ze ontvangen zijn door het %coinName% Betaal Systeem. Als u een ander bedrag verstuurd, zal de transactie worden genegeerd, u zult dan alsnog het correcte bedrag moeten overmaken of contact opnemen met de site beheerder voor verdere assistentie.",
@@ -1227,14 +1237,30 @@ class Cryptobox {
 									"payment"			=> "&#1585;&#1608;&#1588; &#1662;&#1585;&#1583;&#1575;&#1582;&#1578; &#1585;&#1575; &#1575;&#1606;&#1578;&#1582;&#1575;&#1576; &#1705;&#1606;&#1610;&#1583;",
 									"pay_in"			=> "&#1662;&#1585;&#1583;&#1575;&#1582;&#1578; &#1583;&#1585; %coinName%"),
 	    
-							"ko" => array("name"		    => "Korean",
+							"ko" => array("name"		=> "Korean",
 									"button"			=> "&#47564;&#50557; %coinName% &#51060;&#48120; &#48372;&#45256;&#45796;&#47732; &#50668;&#44592;&#47484; &#53364;&#47533;&#54616;&#49464;&#50836;",
 									"msg_not_received" 	=> "<b>%coinNames% &#50500;&#51649; &#48155;&#51648; &#47803;&#54664;&#49845;&#45768;&#45796;.</b><br>&#47564;&#50557; &#45817;&#49888;&#51060; &#51060;&#48120; %coinNames% &#51012; &#48372;&#45256;&#45796;&#47732; (&#50500;&#47000; &#48149;&#49828;&#50504;&#50640; &#48372;&#50668;&#51648;&#45716; &#54616;&#45208;&#51032; &#44208;&#51228; &#45236;&#50640; &#50668;&#48516;&#51032; %coinName% &#51032; &#54633;&#44228;), &#44208;&#51228; &#49884;&#49828;&#53596;&#51060; &#51652;&#54665;&#46104;&#45716; &#46041;&#50504; &#51104;&#49884;&#47564; &#44592;&#45796;&#47140;&#51452;&#49464;&#50836;. &#47564;&#50557; &#45817;&#49888;&#51060; &#54633;&#44228;&#50640; &#48372;&#50668;&#51648;&#45716; &#44163;&#44284; &#45796;&#47480; &#49688;&#47049;&#51032; &#48708;&#53944;&#53076;&#51064;&#51012; &#48372;&#45256;&#45796;&#47732;, &#44208;&#51228; &#49884;&#49828;&#53596;&#51008; &#54644;&#45817; &#44144;&#47000;&#47484; &#47924;&#49884;&#54616;&#47728;, &#45817;&#49888;&#51008; &#45796;&#49884; &#50732;&#48148;&#47480; &#54633;&#44228;&#47564;&#53372;&#51032; &#48708;&#53944;&#53076;&#51064;&#51012; &#48372;&#45236;&#44144;&#45208; &#46020;&#50880;&#51012; &#51460; &#49688; &#51080;&#45716; &#49324;&#51060;&#53944; &#44288;&#47532;&#51088;&#50640;&#44172; &#50672;&#46973;&#54644;&#50556; &#54633;&#45768;&#45796;.",
 									"msg_received" 	 	=> "%coinName% &#44208;&#51228; &#49884;&#49828;&#53596;&#51060; %amountPaid% %coinLabel% &#47484; &#49457;&#44277;&#51201;&#51004;&#47196; &#48155;&#50520;&#49845;&#45768;&#45796; !",
 									"msg_received2" 	=> "%coinName% &#52897;&#52320;&#44032; %amountPaid% %coinLabel% &#47484; &#49457;&#44277;&#51201;&#51004;&#47196; &#48155;&#50520;&#49845;&#45768;&#45796; !",
 									"payment"			=> "&#44208;&#51228; &#48169;&#48277; &#49440;&#53469;",
 									"pay_in"			=> "%coinName% &#51648;&#44553;"),
+
+							"ja" => array("name"		=> "Japanese", 
+									"button"			=> "%coinNames%&#12434;&#36865;&#20449;&#28168;&#12398;&#22580;&#21512;&#12399;&#12289;&#12371;&#12385;&#12425;&#12434;&#12463;&#12522;&#12483;&#12463;&#12375;&#12390;&#12367;&#12384;&#12373;&#12356;",
+									"msg_not_received" 	=> "<b>%coinNames%&#12398;&#21463;&#21462;&#12399;&#23436;&#20102;&#12375;&#12390;&#12356;&#12414;&#12379;&#12435;&#12290;</b><br>%coinNames%&#65288;&#19979;&#35352;&#12395;&#34920;&#31034;&#12373;&#12428;&#12390;&#12356;&#12427;&#12385;&#12423;&#12358;&#12393;&#12398;%coinNames%&#12434;1&#22238;&#12398;&#12488;&#12521;&#12531;&#12470;&#12463;&#12471;&#12519;&#12531;&#12392;&#12375;&#12390;&#65289;&#12434;&#12377;&#12391;&#12395;&#36865;&#12387;&#12383;&#22580;&#21512;&#12399;&#12289;%coinName%&#27770;&#28168;&#12471;&#12473;&#12486;&#12512;&#12363;&#12425;&#25968;&#20998;&#20197;&#20869;&#12395;&#30906;&#35469;&#12364;&#12354;&#12426;&#12414;&#12377;&#12290;&#25351;&#23450;&#20197;&#19978;&#12398;%coinNames%&#12434;&#36865;&#12387;&#12383;&#22580;&#21512;&#12399;&#12289;&#12471;&#12473;&#12486;&#12512;&#12395;&#21453;&#26144;&#12373;&#12428;&#12414;&#12379;&#12435;&#12398;&#12391;&#12289;&#12418;&#12358;&#19968;&#24230;&#12420;&#12426;&#30452;&#12377;&#12363;&#12289;&#12454;&#12455;&#12502;&#12469;&#12452;&#12488;&#31649;&#29702;&#32773;&#12408;&#12362;&#21839;&#21512;&#12379;&#12367;&#12384;&#12373;&#12356;&#12290;&#19975;&#12364;&#19968;&#12289;&#36865;&#20449;&#28168;&#12415;&#12398;&#22580;&#21512;&#12399;&#12289;%coinName%&#27770;&#28168;&#12471;&#12473;&#12486;&#12512;&#12363;&#12425;&#12398;&#30906;&#35469;&#12434;&#24453;&#12387;&#12390;&#12367;&#12384;&#12373;&#12356;&#12290;",
+									"msg_received" 	 	=> "%coinName%&#27770;&#28168;&#12471;&#12473;&#12486;&#12512;&#12391; %amountPaid% %coinLabel% &#12398;&#27770;&#28168;&#12364;&#23436;&#20102;&#12375;&#12414;&#12375;&#12383; !",
+									"msg_received2" 	=> "%coinName%&#12461;&#12515;&#12502;&#12481;&#12515;&#12391; %amountPaid% %coinLabel% &#12398;&#27770;&#28168;&#12364;&#23436;&#20102;&#12375;&#12414;&#12375;&#12383; !",
+									"payment"			=> "&#27770;&#28168;&#26041;&#27861;&#12434;&#36984;&#25246;",
+									"pay_in"			=> "%coinName%&#12391;&#12398;&#27770;&#28168;"),
 									
+							"id" => array("name"		=> "Indonesian", 
+									"button"			=> "Klik disini jika anda telah mengirim %coinNames%",
+									"msg_not_received" 	=> "<b>%coinNames% belum diterima.</b><br>Jika kamu sudah mengirim %coinNames% (sejumlah %coinNames% dengan jumlah yang tepat seperti pada kotak dibawah),  silahkan tunggu beberapa menit untuk menerima %coinName% lewat sistem pembayaran. Jika anda mengirim sejumlah lain, sistem pembayaran akan mengabaikan transaksinya dan anda perlu mengirim dengan jumlah yang tepat lagi, atau kontak pemilik web untuk membantu.",
+									"msg_received" 	 	=> "%coinName% Sistem Pembayaran menerima %amountPaid% %coinLabel% dengan sukses !",
+									"msg_received2" 	=> "%coinName% Captcha menerima %amountPaid% %coinLabel% dengan sukses !",
+									"payment"			=> "Pilih Metode Pembayaran",
+									"pay_in"			=> "Pembayaran dalam bentuk %coinName%"),
+
 							"ar" => array("name"		=> "Arabic",
 									"button"			=> "&#1575;&#1590;&#1594;&#1591; &#1607;&#1606;&#1575; &#1601;&#1610; &#1581;&#1575;&#1604;&#1577; &#1602;&#1605;&#1578; &#1601;&#1593;&#1604;&#1575;&#1611; &#1576;&#1575;&#1604;&#1575;&#1585;&#1587;&#1575;&#1604; %coinNames%",
 									"msg_not_received" 	=> "<b>%coinNames% &#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1587;&#1578;&#1604;&#1575;&#1605;&#1607;&#1575; &#1576;&#1593;&#1583;.</b><br> &#1573;&#1584;&#1575; &#1602;&#1605;&#1578; &#1576;&#1573;&#1585;&#1587;&#1575;&#1604;&#1607;&#1575; %coinNames% (&#1576;&#1575;&#1604;&#1592;&#1576;&#1591; %coinName% &#1605;&#1576;&#1604;&#1594; &#1601;&#1610; &#1583;&#1601;&#1593; &#1608;&#1575;&#1581;&#1583;), &#1610;&#1585;&#1580;&#1609; &#1575;&#1604;&#1573;&#1606;&#1578;&#1592;&#1575;&#1585; &#1576;&#1590;&#1593; &#1583;&#1602;&#1575;&#1574;&#1602; &#1604;&#1573;&#1587;&#1578;&#1604;&#1575;&#1605;&#1607;&#1605; &#1605;&#1606; &#1582;&#1604;&#1575;&#1604; %coinName% &#1606;&#1592;&#1575;&#1605; &#1575;&#1604;&#1583;&#1601;&#1593;. &#1573;&#1584;&#1575; &#1602;&#1605;&#1578; &#1576;&#1573;&#1585;&#1587;&#1575;&#1604; &#1605;&#1576;&#1575;&#1604;&#1594; &#1571;&#1582;&#1585;&#1609;, &#1606;&#1592;&#1575;&#1605; &#1575;&#1604;&#1583;&#1601;&#1593; &#1587;&#1608;&#1601; &#1610;&#1580;&#1575;&#1607;&#1604; &#1575;&#1604;&#1589;&#1601;&#1602;&#1577;&#1548; &#1608;&#1587;&#1608;&#1601; &#1578;&#1581;&#1578;&#1575;&#1580; &#1604;&#1573;&#1585;&#1587;&#1575;&#1604; &#1575;&#1604;&#1605;&#1576;&#1604;&#1594; &#1575;&#1604;&#1589;&#1581;&#1610;&#1581; &#1605;&#1585;&#1577; &#1571;&#1582;&#1585;&#1609;",
@@ -1277,6 +1303,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys);     
+		unset($v); unset($cryptobox_private_keys);  
 	}
 ?>

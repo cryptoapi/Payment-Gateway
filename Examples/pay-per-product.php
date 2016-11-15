@@ -26,6 +26,10 @@
 
 	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options  
 	
+	// *** For convert Euro/GBP/etc. to USD/Bitcoin, use function convert_currency_live() with Google Finance
+	// *** examples: convert_currency_live("EUR", "BTC", 22.37) - convert 22.37 Euro to Bitcoin
+	// *** convert_currency_live("EUR", "USD", 22.37) - convert 22.37 Euro to USD
+
 	/********************************/
 
 

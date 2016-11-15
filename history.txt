@@ -1,0 +1,53 @@
+===============================================================================
+== Version 1.7.8 (November, 2016)
+===============================================================================
+
+- Added Japanese Language (Thanks to Takiko)
+
+- Added Indonesian Language (Thanks to Tejo)
+
+- Added Polish Language (Thanks to Kacper)
+
+
+
+===============================================================================
+== Version 1.7.7 (May, 2016)
+===============================================================================
+
+- Added Korean Language (Thanks to Arthur)
+
+- Moved IPN function cryptobox_new_payment(...) in separate file cryptobox.newpayment.php
+
+
+
+===============================================================================
+== Version 1.7.6 (March, 2016)
+===============================================================================
+
+- Added Portuguese Language (Thanks to Miguel)
+
+- Several new enhancements
+
+
+
+===============================================================================
+== Version 1.7.5 (January, 2016)
+===============================================================================
+
+- Added German Language (Thanks to Sebastian, Julius)
+
+- Added Persian Language (Thanks to Kaveh, Ali-Mehdi)
+
+- Supporting Right-to-Left Languages
+
+
+
+===============================================================================
+== Version 1.7.4 (December, 2015)
+===============================================================================
+
+- Added Dutch Language (Thanks to Erik)
+
+- Several new enhancements
+
+        

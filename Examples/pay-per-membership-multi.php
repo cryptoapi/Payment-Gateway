@@ -168,7 +168,7 @@
 	<br><br>
 	<?php if (!$box->is_paid()) echo $coins_list;  ?>
 	<div style='font-size:12px;margin:50px 0 5px 370px'>Language: &#160; <?php echo $languages_list; ?></div>
-	<?php echo $box->display_cryptobox(true, 530, 230, "padding:3px 6px;margin:10px;border:10px solid #f7f5f2;"); ?>
+	<?php echo $box->display_cryptobox(true, 540, 230, "padding:3px 6px;margin:10px;border:10px solid #f7f5f2;"); ?>
 
 	
 </div><br><br><br><br><br><br>
