@@ -112,14 +112,14 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 	{
 		// ... Your code ...
 
-		// ... and update status
+		// ... and update status in default table where all payments stored - https://github.com/cryptoapi/Payment-Gateway#mysql-table
 		$sql = "UPDATE crypto_payments SET processed = 1, processedDate = '".gmdate("Y-m-d H:i:s")."' WHERE paymentID = ".intval($paymentID)." LIMIT 1";
 		run_sql($sql);
 	}
 
 	.............
     
-   
+ 
 	Debug - new payment email notification for webmaster
 	Uncomment lines below and make any test payment
 	--------------------------------------------
