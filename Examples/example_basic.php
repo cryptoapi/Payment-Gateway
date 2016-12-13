@@ -2,8 +2,8 @@
 /**
  * @category    Basic Example
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014-2016 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit
+ * copyright 	(c) 2014-2017 Delta Consultants
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit, Swiscoin
  * @website     https://gourl.io/api-php.html
  */ 
 	require_once( "../cryptobox.class.php" );

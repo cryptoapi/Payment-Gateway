@@ -8,14 +8,14 @@
  * PHP Cryptocurrency Payment Class          
  *
  * @package     GoUrl PHP Bitcoin/Altcoin Payments and Crypto Captcha
- * @copyright   2014-2016 Delta Consultants
+ * @copyright   2014-2017 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
  * @api         https://gourl.io/api-php.html
  * @example     https://gourl.io/bitcoin-payment-gateway-api.html
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     1.7.8
+ * @version     1.7.9
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -66,10 +66,10 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.7.8");
+define("CRYPTOBOX_VERSION", "1.7.9");
 
 // GoUrl supported crypto currencies
-define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit')));
+define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit', 'swiscoin')));
 
 
 class Cryptobox {
@@ -1303,6 +1303,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys);  
+		unset($v); unset($cryptobox_private_keys);
 	}
 ?>

@@ -2,8 +2,8 @@
 /**
  * @category    Example4 - Pay-Per-Download (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014-2016 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit
+ * copyright 	(c) 2014-2017 Delta Consultants
+ * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit, Swiscoin
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p2
  * @live_demo   https://gourl.io/lib/examples/pay-per-download-multi.php
  */ 
@@ -35,7 +35,7 @@
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoins, dogecoins, litecoins use - $available_payments = array('bitcoin', 'dogecoin', 'litecoin'); 
-	$available_payments = array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit');
+	$available_payments = array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit', 'swiscoin');
 	
 	
 	// Goto  https://gourl.io/info/memberarea/My_Account.html

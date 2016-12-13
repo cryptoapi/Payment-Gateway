@@ -2,9 +2,9 @@
 GoUrl.io Cryptocoin Payment Gateway API
 -----------------------------------------
 
-Version 1.7.8
+Version 1.7.9
 
-**Accept Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit Payments Online on your website**
+**Accept Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit, Swiscoin Payments Online on your website**
 
 # ![Payment-Gateway](https://gourl.io/images/gateway.jpg)
 
@@ -35,7 +35,7 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 Information
 ------------------------------------
 
-Copyright &copy; 2014-2016 [Delta Consultants](https://gourl.io)
+Copyright &copy; 2014-2017 [Delta Consultants](https://gourl.io)
 
 Website: [https://gourl.io](https://gourl.io)
 
@@ -188,6 +188,7 @@ Payment API List :
 * [Vericoin Payment API](https://gourl.io/vericoin-payment-gateway-api.html)
 * [MonetaryUnit Payment API](https://gourl.io/monetaryunit-payment-gateway-api.html)
 * [Peercoin Payment API](https://gourl.io/peercoin-payment-gateway-api.html)
+* [Swiscoin Payment API](https://gourl.io/swiscoin-payment-gateway-api.html)
 
 
 .
@@ -203,4 +204,4 @@ PHP Examples / Live Demo :
 * **Pay-Per-Page-Access**: Example19 - [multiple crypto](http://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](http://gourl.io/lib/examples/pay-per-page.php)
 * **Pay-Per-Membership**: Example11 - [multiple crypto](http://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](http://gourl.io/lib/examples/pay-per-membership.php)
             
-                    
+            

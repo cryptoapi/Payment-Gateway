@@ -112,7 +112,7 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 	{
 		// ... Your code ...
 
-		// ... and update status in default table where all payments stored - https://github.com/cryptoapi/Payment-Gateway#mysql-table
+		// ... and update status in default table where all payments are stored - https://github.com/cryptoapi/Payment-Gateway#mysql-table
 		$sql = "UPDATE crypto_payments SET processed = 1, processedDate = '".gmdate("Y-m-d H:i:s")."' WHERE paymentID = ".intval($paymentID)." LIMIT 1";
 		run_sql($sql);
 	}
@@ -130,7 +130,7 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 
 
 
-    return true;
+    return true;      
 }
 
 ?>
