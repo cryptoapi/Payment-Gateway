@@ -8,13 +8,22 @@
  */ 
 	require_once( "../cryptobox.class.php" );
 
+
+	$orderID	=  "your_product1_or_signuppage1_etc";
+	$userID		= "";
+
+	// Remove all the characters from the string other than a..Z0..9_-@. 
+	$orderID = preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $orderID);
+	$userID = preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $userID);
+
+
 	$options = array( 
 	"public_key"  => "", 		// place your public key from gourl.io
 	"private_key" => "", 		// place your private key from gourl.io
-	"webdev_key" => "", 		// optional, gourl affiliate key
-	"orderID"     => "your_product1_or_signuppage1_etc", // few your users can have the same orderID but combination 'orderID'+'userID' should be unique. 
+	"webdev_key" =>  "", 		// optional, gourl affiliate key
+	"orderID"     => $orderID,  // few your users can have the same orderID but combination 'orderID'+'userID' should be unique. 
 								// for example, on premium page you can use for all visitors: orderID="premium" and userID="" (empty).
-	"userID" 	  => "", 		// optional; when userID value is empty - system will autogenerate unique identifier for every user and save it in cookies
+	"userID" 	  => $userID, 	// optional; when userID value is empty - system will autogenerate unique identifier for every user and save it in cookies
 	"userFormat"  => "COOKIE", 	// save your user identifier userID in cookies. Available values: COOKIE, SESSION, IPADDRESS, MANUAL 
 	"amount" 	  => 0,			// amount in cryptocurrency or in USD below
 	"amountUSD"   => 2,  		// price is 2 USD; it will convert to cryptocoins amount, using Live Exchange Rates
@@ -93,7 +102,7 @@
 <script src='../cryptobox.min.js' type='text/javascript'></script>
 </head>
 <body>
-
+        
 <?php echo $paymentbox; ?>
 <?php echo $message; ?>
 
