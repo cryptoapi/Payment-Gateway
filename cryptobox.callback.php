@@ -11,7 +11,7 @@
  * @copyright   2014-2017 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     1.7.9
+ * @version     1.7.10
  * 
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
@@ -113,6 +113,6 @@ else
 	$box_status = "Only POST Data Allowed"; 
 
 
-	echo $box_status; // don't delete it  
+	echo $box_status; // don't delete it 
            
 ?>

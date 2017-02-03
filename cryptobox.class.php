@@ -15,7 +15,7 @@
  * @example     https://gourl.io/bitcoin-payment-gateway-api.html
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     1.7.9
+ * @version     1.7.10
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -66,7 +66,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.7.9");
+define("CRYPTOBOX_VERSION", "1.7.10");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit', 'swiscoin')));
@@ -1196,7 +1196,23 @@ class Cryptobox {
 									"msg_received2" 	=> "%coinName% Captcha hat %amountPaid% %coinLabel% erfolgreich erhalten !",
 									"payment"			=> "Zahlungmethode ausw&auml;hlen",
 									"pay_in"			=> "Zahlung in %coinName%"),
-									
+
+							"nl" => array("name"		=> "Dutch",
+									"button"			=> "Klik hier als je al %coinNames% hebt verstuurd",
+									"msg_not_received" 	=> "<b>%coinNames% zijn nog niet ontvangen.</b><br>Als je al %coinNames% verstuurd hebt, (het exacte bedrag in %coinName% staat in het vak hieronder), wacht dan a.u.b. een paar minuten tot ze ontvangen zijn door het %coinName% Betaal Systeem. Als u een ander bedrag verstuurd, zal de transactie worden genegeerd, u zult dan alsnog het correcte bedrag moeten overmaken of contact opnemen met de site beheerder voor verdere assistentie.",
+									"msg_received"      => "%coinName% Betaal Systeem heeft %amountPaid% %coinLabel% succesvol ontvangen !",
+									"msg_received2"     => "%coinName% Captcha Systeem heeft %amountPaid% %coinLabel% succesvol ontvangen !",
+									"payment"           => "Kies uw betaalmethode",
+									"pay_in"            => "Betaling in %coinName%"),
+	         
+							"it" => array("name"		=> "Italian",
+									"button"			=> "Clicca qui se hai gi&#224; inviato i %coinNames%",
+									"msg_not_received"  => "<b>%coinNames% non sono ancora stati ricevuti.</b><br>Se hai gi&#224; inviato i %coinNames% (l&#8217;esatta somma di %coinName% in un unico pagamento, come mostrato nel riquadro sottostante), si prega di attendere qualche minuto perch&#233; il sistema di pagamaneto di riceva. Se si invia qualsiasi altra somma, il sistema di pagamento ignorer&#224; la transazione e sar&#224; necessario inviare di nuovo la somma corretta, oppure contattare il supporto del sito.",
+									"msg_received"      => "Il sistema di pagamento %coinName% ha ricevuto %amountPaid% %coinLabel% con successo !",
+									"msg_received2"     => "Il %coinName% Captcha ha ricevuto %amountPaid% %coinLabel% con successo !",
+									"payment"           => "Seleziona metodo di pagamento",
+									"pay_in"            => "Pagamento in %coinName%"),
+	         
 							"ru" => array("name"		=> "Russian",
 									"button"			=> "&#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1079;&#1076;&#1077;&#1089;&#1100; &#1077;&#1089;&#1083;&#1080; &#1074;&#1099; &#1091;&#1078;&#1077; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; %coinNames%",
 									"msg_not_received" 	=> "<b>%coinNames% &#1085;&#1077; &#1087;&#1086;&#1083;&#1091;&#1095;&#1077;&#1085;&#1099; &#1077;&#1097;&#1105;.</b><br>&#1045;&#1089;&#1083;&#1080; &#1074;&#1099; &#1091;&#1078;&#1077; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; %coinNames% (&#1090;&#1086;&#1095;&#1085;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091; %coinName% &#1086;&#1076;&#1085;&#1080;&#1084; &#1087;&#1083;&#1072;&#1090;&#1077;&#1078;&#1105;&#1084; &#1082;&#1072;&#1082; &#1087;&#1086;&#1082;&#1072;&#1079;&#1072;&#1085;&#1086; &#1085;&#1080;&#1078;&#1077;), &#1087;&#1086;&#1078;&#1072;&#1083;&#1091;&#1081;&#1089;&#1090;&#1072; &#1087;&#1086;&#1076;&#1086;&#1078;&#1076;&#1080;&#1090;&#1077; &#1085;&#1077;&#1089;&#1082;&#1086;&#1083;&#1100;&#1082;&#1086; &#1084;&#1080;&#1085;&#1091;&#1090; &#1076;&#1083;&#1103; &#1087;&#1086;&#1083;&#1091;&#1095;&#1077;&#1085;&#1080;&#1103; &#1080;&#1093; %coinName% &#1087;&#1083;&#1072;&#1090;&#1105;&#1078;&#1085;&#1086;&#1081; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1086;&#1081;. &#1045;&#1089;&#1083;&#1080; &#1074;&#1099; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; &#1083;&#1102;&#1073;&#1091;&#1102; &#1076;&#1088;&#1091;&#1075;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091;, &#1087;&#1083;&#1072;&#1090;&#1105;&#1078;&#1085;&#1072;&#1103; &#1089;&#1080;&#1089;&#1090;&#1077;&#1084;&#1072; &#1073;&#1091;&#1076;&#1077;&#1090; &#1080;&#1075;&#1085;&#1086;&#1088;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; &#1101;&#1090;&#1086; &#1080; &#1074;&#1072;&#1084; &#1085;&#1091;&#1078;&#1085;&#1086; &#1073;&#1091;&#1076;&#1077;&#1090; &#1087;&#1086;&#1089;&#1083;&#1072;&#1090;&#1100; &#1087;&#1088;&#1072;&#1074;&#1080;&#1083;&#1100;&#1085;&#1091;&#1102; &#1089;&#1091;&#1084;&#1084;&#1091; &#1086;&#1087;&#1103;&#1090;&#1100;, &#1080;&#1083;&#1080; &#1089;&#1074;&#1103;&#1078;&#1080;&#1090;&#1077;&#1089;&#1100; &#1089; &#1074;&#1083;&#1072;&#1076;&#1077;&#1083;&#1100;&#1094;&#1077;&#1084; &#1089;&#1072;&#1081;&#1090;&#1072; &#1076;&#1083;&#1103; &#1087;&#1086;&#1084;&#1086;&#1097;&#1080;",
@@ -1212,14 +1228,6 @@ class Cryptobox {
 									"msg_received2" 	=> "%coinName% Captcha otrzyma&#322; %amountPaid% %coinLabel% pomy&#347;lnie !",
 									"payment"			=> "Wybierz metod&#281; p&#322;atno&#347;&#263;i",
 									"pay_in"			=> "P&#322;atno&#347;&#263; w %coinName%"),
-
-							"nl" => array("name"		=> "Dutch",
-									"button"			=> "Klik hier als je al %coinNames% hebt verstuurd",
-									"msg_not_received" 	=> "<b>%coinNames% zijn nog niet ontvangen.</b><br>Als je al %coinNames% verstuurd hebt, (het exacte bedrag in %coinName% staat in het vak hieronder), wacht dan a.u.b. een paar minuten tot ze ontvangen zijn door het %coinName% Betaal Systeem. Als u een ander bedrag verstuurd, zal de transactie worden genegeerd, u zult dan alsnog het correcte bedrag moeten overmaken of contact opnemen met de site beheerder voor verdere assistentie.",
-									"msg_received" 	 	=> "%coinName% Betaal Systeem heeft %amountPaid% %coinLabel% succesvol ontvangen !",
-									"msg_received2" 	=> "%coinName% Captcha Systeem heeft %amountPaid% %coinLabel% succesvol ontvangen !",
-									"payment"			=> "Kies uw betaalmethode",
-									"pay_in"			=> "Betaling in %coinName%"),
 
 							"pt" => array("name"		=> "Portuguese",
 									"button"			=> "Se ja enviou %coinNames% clique aqui",
@@ -1303,6 +1311,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys);
+		unset($v); unset($cryptobox_private_keys);   
 	}
 ?>

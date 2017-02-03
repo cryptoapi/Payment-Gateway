@@ -11,7 +11,7 @@
   * @category    Javascript
   * @website     https://gourl.io
   * @api         https://gourl.io/api.html
-  * @version     1.7.9
+  * @version     1.7.10
   *
   */
 
@@ -22,10 +22,11 @@
 		return c.substring(nameEQ.length,c.length); } return ''; 
 	}
 	
-	function cryptobox_show(boxID, coinName, public_key, amount, amountUSD, period, language, iframeID, userID, userFormat, orderID, cookieName, webdev_key, hash, width, height)
+	function cryptobox_show(boxID, coinName, public_key, amount, amountUSD, period, language, iframeID, userID, userFormat, orderID, cookieName, webdev_key, hash, width, height, json)
 	{
 		if (typeof width !== 'number') width = 0;
 		if (typeof height !== 'number') height = 0;
+		if (typeof json !== 'number') json = 0;
 	
 		var id = public_key.substr(0, public_key.indexOf("AA"));
 		if (id == '' || boxID != id || public_key.indexOf("PUB") == -1) alert('Invalid payment box public_key');
@@ -53,7 +54,9 @@
 			(webdev_key?'/w/'+encodeURIComponent(webdev_key):'')+
 			(width>0?'/ws/'+encodeURIComponent(width):'')+
 			(height>0?'/hs/'+encodeURIComponent(height):'')+
-			'/h/'+encodeURIComponent(hash)+'/z/'+Math.random();
+			'/h/'+encodeURIComponent(hash);
+			if (json > 0) url += '/json/'+json;
+			url += '/z/'+Math.random();
 			var html = document.getElementById(iframeID);
 			if (html == null) alert('Cryptobox iframeID HTML with id "' + iframeID + '" not exist!');
 			else html.src = url;
@@ -61,10 +64,10 @@
 		
 		return true;
 	}
-	
+
 	
 	function cryptobox_msghide (id)
 	{ 
-		setTimeout(function(){ document.getElementById(id).style.display='none';}, 15000 ); 
+		setTimeout(function(){ document.getElementById(id).style.display='none';}, 15000 );
 	}
 
