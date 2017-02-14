@@ -5,7 +5,7 @@
  * ##########################################
  *
  *
- * PHP Cryptocurrency Payment Class          
+ * PHP Cryptocurrency Payment Class       
  *
  * @package     GoUrl PHP Bitcoin/Altcoin Payments and Crypto Captcha
  * @copyright   2014-2017 Delta Consultants
@@ -15,7 +15,7 @@
  * @example     https://gourl.io/bitcoin-payment-gateway-api.html
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     1.7.10
+ * @version     1.7.11
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -66,7 +66,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.7.10");
+define("CRYPTOBOX_VERSION", "1.7.11");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit', 'swiscoin')));
@@ -87,7 +87,7 @@ class Cryptobox {
 										 * User will pay you all times the actual price which is linked on current exchange price in USD on the datetime of purchase.      
 										 * You can use in cryptobox options one variable only: amount or amountUSD. You cannot place values of those two variables together. */
 	private $period 		= "";		// period after which the payment becomes obsolete and new cryptobox will be shown; allow values: NOEXPIRY, 1 MINUTE..90 MINUTE, 1 HOUR..90 HOURS, 1 DAY..90 DAYS, 1 WEEK..90 WEEKS, 1 MONTH..90 MONTHS  
-	private $language		= "en";		// cryptobox localisation; en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ko - Korean, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	private $language		= "en";		// cryptobox localisation; en - English, es - Spanish, fr - French, de - German, nl - Dutch, it - Italian, ru - Russian, pl - Polish, pt - Portuguese, fa - Persian, ko - Korean, ja - Japanese, id - Indonesian, tr - Turkish, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	private $iframeID		= "";		// optional, html iframe element id; allow symbols: a..Z0..9_-
 	private $orderID 		= "";		// your page name / product name or order name (not unique); allow symbols: a..Z0..9_-@.; max size: 50 symbols
 	private $userID 		= "";		// optional, manual setup unique identifier for each of your users; allow symbols: a..Z0..9_-@.; max size: 50 symbols
@@ -117,7 +117,7 @@ class Cryptobox {
 	private $boxType		= "";		// cryptobox type - 'paymentbox' or 'captchabox'
 	private $processed		= false;	// optional - set flag to paid & processed	
 	private $cookieName 	= "";		// user cookie/session name (if cookies/sessions use)
-	private $localisation 	= "";		// localisation; en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ko - Korean, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	private $localisation 	= "";		// localisation; en - English, es - Spanish, fr - French, de - German, nl - Dutch, it - Italian, ru - Russian, pl - Polish, pt - Portuguese, fa - Persian, ko - Korean, ja - Japanese, id - Indonesian, ar - Arabic, tr - Turkish, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	
 	
 	public function __construct($options = array()) 
@@ -153,7 +153,7 @@ class Cryptobox {
 		if (!$this->amount || $this->amount <= 0) 		$this->amount 	 = 0;
 		if (!$this->amountUSD || $this->amountUSD <= 0) 	$this->amountUSD = 0;
 		
-		if (($this->amount <= 0 && $this->amountUSD <= 0) || ($this->amount > 0 && $this->amountUSD > 0)) die("You can use in cryptobox options one of variable only: amount or amountUSD. You cannot place values in that two variables together");
+		if (($this->amount <= 0 && $this->amountUSD <= 0) || ($this->amount > 0 && $this->amountUSD > 0)) die("You can use in cryptobox options one of variable only: amount or amountUSD. You cannot place values in that two variables together (submitted amount = '".$this->amount."' and amountUSD = '".$this->amountUSD."' )");
 		 
 		if ($this->amount && (!is_numeric($this->amount) || $this->amount < 0.0001 || $this->amount > 50000000)) die("Invalid Amount - $this->amount $this->coinLabel. Allowed range: 0.0001 .. 50,000,000");
 		if ($this->amountUSD && (!is_numeric($this->amountUSD) || $this->amountUSD < 0.01 || $this->amountUSD > 1000000)) die("Invalid amountUSD - $this->amountUSD USD. Allowed range: 0.01 .. 1,000,000");
@@ -1163,7 +1163,7 @@ class Cryptobox {
 	}
 	
 	
-	// en - English, es - Spanish, fr - French, de - German, ru - Russian, nl - Dutch, pt - Portuguese, fa - Persian, ko - Korean, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	// en - English, es - Spanish, fr - French, de - German, nl - Dutch, it - Italian, ru - Russian, pl - Polish, pt - Portuguese, fa - Persian, ko - Korean, ja - Japanese, id - Indonesian, tr - Turkish, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	$cryptobox_localisation	= array(
 							"en" => array("name"		=> "English", 
 							/*36*/	"button"			=> "Click Here if you have already sent %coinNames%",
@@ -1269,6 +1269,14 @@ class Cryptobox {
 									"payment"			=> "Pilih Metode Pembayaran",
 									"pay_in"			=> "Pembayaran dalam bentuk %coinName%"),
 
+							"tr" => array("name"		=> "Turkish",
+									"button"			=> "%coinName% g&#246;nderdiyseniz, buraya t&#305;klay&#305;n",
+									"msg_not_received" 	=> "<b>%coinNames% hen&#252;z al&#305;namad&#305;.</b><br> De&#287;i&#351;ik yada yanl&#305;&#351; bir mebl&#226; verdiyseniz, sistem kabul etmemi&#351; olabilir. Bu durumda g&#246;derme i&#351;leminizi birka&#231; dakika bekleyerek tekrarlay&#305;n. Veya site sahibinden yard&#305;m isteyin.",
+									"msg_received" 	 	=> "%coinName% &#246;deme sistemine %amountPaid% %coinLabel% ba&#351;ar&#305;yla gelmi&#351;tir !",
+									"msg_received2" 	=> "%coinName% Capcha`ya %amountPaid% %coinLabel% ba&#351;ar&#305;yla gelmi&#351;tir !",
+									"payment"			=> "&#214;deme metodunu se&#231;iniz",
+									"pay_in"			=> "%coinName% ile &#246;deme"),
+	         
 							"ar" => array("name"		=> "Arabic",
 									"button"			=> "&#1575;&#1590;&#1594;&#1591; &#1607;&#1606;&#1575; &#1601;&#1610; &#1581;&#1575;&#1604;&#1577; &#1602;&#1605;&#1578; &#1601;&#1593;&#1604;&#1575;&#1611; &#1576;&#1575;&#1604;&#1575;&#1585;&#1587;&#1575;&#1604; %coinNames%",
 									"msg_not_received" 	=> "<b>%coinNames% &#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1587;&#1578;&#1604;&#1575;&#1605;&#1607;&#1575; &#1576;&#1593;&#1583;.</b><br> &#1573;&#1584;&#1575; &#1602;&#1605;&#1578; &#1576;&#1573;&#1585;&#1587;&#1575;&#1604;&#1607;&#1575; %coinNames% (&#1576;&#1575;&#1604;&#1592;&#1576;&#1591; %coinName% &#1605;&#1576;&#1604;&#1594; &#1601;&#1610; &#1583;&#1601;&#1593; &#1608;&#1575;&#1581;&#1583;), &#1610;&#1585;&#1580;&#1609; &#1575;&#1604;&#1573;&#1606;&#1578;&#1592;&#1575;&#1585; &#1576;&#1590;&#1593; &#1583;&#1602;&#1575;&#1574;&#1602; &#1604;&#1573;&#1587;&#1578;&#1604;&#1575;&#1605;&#1607;&#1605; &#1605;&#1606; &#1582;&#1604;&#1575;&#1604; %coinName% &#1606;&#1592;&#1575;&#1605; &#1575;&#1604;&#1583;&#1601;&#1593;. &#1573;&#1584;&#1575; &#1602;&#1605;&#1578; &#1576;&#1573;&#1585;&#1587;&#1575;&#1604; &#1605;&#1576;&#1575;&#1604;&#1594; &#1571;&#1582;&#1585;&#1609;, &#1606;&#1592;&#1575;&#1605; &#1575;&#1604;&#1583;&#1601;&#1593; &#1587;&#1608;&#1601; &#1610;&#1580;&#1575;&#1607;&#1604; &#1575;&#1604;&#1589;&#1601;&#1602;&#1577;&#1548; &#1608;&#1587;&#1608;&#1601; &#1578;&#1581;&#1578;&#1575;&#1580; &#1604;&#1573;&#1585;&#1587;&#1575;&#1604; &#1575;&#1604;&#1605;&#1576;&#1604;&#1594; &#1575;&#1604;&#1589;&#1581;&#1610;&#1581; &#1605;&#1585;&#1577; &#1571;&#1582;&#1585;&#1609;",
@@ -1311,6 +1319,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 		
-		unset($v); unset($cryptobox_private_keys);   
+		unset($v); unset($cryptobox_private_keys); 
 	}
 ?>

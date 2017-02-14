@@ -5,13 +5,13 @@
  * ##########################################
  *
  *
- * Cryptobox Server Callbacks      
+ * Cryptobox Server Callbacks
  *
  * @package     Cryptobox callbacks
  * @copyright   2014-2017 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     1.7.10
+ * @version     1.7.11
  * 
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
@@ -42,18 +42,28 @@ elseif (!defined('ABSPATH')) exit; // Exit if accessed directly in wordpress
 if ($_POST) foreach ($_POST as $k => $v) if (is_string($v)) $_POST[$k] = trim($v);
 
 
-// b.
-if (isset($_POST["plugin_ver"]) && !isset($_POST["status"]) && isset($_POST["private_key"]) && strlen($_POST["private_key"]) == 50 && in_array($_POST["private_key"], explode("^", CRYPTOBOX_PRIVATE_KEYS)))
+// b. check if private key valid
+$valid_key = false;
+if (isset($_POST["private_key_hash"]) && strlen($_POST["private_key_hash"]) == 128 && preg_replace('/[^A-Za-z0-9]/', '', $_POST["private_key_hash"]) == $_POST["private_key_hash"])
+{
+    $keyshash = array();
+    $arr = explode("^", CRYPTOBOX_PRIVATE_KEYS);
+    foreach ($arr as $v) $keyshash[] = strtolower(hash("sha512", $v));
+    if (in_array(strtolower($_POST["private_key_hash"]), $keyshash)) $valid_key = true;
+}
+
+
+// c.
+if (isset($_POST["plugin_ver"]) && !isset($_POST["status"]) && $valid_key)
 {
 	echo "cryptoboxver_" . (CRYPTOBOX_WORDPRESS ? "wordpress_" . GOURL_VERSION : "php_" . CRYPTOBOX_VERSION);
 	die; 
 }
 
 
-// c.
+// d.
 if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_received", "payment_received_unrecognised")) &&
-		$_POST["box"] && is_numeric($_POST["box"]) && $_POST["box"] > 0 && $_POST["amount"] && is_numeric($_POST["amount"]) && $_POST["amount"] > 0 &&
-		strlen($_POST["private_key"]) == 50 && preg_replace('/[^A-Za-z0-9]/', '', $_POST["private_key"]) == $_POST["private_key"] && in_array($_POST["private_key"], explode("^", CRYPTOBOX_PRIVATE_KEYS)))
+		$_POST["box"] && is_numeric($_POST["box"]) && $_POST["box"] > 0 && $_POST["amount"] && is_numeric($_POST["amount"]) && $_POST["amount"] > 0 && $valid_key)
 {
 	
 	foreach ($_POST as $k => $v)
@@ -110,9 +120,9 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 }   
 
 else
-	$box_status = "Only POST Data Allowed"; 
+	$box_status = "Only POST Data Allowed";
 
 
-	echo $box_status; // don't delete it 
-           
+	echo $box_status; // don't delete it      
+       
 ?>

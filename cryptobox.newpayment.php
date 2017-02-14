@@ -29,7 +29,7 @@
  *        {
  *            "status":"payment_received"
  *            "err":""
- *            "private_key":"1206lO6HX76cw9Bitcoin77DOGED82Y8eyBExZ9kZpX"
+ *            "private_key_hash":"85770A30B97D3AC035EC32354633C1614CF76E1621A20B143A1FBDAD1FCBF25A6EC6C5F99FFF495DD1836E47AE0E37942EC0B04867BD14778B2C93967E4A7FAC" // sha512 hash of gourl payment box private_key
  *            "box":"120"
  *            "boxtype":"paymentbox"
  *            "order":"order15620A"
@@ -53,7 +53,7 @@
  *        {
  *            "status":"payment_received_unrecognised"
  *            "err":"An incorrect bitcoin amount has been received"
- *            "private_key":"1206lO6HX76cw9Bitcoin77DOGED82Y8eyBExZ9kZpX"
+ *            "private_key_hash":"85770A30B97D3AC035EC32354633C1614CF76E1621A20B143A1FBDAD1FCBF25A6EC6C5F99FFF495DD1836E47AE0E37942EC0B04867BD14778B2C93967E4A7FAC" // sha512 hash of gourl payment box private_key
  *            "box":"120"
  *            "boxtype":"paymentbox"
  *            "order":""
@@ -119,18 +119,18 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 
 	.............
     
- 
-	Debug - new payment email notification for webmaster
-	Uncomment lines below and make any test payment
-	--------------------------------------------
-	$email = "....your email address....";
-	mail($email, "Payment - " . $paymentID . " - " . $box_status, " \n Payment ID: " . $paymentID . " \n\n Status: " . $box_status . " \n\n Details: " . print_r($payment_details, true));
-
      */
+ 
+	// Debug - new payment email notification for webmaster
+	// Uncomment lines below and make any test payment
+	// --------------------------------------------
+	// $email = "....your email address....";
+	// mail($email, "Payment - " . $paymentID . " - " . $box_status, " \n Payment ID: " . $paymentID . " \n\n Status: " . $box_status . " \n\n Details: " . print_r($payment_details, true));
 
 
 
-    return true;      
+
+    return true;     
 }
 
 ?>
