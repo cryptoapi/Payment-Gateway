@@ -11,6 +11,7 @@
 
 	$orderID	=  "your_product1_or_signuppage1_etc";
 	$userID		= "";
+	$def_language	= "en";	// default payment box language; en - English, es - Spanish, fr - French, de - German, nl - Dutch, it - Italian, ru - Russian, pl - Polish, pt - Portuguese, fa - Persian, ko - Korean, ja - Japanese, id - Indonesian, tr - Turkish, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 
 	// Remove all the characters from the string other than a..Z0..9_-@. 
 	$orderID = preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $orderID);
@@ -32,7 +33,7 @@
 								// *** convert_currency_live("EUR", "USD", 22.37) - convert 22.37 Euro to USD
 	"period"      => "24 HOUR",	// payment valid period, after 1 day user need to pay again
 	"iframeID"    => "",    	// optional; when iframeID value is empty - system will autogenerate iframe html payment box id
-	"language" 	  => "EN" 		// english, please contact us and we can add your language	
+	"language" 	  => $def_language // default language
 	);  
 	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options  
 
@@ -43,9 +44,13 @@
 	// Display Payment Box or successful payment result   
 	$paymentbox = $box1->display_cryptobox();
 
+	// Language selection list for payment box (html code)
+	$languages_list = display_language_box($def_language);
+
 	// Log
 	$message = "";
 	
+
 	// A. Process Received Payment
 	if ($box1->is_paid()) 
 	{ 
@@ -102,7 +107,8 @@
 <script src='../cryptobox.min.js' type='text/javascript'></script>
 </head>
 <body>
-        
+
+<div style='margin:30px 0 5px 480px'>Language: &#160; <?php echo $languages_list; ?></div>  
 <?php echo $paymentbox; ?>
 <?php echo $message; ?>
 

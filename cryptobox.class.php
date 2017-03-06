@@ -117,7 +117,7 @@ class Cryptobox {
 	private $boxType		= "";		// cryptobox type - 'paymentbox' or 'captchabox'
 	private $processed		= false;	// optional - set flag to paid & processed	
 	private $cookieName 	= "";		// user cookie/session name (if cookies/sessions use)
-	private $localisation 	= "";		// localisation; en - English, es - Spanish, fr - French, de - German, nl - Dutch, it - Italian, ru - Russian, pl - Polish, pt - Portuguese, fa - Persian, ko - Korean, ja - Japanese, id - Indonesian, ar - Arabic, tr - Turkish, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	private $localisation 	= "";		// localisation; en - English, es - Spanish, fr - French, de - German, nl - Dutch, it - Italian, ru - Russian, pl - Polish, pt - Portuguese, fa - Persian, ko - Korean, ja - Japanese, id - Indonesian, tr - Turkish, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
 	
 	
 	public function __construct($options = array()) 
