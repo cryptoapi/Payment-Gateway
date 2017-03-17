@@ -121,10 +121,11 @@
 		{
 			// Successful Cryptocoin Payment received
 
-			// Your code here - 
-			// save user data in db / register new user ...
+			// Your code here...
 			// ...
+			// !!For save user data in db / register new user online, please use function cryptobox_new_payment()!! 
 			// ...
+
 					
 			// Set Payment Status to Processed
 			$successful = true;
@@ -143,7 +144,7 @@
 
 
 	// ...
-	// Also you can use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
+	// Also you need to use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
 	// for send confirmation email, update database, update user membership, etc.
 	// You need to modify file - cryptobox.newpayment.php, read more - https://gourl.io/api-php.html#ipn
 	// ...

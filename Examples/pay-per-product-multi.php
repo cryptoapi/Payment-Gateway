@@ -98,7 +98,7 @@
 	if ($box->is_paid()) 
 	{
 		if (!$box->is_confirmed()) {
-			$message =  "Thank you for payment (payment #".$box->payment_id()."). Awaiting transaction/payment confirmation";
+			$message =  "Thank you for order (order #".$orderID.", payment #".$box->payment_id()."). Awaiting transaction/payment confirmation";
 		}											
 		else 
 		{ // payment confirmed (6+ confirmations)
@@ -107,13 +107,14 @@
 			if (!$box->is_processed())
 			{
 				// One time action after payment has been made/confirmed
+				// !!For update db records, please use function cryptobox_new_payment()!!
 				 
-				$message = "Thank you for order (order #".$orderID.", payment #".$box->payment_id()."). We will send soon";
+				$message = "Thank you for order (order #".$orderID.", payment #".$box->payment_id()."). Payment Confirmed. <br>(User will see this message one time after payment has been made)";
 				
 				// Set Payment Status to Processed
 				$box->set_status_processed();  
 			}
-			else $message = "Thank you. Your order is in process"; // General message
+			else $message = "Thank you for order (order #".$orderID.", payment #".$box->payment_id()."). Payment Confirmed. <br>(User will see this message during ".$period." after payment has been made)"; // General message
 		}
 	}
 	else $message = "This invoice has not been paid yet";
@@ -135,7 +136,7 @@
 
 
 	// ...
-	// Also you can use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
+	// Also you need to use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
 	// for send confirmation email, update database, update user membership, etc.
 	// You need to modify file - cryptobox.newpayment.php, read more - https://gourl.io/api-php.html#ipn
 	// ...

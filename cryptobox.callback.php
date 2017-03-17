@@ -79,7 +79,7 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	
 	
 	$dt			= gmdate('Y-m-d H:i:s');
-	$obj 		= run_sql("select paymentID, txConfirmed from crypto_payments where boxID = ".$_POST["box"]." && orderID = '".$_POST["order"]."' && userID = '".$_POST["user"]."' && txID = '".$_POST["tx"]."' limit 1");
+	$obj 		= run_sql("select paymentID, txConfirmed from crypto_payments where boxID = ".$_POST["box"]." && orderID = '".$_POST["order"]."' && userID = '".$_POST["user"]."' && txID = '".$_POST["tx"]."' && amount = ".$_POST["amount"]." && addr = '".$_POST["addr"]."' limit 1");
 	
 	
 	$paymentID		= ($obj) ? $obj->paymentID : 0;

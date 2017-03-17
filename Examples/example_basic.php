@@ -54,7 +54,7 @@
 	// A. Process Received Payment
 	if ($box1->is_paid()) 
 	{ 
-		$message .= "A. User will see this message during 24 hours after payment has been made!";
+		$message .= "A. User will see this message during ".$options["period"]." after payment has been made!";
 		
 		$message .= "<br>".$box1->amount_paid()." ".$box1->coin_label()."  received<br>";
 		
@@ -72,6 +72,7 @@
 		$message .= "B. User will see this message one time after payment has been made!";	
 	
 		// Your code here - for example, publish order number for user
+		// !!For update db records, please use function cryptobox_new_payment()!!
 		// ...
 
 		// Also you can use $box1->is_confirmed() - return true if payment confirmed 
@@ -91,7 +92,7 @@
 	
 
 	// ...
-	// Also you can use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
+	// Also you need to use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
 	// for send confirmation email, update database, update user membership, etc.
 	// You need to modify file - cryptobox.newpayment.php, read more - https://gourl.io/api-php.html#ipn
 	// ...

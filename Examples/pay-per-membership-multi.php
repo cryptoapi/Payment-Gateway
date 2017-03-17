@@ -117,7 +117,7 @@
 
 
 	// ...
-	// Also you can use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
+	// Also you need to use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
 	// for send confirmation email, update database, update user membership, etc.
 	// You need to modify file - cryptobox.newpayment.php, read more - https://gourl.io/api-php.html#ipn
 	// ...

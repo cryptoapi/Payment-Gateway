@@ -165,7 +165,7 @@ in that one table :
 	  KEY `recordCreated` (`recordCreated`),
 	  KEY `key1` (`boxID`,`orderID`),
 	  KEY `key2` (`boxID`,`orderID`,`userID`),
-	  KEY `key3` (`boxID`,`orderID`,`userID`,`txID`)
+	  UNIQUE KEY `key3` (`boxID`, `orderID`, `userID`, `txID`, `amount`, `addr`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 

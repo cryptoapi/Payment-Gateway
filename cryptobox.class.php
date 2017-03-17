@@ -69,7 +69,7 @@ elseif (!defined('ABSPATH')) exit; // Wordpress
 define("CRYPTOBOX_VERSION", "1.7.11");
 
 // GoUrl supported crypto currencies
-define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'paycoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'monetaryunit', 'swiscoin')));
+define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'paycoin', 'monetaryunit', 'swiscoin')));
 
 
 class Cryptobox {
@@ -679,7 +679,7 @@ class Cryptobox {
 
 			
 			$dt  = gmdate('Y-m-d H:i:s');
-			$obj = run_sql("select paymentID, processed, txConfirmed from crypto_payments where boxID = ".$res["box"]." && orderID = '".$res["order"]."' && userID = '".$res["user"]."' && txID = '".$res["tx"]."' limit 1"); 
+			$obj = run_sql("select paymentID, processed, txConfirmed from crypto_payments where boxID = ".$res["box"]." && orderID = '".$res["order"]."' && userID = '".$res["user"]."' && txID = '".$res["tx"]."' && amount = ".$res["amount"]." && addr = '".$res["addr"]."' limit 1"); 
 
 			if ($obj)
 			{ 
