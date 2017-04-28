@@ -1,4 +1,15 @@
 ===============================================================================
+== Version 1.8 (April 2017)
+===============================================================================
+
+- Get bitcoin/altcoin payment box values from gourl.io in JSON format. 
+JSON data will allow you to easily customise your bitcoin payment boxes. 
+For example, you can display payment amount and  bitcoin payment address with your 
+own text, you can also accept payments in android/windows and other applications.
+
+
+
+===============================================================================
 == Version 1.7.11 (February 2017) 
 ===============================================================================
 

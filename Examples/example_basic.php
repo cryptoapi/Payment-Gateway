@@ -54,7 +54,7 @@
 	// A. Process Received Payment
 	if ($box1->is_paid()) 
 	{ 
-		$message .= "A. User will see this message during ".$options["period"]." after payment has been made!";
+		$message .= "A. User will see this message during ".$options["period"]." period after payment has been made!";
 		
 		$message .= "<br>".$box1->amount_paid()." ".$box1->coin_label()."  received<br>";
 		
@@ -111,7 +111,7 @@
 
 <div style='margin:30px 0 5px 480px'>Language: &#160; <?php echo $languages_list; ?></div>  
 <?php echo $paymentbox; ?>
-<?php echo $message; ?>
-
+<center><?php echo $message; ?></center>
+ 
 </body>
 </html>

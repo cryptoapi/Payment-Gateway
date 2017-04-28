@@ -11,7 +11,7 @@
  * @copyright   2014-2017 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     1.7.11
+ * @version     1.8
  * 
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
@@ -38,11 +38,7 @@ if (!CRYPTOBOX_WORDPRESS) include_once("cryptobox.class.php");
 elseif (!defined('ABSPATH')) exit; // Exit if accessed directly in wordpress
 
 
-// a.
-if ($_POST) foreach ($_POST as $k => $v) if (is_string($v)) $_POST[$k] = trim($v);
-
-
-// b. check if private key valid
+// a. check if private key valid
 $valid_key = false;
 if (isset($_POST["private_key_hash"]) && strlen($_POST["private_key_hash"]) == 128 && preg_replace('/[^A-Za-z0-9]/', '', $_POST["private_key_hash"]) == $_POST["private_key_hash"])
 {
@@ -53,7 +49,38 @@ if (isset($_POST["private_key_hash"]) && strlen($_POST["private_key_hash"]) == 1
 }
 
 
+// b. alternative - ajax script send gourl.io json data
+if (!$valid_key && isset($_POST["json"]) && $_POST["json"] == "1")
+{
+    $data_hash = $boxID = "";
+    if (isset($_POST["data_hash"]) && strlen($_POST["data_hash"]) == 128 && preg_replace('/[^A-Za-z0-9]/', '', $_POST["data_hash"]) == $_POST["data_hash"]) { $data_hash = $_POST["data_hash"]; unset($_POST["data_hash"]); }
+    if (isset($_POST["box"]) && is_numeric($_POST["box"]) && $_POST["box"] > 0) $boxID = intval($_POST["box"]);
+    
+    if ($data_hash && $boxID)
+    {
+        $private_key = "";
+        $arr = explode("^", CRYPTOBOX_PRIVATE_KEYS);
+        foreach ($arr as $v) if (strpos($v, $boxID."AA") === 0) $private_key = $v;
+    
+        if ($private_key)
+        {
+            $data_hash2 = strtolower(hash("sha512", $private_key.json_encode($_POST).$private_key));
+            if ($data_hash == $data_hash2) $valid_key = true;
+        }
+        unset($private_key);
+    }
+    
+    if (!$valid_key) die("Error! Invalid Json Data sha512 Hash!"); 
+    
+}
+
+
 // c.
+if ($_POST) foreach ($_POST as $k => $v) if (is_string($v)) $_POST[$k] = trim($v);
+
+
+
+// d.
 if (isset($_POST["plugin_ver"]) && !isset($_POST["status"]) && $valid_key)
 {
 	echo "cryptoboxver_" . (CRYPTOBOX_WORDPRESS ? "wordpress_" . GOURL_VERSION : "php_" . CRYPTOBOX_VERSION);
@@ -61,7 +88,7 @@ if (isset($_POST["plugin_ver"]) && !isset($_POST["status"]) && $valid_key)
 }
 
 
-// d.
+// e.
 if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_received", "payment_received_unrecognised")) &&
 		$_POST["box"] && is_numeric($_POST["box"]) && $_POST["box"] > 0 && $_POST["amount"] && is_numeric($_POST["amount"]) && $_POST["amount"] > 0 && $valid_key)
 {
@@ -123,6 +150,6 @@ else
 	$box_status = "Only POST Data Allowed";
 
 
-	echo $box_status; // don't delete it      
+	echo $box_status; // don't delete it   
        
 ?>

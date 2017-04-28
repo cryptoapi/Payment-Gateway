@@ -1,9 +1,4 @@
 /**
-  * ##########################################
-  * ###  PLEASE DO NOT MODIFY THIS FILE !  ###
-  * ##########################################
-  *
-  *
   * Cryptocoin Payment Box Javascript           
   *
   * @package     GoUrl Bitcoin/Altcoin Payment Box and Crypto Captcha
@@ -11,22 +6,215 @@
   * @category    Javascript
   * @website     https://gourl.io
   * @api         https://gourl.io/api.html
-  * @version     1.7.11
+  * @version     1.8
   *
   */
 
-	function cryptobox_cookie(name) 
+	
+	// Get JSON bitcoin/altcoin data from Gourl.io payment gateway
+	// JSON data will allow you to easily customise your bitcoin/altcoin payment box
+	// Parameters -
+	// url - 	payment box full url
+	// paid - 	1/0, transaction received already or not
+	// path - 	path to file cryptobox.callback.php
+	// ext - 	custom text in html element class names
+	// redirect -   redirect to another page after payment is received
+
+	function cryptobox_custom(url, paid, path, ext, redirect)
 	{
-		var nameEQ = name + "="; var ca = document.cookie.split(';'); for(var i=0;i <  ca.length;i++) { 
-		var c = ca[i]; while (c.charAt(0)==' ') c = c.substring(1,c.length); if (c.indexOf(nameEQ) == 0) 
-		return c.substring(nameEQ.length,c.length); } return ''; 
+		var start  = new Date().getTime();
+		var st = new Date().getTime();
+		var received = false;
+		var error = false;
+		
+
+		if (typeof paid !== 'number') 		paid = 0;
+		if (typeof path !== 'string') 		path = '';
+		if (typeof ext !== 'string') 		ext = 'gourl_';
+		if (typeof redirect !== 'string') 	redirect = '';
+		
+
+		cryptobox_callout = function () 
+		{
+			$.ajax(
+			{
+				type: 'GET', 
+				url: url,
+				cache: false, 
+				contentType: 'application/json; charset=utf-8',
+				data: { format: 'json' },
+				dataType: 'json'
+			})
+
+			.fail(function() 
+			{
+				$('.'+ext+'error_message').html('Error loading data ! &#160; <a target="_blank" href="'+url+'">Raw details here &#187;</a>');
+				$('.'+ext+'loader_button' ).fadeOut(400, function(){ $('.'+ext+'loader').show(); $('.'+ext+'cryptobox_error').fadeIn(400);  })
+				error = true;
+			})
+
+			.done(function( data ) 
+			{
+				cryptobox_update_page(data, ext);
+				if (data.status == "payment_received")
+				{
+					received = true;
+					
+					// update record in local db
+					if (!paid) $.post( path+"cryptobox.callback.php", data )
+								.fail( function() {alert( "Internal Error! Unable to find file cryptobox.callback.php. Please contact the website administrator.") })
+								.done(function(txt) { if (txt != "cryptobox_newrecord" && txt != "cryptobox_updated" && txt != "cryptobox_nochanges") alert("Internal Error! "+txt); });
+								
+					// optional, redirect to another page after payment is received
+					if (redirect) setTimeout(function() { window.location = redirect; }, 5000);
+				}
+
+				if (!received && !error)
+				{	  			  		
+					var end = new Date().getTime();
+					if ((end - start) > 20*60*1000)
+					{
+						 $('.'+ext+'button_wait').hide();
+						 $('.'+ext+'button_refresh').removeClass('btn-default').addClass('btn-info');
+						 $('.'+ext+'cryptobox_unpaid .panel').removeClass('panel-info').removeClass('panel-primary').removeClass('panel-warning').removeClass('panel-success').addClass('panel-default').fadeTo("slow" , 0.4, function() {});
+						 $('[data-original-title]').tooltip('disable');
+					}
+					else
+					{
+						setTimeout(cryptobox_callout, 7000);
+					}
+				}
+			});
+		}
+		
+		cryptobox_callout();
+
+		return true;
+		
 	}
 	
-	function cryptobox_show(boxID, coinName, public_key, amount, amountUSD, period, language, iframeID, userID, userFormat, orderID, cookieName, webdev_key, hash, width, height, json)
+	
+	function cryptobox_update_page(data, ext)
+	{
+
+		// Awaiting Payment
+		logoext = (data.coinname == 'Bitcoin') ? '_' + data.texts.language : '';   	
+		if (data.boxtype == 'paymentbox') $('.'+ext+'boxlogo').attr('src', 'https://coins.gourl.io/images/'+data.coinname.toLowerCase()+'/payment'+logoext+'.png'); else $('.'+ext+'boxlogo').attr('src', 'https://coins.gourl.io/images/'+data.coinname.toLowerCase()+'/captcha'+logoext+'.png');
+
+		var qrcodesize = (typeof $('.'+ext+'qrcode_image').attr('data-size') === 'undefined') ? 110 : $('.'+ext+'qrcode_image').attr('data-size');
+		$('.'+ext+'qrcode_image').attr('src', 'https://chart.googleapis.com/chart?chs='+qrcodesize+'x'+qrcodesize+'&chld=M|0&cht=qr&chl='+data.coinname+'%3A'+data.addr+'%3Famount%3D'+data.amount+'&choe=UTF-8');
+		
+		if ($.isFunction($.fn.tooltip)) 
+		{ 
+			$('.'+ext+'wallet_open').attr('data-original-title', data.texts.btn_wallet).attr('data-placement', 'bottom').attr('data-toggle', 'tooltip').tooltip();  
+			$('.'+ext+'qrcode_image').attr('data-original-title', data.texts.qrcode).attr('data-placement', 'bottom').attr('data-toggle', 'tooltip').tooltip(); 
+			$('.'+ext+'fees_hint').attr('data-original-title', '<img border="0" width="320" src="http://coins.gourl.io/images/fees.png" />').attr('data-placement', 'bottom').attr('data-toggle', 'tooltip').tooltip({ html: true }); 
+			$('.'+ext+'button_wait').attr('data-original-title', data.texts.btn_wait_hint).attr('data-placement', 'top').attr('data-toggle', 'tooltip').tooltip();  
+		}
+		
+		$('.'+ext+'paymentcaptcha_amount').text(((data.boxtype=='paymentbox') ? data.texts.payment_amount : data.texts.captcha_amount));
+		$('.'+ext+'paymentcaptcha_status').text(((data.boxtype=='paymentbox') ? data.texts.payment_status : data.texts.captcha_status));
+
+		var txt = '-';
+		if (data.status=='payment_not_received')  txt = data.texts.not_received;
+		else if (data.status=='payment_received') txt = (data.boxtype=='paymentbox') ? data.texts.payment_successful : data.texts.captcha_successful;
+
+		$('.'+ext+'paymentcaptcha_statustext').text(txt);
+
+
+		
+		// Buttons	
+		if (data.status == 'payment_received')
+		{
+			$('.'+ext+'texts_btn_wait_hint').hide();
+			$('.'+ext+'button_wait').html(((data.boxtype=='paymentbox') ? data.texts.payment_successful : data.texts.captcha_successful));
+		}
+		else
+		{
+			$('.'+ext+'button_wait').html('<i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i> &#160; ' + ((data.boxtype=='paymentbox') ? data.texts.payment_wait : data.texts.captcha_wait));
+		}
+		
+		$('.'+ext+'button_refresh').html('<i class="fa fa-refresh" aria-hidden="true"></i>&#160; ' + data.texts.refresh);
+		
+		
+		
+		// Payment Received
+		$('.'+ext+'paymentcaptcha_title').text((data.boxtype=='paymentbox') ? data.texts.title : data.coinname);
+		$('.'+ext+'paymentcaptcha_successful').text((data.boxtype=='paymentbox') ? data.texts.payment_successful : data.texts.captcha_successful);
+		$('.'+ext+'paymentcaptcha_date').html(((data.boxtype=='paymentbox') ? data.texts.received_on : data.texts.captcha_passed) + ' <b>' + data.date + '</b>');
+		$('.'+ext+'button_details').html('<span class="glyphicon glyphicon-'+((data.coinlabel=='BTC') ? 'bitcoin' : 'globe')+'" aria-hidden="true"></span>&#160; ' + data.texts.btn_res);
+		$('.'+ext+'button_details').attr('href', data.tx_url).attr('target', '_blank');
+
+		
+		
+		// Init
+		if (data.texts.language == 'fa' || data.texts.language == 'ar') $('.'+ext+'cryptobox_error, .'+ext+'cryptobox_top, .'+ext+'cryptobox_unpaid, .'+ext+'cryptobox_paid, .'+ext+'cryptobox_rawdata').attr('dir', 'rtl');
+
+		$('.'+ext+'loader').fadeOut(400, function()
+		{
+			$('.'+ext+'cryptobox_top, .'+ext+'cryptobox_rawdata').fadeIn(400);
+			if (data.status == 'payment_received') 
+			{
+				$('.'+ext+'cryptobox_unpaid, .'+ext+'boxlogo_unpaid, .'+ext+'msg').hide(); 
+				$('.'+ext+'cryptobox_paid, .'+ext+'boxlogo_paid').fadeIn(400); 
+			}
+			else 
+			{
+				$('.'+ext+'cryptobox_paid, .'+ext+'boxlogo_paid').hide();
+				$('.'+ext+'cryptobox_unpaid, .'+ext+'boxlogo_unpaid').fadeIn(400); 
+			}
+			$('.'+ext+'msg').delay(7000).fadeOut(2000);
+		}); 		
+
+		
+		
+		// Raw Data froim Gourl.io 
+		var html = "";
+		$.each(data, function(key, val)
+		{
+			if (typeof val === 'object')
+			{
+				var html2 = '<div style="margin-left:50px">';
+				$.each(val, function(key2, val2)
+				{
+					html2 += "[" + key2 + '] => ' + val2 + "<br>";
+					$('.' + ext + key + '_' + key2).html(val2);
+				});
+				val = html2 + '</div>';
+			}
+			else 
+			{	
+				if (key.indexOf("_url") > 0) $('.' + ext + key).attr("href", val);
+				else $('.' + ext + key).html(val);
+			}
+			
+			html += "[" + key + '] => ' + val + "<br>";
+		});
+		
+
+		// Custom exchange text
+		if ($('.'+ext+'texts_intro1b').attr('data-site') !== 'undefined' && $('.'+ext+'texts_intro1b').attr('data-url') !== 'undefined')
+		{
+			var exchange = '<a target="_blank" href="' + $('.'+ext+'texts_intro1b').attr('data-url') + '">' + $('.'+ext+'texts_intro1b').attr('data-site') + '</a>';
+			$('.'+ext+'texts_intro1b').html((data.texts.intro1b).replace("___", exchange));
+		}
+		
+
+		$('.'+ext+'jsondata').html(html);
+
+		
+		return true;
+	}
+	
+	
+	
+	
+	
+	
+	function cryptobox_show(boxID, coinName, public_key, amount, amountUSD, period, language, iframeID, userID, userFormat, orderID, cookieName, webdev_key, hash, width, height)
 	{
 		if (typeof width !== 'number') width = 0;
 		if (typeof height !== 'number') height = 0;
-		if (typeof json !== 'number') json = 0;
 	
 		var id = public_key.substr(0, public_key.indexOf("AA"));
 		if (id == '' || boxID != id || public_key.indexOf("PUB") == -1) alert('Invalid payment box public_key');
@@ -54,9 +242,9 @@
 			(webdev_key?'/w/'+encodeURIComponent(webdev_key):'')+
 			(width>0?'/ws/'+encodeURIComponent(width):'')+
 			(height>0?'/hs/'+encodeURIComponent(height):'')+
-			'/h/'+encodeURIComponent(hash);
-			if (json > 0) url += '/json/'+json;
-			url += '/z/'+Math.random();
+			'/h/'+encodeURIComponent(hash)+
+			'/z/'+Math.random();
+			
 			var html = document.getElementById(iframeID);
 			if (html == null) alert('Cryptobox iframeID HTML with id "' + iframeID + '" not exist!');
 			else html.src = url;
@@ -66,8 +254,18 @@
 	}
 
 	
-	function cryptobox_msghide (id)
-	{ 
-		setTimeout(function(){ document.getElementById(id).style.display='none';}, 15000 );
+	
+	
+	function cryptobox_cookie(name) 
+	{
+		var nameEQ = name + "="; var ca = document.cookie.split(';'); for(var i=0;i <  ca.length;i++) { 
+		var c = ca[i]; while (c.charAt(0)==' ') c = c.substring(1,c.length); if (c.indexOf(nameEQ) == 0) 
+		return c.substring(nameEQ.length,c.length); } return ''; 
 	}
 
+	
+	function cryptobox_msghide (id)
+	{
+		setTimeout(function(){ document.getElementById(id).style.display='none';}, 15000 );
+	}
+ 
