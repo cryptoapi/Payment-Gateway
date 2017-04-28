@@ -168,7 +168,7 @@
     <br>
     <div class="well">Bitcoin JSON Data will allow you to easily customise your bitcoin payment boxes.<br> 
 	For example, you can display payment amount and  bitcoin payment address with your own text, you can also accept payments in android/windows and other applications. 
-	See <a href='http://gourl.local/bitcoin-payment-gateway-api.html#p8'>instruction</a> and <a href='https://github.com/cryptoapi/Payment-Gateway/blob/master/Examples/json.php'>php source</a><br>
+	See <a href='https://gourl.io/bitcoin-payment-gateway-api.html#p8'>instruction</a> and <a href='https://github.com/cryptoapi/Payment-Gateway/blob/master/Examples/json.php'>php source</a><br>
     </div>
     
     <br><br>
@@ -399,6 +399,6 @@
 
 </div>
   
-
+  
 </body>
 </html>
