@@ -1049,7 +1049,8 @@ class Cryptobox {
 	    
 	/* E. Function display_language_box()
 	 * 
-	 * Language selection dropdown list for cryptocoin payment box
+	 * Language selection dropdown list for cryptocoin payment box<br>
+	 * $select_list = true - use &lt;SELECT&gt; tag for dropdown list, &lt;UL&gt; tag for dropdown list (using in bootstrap)
 	 */
 	function display_language_box($default = "en", $anchor = "gourlcryptolang", $select_list = true)
 	{
@@ -1455,7 +1456,7 @@ class Cryptobox {
 							);
 
 	if(!defined("CRYPTOBOX_LOCALISATION")) define("CRYPTOBOX_LOCALISATION", json_encode($cryptobox_localisation));
-	unset($cryptobox_localisation);
+	unset($cryptobox_localisation);   
 	
 	if (!CRYPTOBOX_WORDPRESS || defined("CRYPTOBOX_PRIVATE_KEYS"))
 	{
