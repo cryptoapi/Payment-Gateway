@@ -5,7 +5,7 @@
  * ##########################################
  *
  *
- * PHP Cryptocurrency Payment Class
+ * PHP Cryptocurrency Payment Class       
  *
  * @package     GoUrl PHP Bitcoin/Altcoin Payments and Crypto Captcha
  * @copyright   2014-2017 Delta Consultants
@@ -328,23 +328,23 @@ class Cryptobox {
 	    $ip		= $this->ip_address();
 	    $hash 	= $this->cryptobox_hash(true);
 	    
-	    $data = array(
+	    $data = array
+	    (
 	        "b" 	=> $this->boxID,
 	        "c" 	=> $this->coinName,
 	        "p" 	=> $this->public_key,
 	        "a" 	=> $this->amount,
 	        "au" 	=> $this->amountUSD,
 	        "pe"	=> str_replace(" ", "_", $this->period),
-	        "l"		=> $this->language,
-	        "o"		=> $this->orderID,
-	        "u"		=> $this->userID,
+	        "l" 	=> $this->language,
+	        "o" 	=> $this->orderID,
+	        "u" 	=> $this->userID,
 	        "us"	=> $this->userFormat,
 	        "j"     => 1, // json   
-	        "d"		=> base64_encode($ip),
-	        "h"		=> $hash        
+	        "d" 	=> base64_encode($ip),
+	        "h" 	=> $hash
 	    );
 	     
-	    
 	    if ($this->webdev_key) $data["w"]  = $this->webdev_key;
 	    $data["z"] = rand(0,10000000);
 	    
@@ -366,7 +366,7 @@ class Cryptobox {
 	public function cryptobox_hash($json = false, $width = 0, $height = 0)
 	{
 	    
-	    $ip		= $this->ip_address();
+	    $ip	  = $this->ip_address();
 	    
 	    if ($json) $hash_str = $this->boxID."|".$this->coinName."|".$this->public_key."|".$this->private_key."|".$this->webdev_key."|".$this->amount."|".$this->amountUSD."|".$this->period."|". $this->language."|".$this->orderID."|".$this->userID."|".$this->userFormat."|".$this->ip_address();
 	    else       $hash_str = $this->boxID."|".$this->coinName."|".$this->public_key."|".$this->private_key."|".$this->webdev_key."|".$this->amount."|".$this->amountUSD."|".$this->period."|". $this->language."|".$this->orderID."|".$this->userID."|".$this->userFormat."|".$this->iframeID."|".$width."|".$height;
