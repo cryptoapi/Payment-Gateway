@@ -380,7 +380,7 @@ class Cryptobox {
 	 */
 	public function get_json_values()
 	{
-	    $url = $this->cryptobox_json_url();
+		$url = $this->cryptobox_json_url();
 	    
 		$ch = curl_init( $url );
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -1525,6 +1525,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);    
+		unset($v); unset($cryptobox_private_keys);       
 	}
 ?>
