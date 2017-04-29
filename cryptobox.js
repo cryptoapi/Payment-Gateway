@@ -10,15 +10,28 @@
   *
   */
 
-	
-	// Get JSON bitcoin/altcoin data from Gourl.io payment gateway
-	// JSON data will allow you to easily customise your bitcoin/altcoin payment box
-	// Parameters -
-	// url - 	payment box full url
-	// paid - 	1/0, transaction received already or not
-	// path - 	path to file cryptobox.callback.php
-	// ext - 	custom text in html element class names
-	// redirect -   redirect to another page after payment is received
+
+	/*
+	 * This function will receive JSON payment data from Gourl.io Payment Gateway through jquery ajax request and 
+	 * will place received json values in all existing html <div class='gourl_...'> elements on webpage.
+	 * Also that function checks every 7 seconds if payment has been received and automatically displays received payment data on webpage.
+	 * 
+	 * This function has the following parameters -
+	 * url - payment url to gourl.io. Using this url you can get bitcoin/altcoin payment box values in JSON format.
+	 * Please use php function $box->cryptobox_json_url() - which will generate url with your parameters to gourl.io payment gateway. 
+	 * paid - 1/0, shows if transaction received already or not. You need to call $this->is_paid() as in example.
+	 * path - path to file cryptobox.callback.php; it will be automatically call that file through ajax if payment is received
+	 * ext - custom prefix in html class names, by default 'gourl_'. You can use for example - 'mycrypto_' and therefore div class in html template will be <div class='mycrypto_amount'></div>, etc.
+	 * redirect - url, redirect to another page after payment is received; i.e. when payment received automatically call cryptobox.callback.php through ajax and after 5 seconds it will redirect to another page. Php class $this->is_paid() start to return TRUE.
+	 * 
+	 * JSON Values Example -
+	 * Payment not received - https://coins.gourl.io/b/20/c/Bitcoin/p/20AAvZCcgBitcoin77BTCPUB0xyyeKkxMUmeTJRWj7IZrbJ0oL/a/0/au/2.21/pe/NOEXPIRY/l/en/o/invoice22/u/83412313__3bccb54769/us/COOKIE/j/1/d/ODIuMTEuOTQuMTIx/h/e889b9a07493ee96a479e471a892ae2e   
+	 * Payment received successfully - https://coins.gourl.io/b/20/c/Bitcoin/p/20AAvZCcgBitcoin77BTCPUB0xyyeKkxMUmeTJRWj7IZrbJ0oL/a/0/au/0.1/pe/NOEXPIRY/l/en/o/invoice1/u/demo/us/MANUAL/j/1/d/ODIuMTEuOTQuMTIx/h/ac7733d264421c8410a218548b2d2a2a
+	 * 
+	 * Alternatively, you can receive JSON values though php curl on server side (php function get_json_values()) and use it in your php file without using Javascript and Jquery/Ajax.
+	 * 
+	 * Full Instruction - https://gourl.io/bitcoin-payment-gateway-api.html#p8
+	 */
 
 	function cryptobox_custom(url, paid, path, ext, redirect)
 	{
@@ -267,4 +280,4 @@
 	function cryptobox_msghide (id)
 	{
 		setTimeout(function(){ document.getElementById(id).style.display='none';}, 15000 );
-	}
+	} 

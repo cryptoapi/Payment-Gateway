@@ -6,7 +6,7 @@
 JSON data will allow you to easily customise your bitcoin payment boxes. 
 For example, you can display payment amount and  bitcoin payment address with your 
 own text, you can also accept payments in android/windows and other applications.
-
+Instruction - https://gourl.io/bitcoin-payment-gateway-api.html#p8
 
 
 ===============================================================================
@@ -85,4 +85,4 @@ own text, you can also accept payments in android/windows and other applications
 
 - Several new enhancements
 
-      
+          

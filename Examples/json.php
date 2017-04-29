@@ -11,7 +11,7 @@
     $message    = "";
     $path       = "../";
     $page_url   = "//".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"]."#gourlcryptolang"; // Current page url
-   
+    
     require_once( $path."cryptobox.class.php" );
     
     
@@ -61,7 +61,7 @@
 	// coin name
 	$coinName = $box->coin_name(); 
 
-
+	
 	// Payment Received
 	if ($box->is_paid()) 
 	{ 
@@ -98,6 +98,9 @@
 	}
 	
 	
+	// Alternatively, you can receive JSON values through php curl on server side - function get_json_values() and use it in your php/other files without using javascript and jquery/ajax.
+	// print_r($box->get_json_values());
+	
 	
 	
 	// ...
@@ -107,6 +110,7 @@
 	// Please modify file - cryptobox.newpayment.php, read more - https://gourl.io/api-php.html#ipn
 	// ...
 
+	
 	
 ?>
 
@@ -384,8 +388,9 @@
         <div class="page-header">
         	<h1>Raw JSON Data (from GoUrl.io payment gateway) -</h1>
         </div>
-        <p>You can use php function <a target='_blank' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/cryptobox.class.php#L315'>$box->cryptobox_json_url()</a>; It generates url with your paramenters to gourl.io payment gateway.<br> 
-        Using this url you can get bitcoin/altcoin payment box values in JSON format. JSON data will allow you to easily customise your bitcoin payment boxes. For example, you can display payment amount and  bitcoin payment address with your own text, you can also accept payments in android/windows and other applications. </p>
+        <p>You can use php function <a target='_blank' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/cryptobox.class.php#L316'>$box->cryptobox_json_url()</a>; It generates url with your paramenters to gourl.io payment gateway.<br> 
+           Using this url you can get bitcoin/altcoin payment box values in JSON format and use it on html page with Jquery/Ajax - <a target='_blank' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/cryptobox.js#L14'>cryptobox_custom(url, paid, path, ext, redirect)</a>. JSON data will allow you to easily customise your bitcoin payment boxes. For example, you can display payment amount and  bitcoin payment address with your own text, you can also accept payments in android/windows and other applications. </p>
+        <p>Alternatively, you can receive JSON values through php curl on server side - php function <a target='_blank' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/cryptobox.class.php#L369'>$box->get_json_values()</a>; and use it in your php/other files without using javascript and jquery/ajax.</p>
         <p><a target='_blank' href='<?php echo $box->cryptobox_json_url(); ?>'>JSON data source &#187;</a></p>
         <div class="well well-sm">
         	<div class='gourl_jsondata'></div>
@@ -399,6 +404,6 @@
 
 </div>
   
-  
+
 </body>
 </html>
