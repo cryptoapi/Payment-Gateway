@@ -422,12 +422,12 @@ class Cryptobox {
 	public function cryptobox_hash($json = false, $width = 0, $height = 0)
 	{
 	    
-	    $ip	  = $this->ip_address();
-	    
 	    if ($json) $hash_str = $this->boxID."|".$this->coinName."|".$this->public_key."|".$this->private_key."|".$this->webdev_key."|".$this->amount."|".$this->amountUSD."|".$this->period."|". $this->language."|".$this->orderID."|".$this->userID."|".$this->userFormat."|".$this->ip_address();
 	    else       $hash_str = $this->boxID."|".$this->coinName."|".$this->public_key."|".$this->private_key."|".$this->webdev_key."|".$this->amount."|".$this->amountUSD."|".$this->period."|". $this->language."|".$this->orderID."|".$this->userID."|".$this->userFormat."|".$this->iframeID."|".$width."|".$height;
+
 		
 	    $hash = md5($hash_str);
+
 		
 	    return $hash; 
 	}
@@ -1525,6 +1525,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);       
+		unset($v); unset($cryptobox_private_keys);     
 	}
 ?>
