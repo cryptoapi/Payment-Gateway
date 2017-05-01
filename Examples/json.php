@@ -348,7 +348,7 @@
                 <div class="panel panel-success">
                 
                     <div class="panel-heading">
-                        <div style="float:right">
+                        <div style="float:right; margin-left:10px">  
                         	<span class="gourl_texts_total"></span>: <span class="gourl_amount"></span> <span class="gourl_coinlabel"></span>
                         </div>
                         <h3 class="panel-title gourl_paymentcaptcha_title">Result</h3>
