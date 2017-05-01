@@ -95,9 +95,9 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	
 	foreach ($_POST as $k => $v)
 	{
-		if ($k == "datetime") 							$mask = '/[^0-9\ \-\:]/';
-		elseif (in_array($k, array("err", "date")))		$mask = '/[^A-Za-z0-9\.\_\-\@\ ]/';
-		else											$mask = '/[^A-Za-z0-9\.\_\-\@]/';
+		if ($k == "datetime") 						$mask = '/[^0-9\ \-\:]/';
+		elseif (in_array($k, array("err", "date", "period")))		$mask = '/[^A-Za-z0-9\.\_\-\@\ ]/';
+		else								$mask = '/[^A-Za-z0-9\.\_\-\@]/';
 		if ($v && preg_replace($mask, '', $v) != $v) 	$_POST[$k] = "";
 	}
 	
@@ -151,5 +151,5 @@ else
 
 
 	echo $box_status; // don't delete it   
-       
+ 
 ?>
