@@ -115,7 +115,7 @@
 		if (data.boxtype == 'paymentbox') $('.'+ext+'boxlogo').attr('src', 'https://coins.gourl.io/images/'+data.coinname.toLowerCase()+'/payment'+logoext+'.png'); else $('.'+ext+'boxlogo').attr('src', 'https://coins.gourl.io/images/'+data.coinname.toLowerCase()+'/captcha'+logoext+'.png');
 
 		var qrcodesize = (typeof $('.'+ext+'qrcode_image').attr('data-size') === 'undefined') ? 110 : $('.'+ext+'qrcode_image').attr('data-size');
-		$('.'+ext+'qrcode_image').attr('src', 'https://chart.googleapis.com/chart?chs='+qrcodesize+'x'+qrcodesize+'&chld=M|0&cht=qr&chl='+data.coinname+'%3A'+data.addr+'%3Famount%3D'+data.amount+'&choe=UTF-8');
+		$('.'+ext+'qrcode_image').attr('src', 'https://chart.googleapis.com/chart?chs='+qrcodesize+'x'+qrcodesize+'&chld=M|0&cht=qr&chl='+data.coinname.toLowerCase()+'%3A'+data.addr+'%3Famount%3D'+data.amount+'&choe=UTF-8'); 
 		
 		if ($.isFunction($.fn.tooltip)) 
 		{ 
