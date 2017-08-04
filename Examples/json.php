@@ -3,7 +3,7 @@
  * @category    Example14 - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2017 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit, Swiscoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p8
  * @live_demo   https://gourl.io/lib/examples/json.php
  */ 
@@ -402,7 +402,7 @@
 
     </div>
 
-</div>
+</div> 
   
 
 </body>

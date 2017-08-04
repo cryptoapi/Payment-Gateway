@@ -6,7 +6,7 @@
   * @category    Javascript
   * @website     https://gourl.io
   * @api         https://gourl.io/api.html
-  * @version     1.8
+  * @version     1.8.1
   *
   */
 
@@ -276,8 +276,8 @@
 		return c.substring(nameEQ.length,c.length); } return ''; 
 	}
 
-	
+
 	function cryptobox_msghide (id)
 	{
 		setTimeout(function(){ document.getElementById(id).style.display='none';}, 15000 );
-	} 
+	}

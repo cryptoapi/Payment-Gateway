@@ -3,7 +3,7 @@
  * @category    Basic Example
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2017 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit, Swiscoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit
  * @website     https://gourl.io/api-php.html
  */ 
 	require_once( "../cryptobox.class.php" );
@@ -92,13 +92,13 @@
 	
 
 	// ...
-	// Also you need to use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "") 
+	// Also you need to use IPN function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
 	// for send confirmation email, update database, update user membership, etc.
 	// You need to modify file - cryptobox.newpayment.php, read more - https://gourl.io/api-php.html#ipn
 	// ...
 
 
-	
+
 ?>
 
 <!DOCTYPE html>
@@ -109,7 +109,7 @@
 </head>
 <body>
 
-<div style='margin:30px 0 5px 480px'>Language: &#160; <?php echo $languages_list; ?></div>  
+<div style='margin:30px 0 5px 480px'>Language: &#160; <?php echo $languages_list; ?></div>
 <?php echo $paymentbox; ?>
 <center><?php echo $message; ?></center>
  

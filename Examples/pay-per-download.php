@@ -3,7 +3,7 @@
  * @category    Example3 - Pay-Per-Download (single crypto currency in payment box)
  * @package     GoUrl Cryptocurrency Payment API 
  * copyright 	(c) 2014-2017 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, Litecoin, Paycoin, Dogecoin, Dash, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Vericoin, Peercoin, MonetaryUnit, Swiscoin
+ * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p2
  * @live_demo   https://gourl.io/lib/examples/pay-per-download.php
  */ 

@@ -15,7 +15,7 @@
  * @example     https://gourl.io/bitcoin-payment-gateway-api.html
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     1.8
+ * @version     1.8.1
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -47,7 +47,7 @@
  *  C. function cryptobox_sellanguage(..)       // Get cryptobox current selected language by user (english, spanish, etc)
  *  D. function cryptobox_selcoin(..)			// Get cryptobox current selected coin by user (bitcoin, dogecoin, etc. - for multiple coin payment boxes) 
  *  E. function display_language_box(..)		// Language selection dropdown list for cryptocoin payment box 
- *  F. function display_currency_box(..)		// Multiple crypto currency selection list. You can accept payments in multiple crypto currencies (for example: bitcoin, litecoin, dogecoin)
+ *  F. function display_currency_box(..)		// Multiple crypto currency selection list. You can accept payments in multiple crypto currencies (for example: bitcoin, bitcoincash, litecoin, dogecoin)
  *  G. function get_country_name(..)			// Get country name by country code or reverse
  *  H. function convert_currency_live(..)		// Fiat currency converter using Google Finance live exchange rates
  *  I. function validate_gourlkey(..)			// Validate gourl private/public/affiliate keys 
@@ -78,7 +78,7 @@ elseif (!defined('ABSPATH')) exit; // Wordpress
 define("CRYPTOBOX_VERSION", "1.8");
 
 // GoUrl supported crypto currencies
-define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'litecoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'vericoin', 'peercoin', 'paycoin', 'monetaryunit', 'swiscoin')));
+define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit')));
 
 
 class Cryptobox {
@@ -282,7 +282,7 @@ class Cryptobox {
 	
 
 			if ($this->paid) $cryptobox_html .= "<span style='color:#339e2e;white-space:nowrap;'>".str_replace(array("%coinName%", "%coinLabel%", "%amountPaid%"), array($this->coinName, $this->coinLabel, $this->amountPaid), $this->localisation[($this->boxType=="paymentbox"?"msg_received":"msg_received2")])."</span>";
-			else $cryptobox_html .= "<span style='color:#eb4847'>".str_replace(array("%coinName%", "%coinNames%", "%coinLabel%"), array($this->coinName, ($this->coinLabel=='DASH'?$this->coinName:$this->coinName.'s'), $this->coinLabel), $this->localisation["msg_not_received"])."</span><script type='text/javascript'>cryptobox_msghide('$id')</script>";
+			else $cryptobox_html .= "<span style='color:#eb4847'>".str_replace(array("%coinName%", "%coinNames%", "%coinLabel%"), array($this->coinName, (in_array($this->coinLabel, array('BCH', 'DASH'))?$this->coinName:$this->coinName.'s'), $this->coinLabel), $this->localisation["msg_not_received"])."</span><script type='text/javascript'>cryptobox_msghide('$id')</script>";
 			
 			$cryptobox_html .= "</div></div><br>";
 		}
@@ -299,7 +299,7 @@ class Cryptobox {
 			$cryptobox_html .= "<form action='".$_SERVER["REQUEST_URI"]."#".($anchor?$anchor:"c".$this->iframeID)."' method='post'>";
 			$cryptobox_html .= "<input type='hidden' id='cryptobox_live_' name='cryptobox_live_' value='$val'>";
 			$cryptobox_html .= "<div align='center'>";
-			$cryptobox_html .= "<button".(in_array($this->language, array("ar", "fa"))?' dir="rtl"':'')." style='color:#555;border-color:#ccc;background:#f7f7f7;-webkit-box-shadow:inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.08);box-shadow:inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.08);vertical-align:top;display:inline-block;text-decoration:none;font-size:13px;line-height:26px;min-height:28px;margin:20px 0 25px 0;padding:0 10px 1px;cursor:pointer;border-width:1px;border-style:solid;-webkit-appearance:none;-webkit-border-radius:3px;border-radius:3px;white-space:nowrap;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;font-family:\"Open Sans\",sans-serif;font-size: 13px;font-weight: normal;text-transform: none;'>&#160; ".str_replace(array("%coinName%", "%coinNames%", "%coinLabel%"), array($this->coinName, ($this->coinLabel=='DASH'?$this->coinName:$this->coinName.'s'), $this->coinLabel), $this->localisation["button"]).($this->language!="ar"?" &#187;":"")." &#160;</button>";
+			$cryptobox_html .= "<button".(in_array($this->language, array("ar", "fa"))?' dir="rtl"':'')." style='color:#555;border-color:#ccc;background:#f7f7f7;-webkit-box-shadow:inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.08);box-shadow:inset 0 1px 0 #fff,0 1px 0 rgba(0,0,0,.08);vertical-align:top;display:inline-block;text-decoration:none;font-size:13px;line-height:26px;min-height:28px;margin:20px 0 25px 0;padding:0 10px 1px;cursor:pointer;border-width:1px;border-style:solid;-webkit-appearance:none;-webkit-border-radius:3px;border-radius:3px;white-space:nowrap;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;font-family:\"Open Sans\",sans-serif;font-size: 13px;font-weight: normal;text-transform: none;'>&#160; ".str_replace(array("%coinName%", "%coinNames%", "%coinLabel%"), array($this->coinName, (in_array($this->coinLabel, array('BCH', 'DASH'))?$this->coinName:$this->coinName.'s'), $this->coinLabel), $this->localisation["button"]).($this->language!="ar"?" &#187;":"")." &#160;</button>";
 			$cryptobox_html .= "</div>";
 			$cryptobox_html .= "</form>";
 		}
@@ -692,7 +692,7 @@ class Cryptobox {
 	
 	/* 16. Function coin_name()
 	 *
-	 * Returns coin name (bitcoin, dogecoin, litecoin, etc)   
+	 * Returns coin name (bitcoin, bitcoincash, litecoin, etc)   
 	*/
 	public function coin_name()
 	{
@@ -704,7 +704,7 @@ class Cryptobox {
 	
 	/* 17. Function coin_label()
 	 *
-	 * Returns coin label (DOGE, BTC, LTC, etc)   
+	 * Returns coin label (BTC, BCH, LTC, etc)   
 	*/
 	public function coin_label()
 	{
@@ -1152,7 +1152,7 @@ class Cryptobox {
 	/* F. Function display_currency_box()
 	 *
 	* Multiple crypto currency selection list. You can accept payments in multiple crypto currencies
-	* For example you can accept payments in bitcoin, litecoin, dogecoin and use the same price in USD
+	* For example you can accept payments in bitcoin, bitcoincash, litecoin, etc and use the same price in USD
 	*/
 	function display_currency_box($coins = array(), $defCoin = "", $defLang = "en", $iconWidth = 50, $style = "width:350px; margin: 10px 0 10px 320px", $directory = "images", $anchor = "gourlcryptocoins")
 	{
@@ -1525,6 +1525,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);     
+		unset($v); unset($cryptobox_private_keys);  
 	}
 ?>
