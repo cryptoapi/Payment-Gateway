@@ -75,7 +75,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.8");
+define("CRYPTOBOX_VERSION", "1.8.1");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit')));
@@ -1525,6 +1525,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);  
+		unset($v); unset($cryptobox_private_keys);
 	}
 ?>
