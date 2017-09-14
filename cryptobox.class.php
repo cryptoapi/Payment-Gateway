@@ -15,7 +15,7 @@
  * @example     https://gourl.io/bitcoin-payment-gateway-api.html
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     1.8.1
+ * @version     1.8.2
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -75,7 +75,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "1.8.1");
+define("CRYPTOBOX_VERSION", "1.8.2");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit')));
@@ -1236,13 +1236,13 @@ class Cryptobox {
 		if ($from_Currency == "ZWD")  $from_Currency = "ZWL"; // fix for Zimbabwe Dollar
 		if ($from_Currency == "RIAL") $from_Currency = "IRR"; // fix for Iranian Rial
 		
-		$url = "https://www.google.com/finance/converter?a=".$amount."&from=".$from_Currency."&to=".$to_Currency;
+		$url = "https://finance.google.com/finance/converter?a=".$amount."&from=".$from_Currency."&to=".$to_Currency;
 	
 		$ch = curl_init();
 		curl_setopt ($ch, CURLOPT_URL, $url);
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
+		curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko");
 		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 20);
 		curl_setopt ($ch, CURLOPT_TIMEOUT, 20);
 		$res = curl_exec($ch);
@@ -1526,6 +1526,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);
+		unset($v); unset($cryptobox_private_keys);      
 	}
 ?>
