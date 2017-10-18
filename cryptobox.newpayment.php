@@ -42,7 +42,7 @@
  *            "addr":"14dt2cSbvwghDcETJDuvFGHe5bCsCPR9jW"
  *            "tx":"95ed924c215f2945e75acfb5650e28384deac382c9629cf0d3f31d0ec23db08d"
  *            "confirmed":0
- *            "timestamp":"1422624765 "
+ *            "timestamp":"1422624765"
  *            "date":"30 January 2015"
  *            "datetime":"2015-01-30 13:32:45"
  *        }
@@ -130,7 +130,7 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 
 
 
-    return true;     
+    return true;      
 }
 
 ?>

@@ -164,8 +164,8 @@ class Cryptobox {
 		
 		if (($this->amount <= 0 && $this->amountUSD <= 0) || ($this->amount > 0 && $this->amountUSD > 0)) die("You can use in cryptobox options one of variable only: amount or amountUSD. You cannot place values in that two variables together (submitted amount = '".$this->amount."' and amountUSD = '".$this->amountUSD."' )");
 		 
-		if ($this->amount && (!is_numeric($this->amount) || $this->amount < 0.0001 || $this->amount > 50000000)) die("Invalid Amount - $this->amount $this->coinLabel. Allowed range: 0.0001 .. 50,000,000");
-		if ($this->amountUSD && (!is_numeric($this->amountUSD) || $this->amountUSD < 0.01 || $this->amountUSD > 1000000)) die("Invalid amountUSD - $this->amountUSD USD. Allowed range: 0.01 .. 1,000,000");
+		if ($this->amount && (!is_numeric($this->amount) || $this->amount < 0.0001 || $this->amount > 500000000)) die("Invalid Amount - ".sprintf('%.8f', $this->amount)." $this->coinLabel. Allowed range: 0.0001 .. 500,000,000");
+		if ($this->amountUSD && (!is_numeric($this->amountUSD) || $this->amountUSD < 0.01 || $this->amountUSD > 1000000)) die("Invalid amountUSD - ".sprintf('%.8f', $this->amountUSD)." USD. Allowed range: 0.01 .. 1,000,000");
 		
 		$this->period = trim(strtoupper(str_replace(" ", "", $this->period)));
 		if (substr($this->period, -1) == "S") $this->period = substr($this->period, 0, -1);
@@ -1228,40 +1228,95 @@ class Cryptobox {
 	 */
 	function convert_currency_live($from_Currency, $to_Currency, $amount)
 	{
-		$amount = urlencode($amount);
+		static $arr = array();
+	    
 		$from_Currency = trim(strtoupper(urlencode($from_Currency)));
-		$to_Currency = trim(strtoupper(urlencode($to_Currency)));
+		$to_Currency   = trim(strtoupper(urlencode($to_Currency)));
 
-		if ($from_Currency == "TRL")  $from_Currency = "TRY"; // fix for Turkish Lyra
-		if ($from_Currency == "ZWD")  $from_Currency = "ZWL"; // fix for Zimbabwe Dollar
+		if ($from_Currency == "TRL") $from_Currency = "TRY"; // fix for Turkish Lyra
+		if ($from_Currency == "ZWD") $from_Currency = "ZWL"; // fix for Zimbabwe Dollar
+		if ($from_Currency == "RM")  $from_Currency = "MYR"; // fix for Malaysian Ringgit
+		
 		if ($from_Currency == "RIAL") $from_Currency = "IRR"; // fix for Iranian Rial
+		if ($from_Currency == "IRT") { $from_Currency = "IRR"; $amount = $amount * 10; } // fix for Iranian Toman; 1IRT = 10IRR
+
+		$key  = $from_Currency."_".$to_Currency;
 		
-		$url = "https://finance.google.com/finance/converter?a=".$amount."&from=".$from_Currency."&to=".$to_Currency;
-	
-		$ch = curl_init();
-		curl_setopt ($ch, CURLOPT_URL, $url);
-		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko");
-		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 20);
-		curl_setopt ($ch, CURLOPT_TIMEOUT, 20);
-		$res = curl_exec($ch);
-		curl_close($ch);
-		
-		if ($res)
+		if (isset($arr[$key])) 
 		{
-    		$data = explode('bld>', $res);
-    		$data = explode($to_Currency, $data[1]);
-    		return round($data[0], ($to_Currency=="BTC"?5:2));
+		    if ($arr[$key] > 0) 
+		    {
+		        $total = $arr[$key]*$amount;
+		        if ($to_Currency=="BTC" || $total<0.01) return sprintf('%.5f', round($total, 5));
+		        else return round($total, 2);
+		    }
+		    else return -1;
 		}
-		else return -1; 
+		
+		
+		$url = "https://finance.google.com/finance/converter?a=1&from=".$from_Currency."&to=".$to_Currency;
+		
+		$rawdata = get_url_contents( $url );
+		
+		$data = explode('bld>', $rawdata);
+		$data = (isset($data[1])) ? explode($to_Currency, $data[1]) : array();
+		$data[0] = (isset($data[0])) ? floatval($data[0]) : 0;
+		
+		// alternative
+		// not working - https://finance.google.com/finance/converter?a=1&from=IRR&to=USD
+		// working - https://finance.google.com/finance/converter?a=1&from=USD&to=IRR
+		if ($data[0] <= 0)
+		{
+		    $url = "https://finance.google.com/finance/converter?a=1&from=".$to_Currency."&to=".$from_Currency;
+		    $rawdata = get_url_contents( $url );
+		    $data = explode('bld>', $rawdata);
+		    $data = (isset($data[1])) ? explode($to_Currency, $data[1]) : array();
+		    $data[0] = (isset($data[0])) ? floatval($data[0]) : 0;
+
+		    if ($data[0] > 0) $data[0] = 1 / $data[0];
+		}		
+		
+
+		if ($data[0] > 0)
+		{
+		    $arr[$key] = $data[0];
+		    $total = $arr[$key]*$amount;
+		    if ($to_Currency=="BTC" || $total<0.01) return sprintf('%.5f', round($total, 5));
+		    else return round($total, 2);
+		}
+		else 
+		{
+		    $arr[$key] = -1;
+		    return -1;
+		}
+	}
+	
+
+	
+	
+	/*	I. Get URL Data
+	*/
+	function get_url_contents( $url, $timeout = 20 )
+	{
+	    $ch = curl_init();
+	    curl_setopt ($ch, CURLOPT_URL, $url);
+	    curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+	    curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt ($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+	    curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko");
+	    curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+	    curl_setopt ($ch, CURLOPT_TIMEOUT, $timeout);
+	    $data 		= curl_exec($ch);
+	    $httpcode 	= curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	    curl_close($ch);
+	
+	    return ($httpcode>=200 && $httpcode<300) ? $data : false;
 	}
 	
 	
 	
 	
-	
-	/* I. Function validate_gourlkey()
+	/* J. Function validate_gourlkey()
 	 *
 	* Validate gourl private/public/affiliate keys
 	* $key 	 	- gourl payment box key
@@ -1304,7 +1359,7 @@ class Cryptobox {
 	
 	
 	
-	/* J. Function run_sql()
+	/* K. Function run_sql()
 	 *
 	 * Run SQL queries and return result in array/object formats
 	 */
@@ -1518,7 +1573,7 @@ class Cryptobox {
 							);
 
 	if(!defined("CRYPTOBOX_LOCALISATION")) define("CRYPTOBOX_LOCALISATION", json_encode($cryptobox_localisation));
-	unset($cryptobox_localisation);   
+	unset($cryptobox_localisation);  
 	
 	if (!CRYPTOBOX_WORDPRESS || defined("CRYPTOBOX_PRIVATE_KEYS"))
 	{
@@ -1526,6 +1581,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);      
+		unset($v); unset($cryptobox_private_keys);                          
 	}
 ?>
