@@ -2,8 +2,8 @@
 /**
  * @category    Example5 - Pay-Per-Post (single crypto currency in payment box)
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014-2017 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit
+ * copyright 	(c) 2014-2018 Delta Consultants
+ * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit, UniversalCurrency
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p3
  * @live_demo   https://gourl.io/lib/examples/pay-per-post.php
  */ 

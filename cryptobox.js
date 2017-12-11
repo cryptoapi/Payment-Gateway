@@ -2,11 +2,11 @@
   * Cryptocoin Payment Box Javascript           
   *
   * @package     GoUrl Bitcoin/Altcoin Payment Box and Crypto Captcha
-  * @copyright   2014-2017 Delta Consultants
+  * @copyright   2014-2018 Delta Consultants
   * @category    Javascript
   * @website     https://gourl.io
   * @api         https://gourl.io/api.html
-  * @version     1.8.2
+  * @version     1.8.3
   *
   */
 
@@ -121,7 +121,6 @@
 		{ 
 			$('.'+ext+'wallet_open').attr('data-original-title', data.texts.btn_wallet).attr('data-placement', 'bottom').attr('data-toggle', 'tooltip').tooltip();  
 			$('.'+ext+'qrcode_image').attr('data-original-title', data.texts.qrcode).attr('data-placement', 'bottom').attr('data-toggle', 'tooltip').tooltip(); 
-			$('.'+ext+'fees_hint').attr('data-original-title', '<img border="0" width="320" src="https://coins.gourl.io/images/fees.png" />').attr('data-placement', 'bottom').attr('data-toggle', 'tooltip').tooltip({ html: true }); 
 			$('.'+ext+'button_wait').attr('data-original-title', data.texts.btn_wait_hint).attr('data-placement', 'top').attr('data-toggle', 'tooltip').tooltip();  
 		}
 		
@@ -280,4 +279,4 @@
 	function cryptobox_msghide (id)
 	{
 		setTimeout(function(){ document.getElementById(id).style.display='none';}, 15000 );
-	}
+	}    

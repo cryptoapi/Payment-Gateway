@@ -2,8 +2,8 @@
 /**
  * @category    Example14 - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)
  * @package     GoUrl Cryptocurrency Payment API
- * copyright 	(c) 2014-2017 Delta Consultants
- * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit
+ * copyright 	(c) 2014-2018 Delta Consultants
+ * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit, UniversalCurrency
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p8
  * @live_demo   https://gourl.io/lib/examples/json.php
  */ 
@@ -155,7 +155,7 @@
 
 <div style='text-align:center;width:100%;height:auto;line-height:50px;background-color:#f1f1f1;border-bottom:1px solid #ddd;color:#49abe9;font-size:18px;'>
 	14. GoUrl <b>Custom JSON / JQUERY Payment Box</b> Example (<?php echo $coinName; ?> payments). &#160;Use it on your website. 
-	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html#p8'>Instruction</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/Examples/json.php'>PHP Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
+	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html#p8'>Instruction</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/Examples/json.php'>PHP Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://github.com/cryptoapi/Bitcoin-Payment-Gateway-ASP.NET/blob/master/GoUrl/Views/Examples/PayPerJson.cshtml'>ASP.NET Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
 </div>
 
 
@@ -304,7 +304,7 @@
                     	<h3 class="panel-title">3. <span class="gourl_paymentcaptcha_amount"></span></h3>
                     </div>
                     <div class="panel-body">
-                    	<span class="gourl_amount"></span> <span class="gourl_coinlabel"></span> + <a class="gourl_texts_fees gourl_fees_hint" href="#"></a>
+                    	<span class="gourl_amount"></span> <span class="gourl_coinlabel"></span>
                     	
                     </div>
                 </div>
