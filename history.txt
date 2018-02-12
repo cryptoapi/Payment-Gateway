@@ -1,4 +1,15 @@
 ===============================================================================
+== Version 2.0 (February 2018)    
+===============================================================================
+
+- Added mobile friendly payment box
+- White Label Product - Bitcoin Payments with your own logo and all payment requests through your server
+- Generate PHP Custom Payment Box Code Online - https://gourl.io/lib/examples/example_customize_box.php
+- JSON/Bootstrap4 supports
+
+
+
+===============================================================================
 == Version 1.8.3 (December 2017)    
 ===============================================================================
 
@@ -101,4 +112,4 @@ Instruction - https://gourl.io/bitcoin-payment-gateway-api.html#p8
 
 - Several new enhancements
 
-       
+     

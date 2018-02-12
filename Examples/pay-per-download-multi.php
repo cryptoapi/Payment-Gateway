@@ -7,8 +7,23 @@
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p2
  * @live_demo   https://gourl.io/lib/examples/pay-per-download-multi.php
  */ 
+
+	/********************** NOTE - 2018 YEAR *******************************************************************************/ 
+	/*****                                                                                                             *****/ 
+	/*****     This is iFrame Bitcoin Payment Box Example (2014 - 2017)                                                *****/ 
+	/*****                                                                                                             *****/ 
+	/*****     Available - new 2018 version; mobile friendly JSON payment box (own logo, white label product)          *****/
+	/*****     New Demo with generation php payment box code - https://gourl.io/lib/examples/example_customize_box.php *****/
+	/*****         White Theme - https://gourl.io/lib/examples/example_customize_box.php?theme=black                   *****/
+	/*****         Black Theme - https://gourl.io/lib/examples/example_customize_box.php?theme=default     		   *****/
+	/*****         Your Own Logo - https://gourl.io/lib/examples/example_customize_box.php?theme=default&logo=custom   *****/
+	/*****                                                                                                             *****/ 
+	/***********************************************************************************************************************/
+
+
 	
-	require_once( "../cryptobox.class.php" );
+	
+	require_once( "../lib/cryptobox.class.php" );
 
 	
 	/**** CONFIGURATION VARIABLES ****/ 
@@ -135,7 +150,7 @@
 	
 	
 	// Optional - Coin selection list (html code)
-	$coins_list = display_currency_box($available_payments, $def_payment, $def_language, 60, "margin: 80px 0 0 0");
+	$coins_list = display_currency_box($available_payments, $def_payment, $def_language, 60, "margin: 80px 0 0 0", "images");
 
 
 
@@ -159,13 +174,13 @@
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='Expires' content='-1'>
 <meta name='robots' content='all'>
-<script src='../cryptobox.min.js' type='text/javascript'></script>
+<script src='../js/cryptobox.min.js' type='text/javascript'></script>
 </head>
 <body style='font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#666;margin:0'>
 <div align='center'>
 <div style='width:100%;height:auto;line-height:50px;background-color:#f1f1f1;border-bottom:1px solid #ddd;color:#49abe9;font-size:18px;'>
 	4. GoUrl <b>Pay-Per-Download</b> Example (multiple cryptocurrencies). Use it on your website. 
-	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?= "//".$_SERVER["HTTP_HOST"].str_replace("-multi.php", ".php", $_SERVER["REQUEST_URI"]); ?>'>Single Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html#p2'>PHP Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://github.com/cryptoapi/Bitcoin-Payment-Gateway-ASP.NET/tree/master/GoUrl/Views/Examples/PayPerDownloadMulti.cshtml'>ASP.NET Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://wordpress.org/plugins/gourl-bitcoin-payment-gateway-paid-downloads-membership/'>Wordpress</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
+	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?= "//".$_SERVER["HTTP_HOST"].str_replace("-multi.php", ".php", $_SERVER["REQUEST_URI"]); ?>'>Single Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html#p2'>PHP Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://github.com/cryptoapi/Bitcoin-Payment-Gateway-ASP.NET/tree/master/GoUrl/Views/Examples/PayPerDownloadMulti.cshtml'>ASP.NET Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/lib/examples/example_customize_box.php'>NEW - Payment Box 2018 (Mobile Friendly)</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://wordpress.org/plugins/gourl-bitcoin-payment-gateway-paid-downloads-membership/'>Wordpress</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
 </div>
 
 <h2>Example - Paid File Downloads (multi coins below)</h2>

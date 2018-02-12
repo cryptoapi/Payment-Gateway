@@ -2,7 +2,7 @@
 GoUrl.io Cryptocoin Payment Gateway API
 -----------------------------------------
 
-Version 1.8.3
+Version 2.0
 
 **Accept Bitcoin, Bitcoin Cash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, UniversalCurrency, MonetaryUnit Payments Online on your website**
 
@@ -15,7 +15,8 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 * No Monthly Fee, Transaction Fee from 0%
 * No ID Required, No Bank Account Needed
 * Get payments straight to your bitcoin/altcoin wallets and convert to [USD/EUR/etc](https://gourl.io/#usd) later
-* [Custom Payment Box](https://gourl.io/lib/examples/json.php) - json format; customise your bitcoin payment box with your own text / logo
+* [Custom Payment Box](https://gourl.io/lib/examples/example_customize_box.php) - json format; customise your bitcoin payment box with your own text / logo
+* [White Label Product](https://gourl.io/lib/examples/example_customize_box.php?logo=custom&method=curl&boxtype=1) - Bitcoin Payments with your own logo and all payment requests through your server
 * [Pay-Per-Product](https://gourl.io/lib/examples/pay-per-product-multi.php) - sell your products for bitcoin, bitcoin cash, litecoin, etc. online on your website. It is easy!
 * [Pay-Per-Download](https://gourl.io/lib/examples/pay-per-download-multi.php) -  make money on file downloads/other digital content from your website online
 * [Pay-Per-Post](https://gourl.io/lib/examples/pay-per-post-multi.php) - get separate payments for each post/article published on your website
@@ -197,12 +198,11 @@ Payment API List :
 PHP Examples / Live Demo :
 -----------------------------
 
+* **White Label Product**  Customize - [bitcoin json / jquery](https://gourl.io/lib/examples/example_customize_box.php)
 * **Pay-Per-Product**: Example1 - [multiple crypto](https://gourl.io/lib/examples/pay-per-product-multi.php), Example2 - [bitcoin](https://gourl.io/lib/examples/pay-per-product.php)
 * **Pay-Per-Download**: Example3 - [multiple crypto](https://gourl.io/lib/examples/pay-per-download-multi.php), Example4 - [bitcoin](https://gourl.io/lib/examples/pay-per-download.php)
 * **Pay-Per-Post**: Example5 - [multiple crypto](https://gourl.io/lib/examples/pay-per-post-multi.php), Example6 - [bitcoin](https://gourl.io/lib/examples/pay-per-post.php)
 * **Pay-Per-Registration**: Example7 - [multiple crypto](https://gourl.io/lib/examples/pay-per-registration-multi.php), Example8 - [bitcoin](https://gourl.io/lib/examples/pay-per-registration.php)
 * **Pay-Per-Page-Access**: Example19 - [multiple crypto](https://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](https://gourl.io/lib/examples/pay-per-page.php)
 * **Pay-Per-Membership**: Example11 - [multiple crypto](https://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](https://gourl.io/lib/examples/pay-per-membership.php)
-* **Your Custom Payment Box** Example13 - [bitcoin json / jquery](https://gourl.io/lib/examples/json.php)
 
-   

@@ -7,8 +7,23 @@
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p4
  * @live_demo   https://gourl.io/lib/examples/pay-per-registration.php
  */ 
+
+	/********************** NOTE - 2018 YEAR *******************************************************************************/ 
+	/*****                                                                                                             *****/ 
+	/*****     This is iFrame Bitcoin Payment Box Example (2014 - 2017)                                                *****/ 
+	/*****                                                                                                             *****/ 
+	/*****     Available - new 2018 version; mobile friendly JSON payment box (own logo, white label product)          *****/
+	/*****     New Demo with generation php payment box code - https://gourl.io/lib/examples/example_customize_box.php *****/
+	/*****         White Theme - https://gourl.io/lib/examples/example_customize_box.php?theme=black                   *****/
+	/*****         Black Theme - https://gourl.io/lib/examples/example_customize_box.php?theme=default     		   *****/
+	/*****         Your Own Logo - https://gourl.io/lib/examples/example_customize_box.php?theme=default&logo=custom   *****/
+	/*****                                                                                                             *****/ 
+	/***********************************************************************************************************************/
+
+
 	
-	require_once( "../cryptobox.class.php" );
+	
+	require_once( "../lib/cryptobox.class.php" );
 
 	
 	/**** CONFIGURATION VARIABLES ****/ 
@@ -119,13 +134,13 @@
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='Expires' content='-1'>
 <meta name='robots' content='all'>
-<script src='../cryptobox.min.js' type='text/javascript'></script>
+<script src='../js/cryptobox.min.js' type='text/javascript'></script>
 </head>
 <body style='font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#666;margin:0'>
 <div align='center'>
 <div style='width:100%;height:auto;line-height:50px;background-color:#f1f1f1;border-bottom:1px solid #ddd;color:#49abe9;font-size:18px;'>
 	7. GoUrl <b>Pay-Per-Registration</b> Example (<?php echo $coinName; ?> payments). Use it on your website. 
-	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?= "//".$_SERVER["HTTP_HOST"].str_replace(".php", "-multi.php", $_SERVER["REQUEST_URI"]); ?>'>Multiple Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html#p4'>PHP Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://github.com/cryptoapi/Bitcoin-Payment-Gateway-ASP.NET/tree/master/GoUrl/Views/Examples/PayPerRegistration.cshtml'>ASP.NET Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://wordpress.org/plugins/gourl-bitcoin-payment-gateway-paid-downloads-membership/'>Wordpress</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
+	<div style='float:right;'><a style='font-size:15px;color:#389ad8;margin-right:20px' href='<?= "//".$_SERVER["HTTP_HOST"].str_replace(".php", "-multi.php", $_SERVER["REQUEST_URI"]); ?>'>Multiple Crypto</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html#p4'>PHP Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://github.com/cryptoapi/Bitcoin-Payment-Gateway-ASP.NET/tree/master/GoUrl/Views/Examples/PayPerRegistration.cshtml'>ASP.NET Source</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/lib/examples/example_customize_box.php'>NEW - Payment Box 2018 (Mobile Friendly)</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://wordpress.org/plugins/gourl-bitcoin-payment-gateway-paid-downloads-membership/'>Wordpress</a><a style='font-size:15px;color:#389ad8;margin-right:20px' href='https://gourl.io/<?= strtolower($coinName) ?>-payment-gateway-api.html'>Other Examples</a></div>
 </div>
 <br>
 <h1>Example - Paid Registration</h1>
