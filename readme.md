@@ -64,7 +64,7 @@ The big benefit of Cryptocoin Payment Box is that it fully integrated on your we
 Your website will receive full user payment information immediately after cryptocoin payment is made and you can process it in automatic mode.
 
 
-# ![Payment-Box](https://gourl.io/images/bitcoinbox.png)
+# ![Payment-Box](https://gourl.io/images/bitcoinbox2.png)
 
 
 
@@ -198,7 +198,7 @@ Payment API List :
 PHP Examples / Live Demo :
 -----------------------------
 
-* **White Label Product**  Customize - [bitcoin json / jquery](https://gourl.io/lib/examples/example_customize_box.php)
+* **White Label Product**  Bitcoin Payments - [your logo/jquery](https://gourl.io/lib/examples/example_customize_box.php)
 * **Pay-Per-Product**: Example1 - [multiple crypto](https://gourl.io/lib/examples/pay-per-product-multi.php), Example2 - [bitcoin](https://gourl.io/lib/examples/pay-per-product.php)
 * **Pay-Per-Download**: Example3 - [multiple crypto](https://gourl.io/lib/examples/pay-per-download-multi.php), Example4 - [bitcoin](https://gourl.io/lib/examples/pay-per-download.php)
 * **Pay-Per-Post**: Example5 - [multiple crypto](https://gourl.io/lib/examples/pay-per-post-multi.php), Example6 - [bitcoin](https://gourl.io/lib/examples/pay-per-post.php)
@@ -206,3 +206,4 @@ PHP Examples / Live Demo :
 * **Pay-Per-Page-Access**: Example19 - [multiple crypto](https://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](https://gourl.io/lib/examples/pay-per-page.php)
 * **Pay-Per-Membership**: Example11 - [multiple crypto](https://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](https://gourl.io/lib/examples/pay-per-membership.php)
 
+       
