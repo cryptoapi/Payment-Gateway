@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo) 
+ * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)          
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2018 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
@@ -653,6 +653,7 @@
   <?php 
     
         if ($method == "curl" && !in_array($theme, array("black", "greyred", "greygreen"))) echo "<div class='text-center'><br><img style='max-width:100%; height:auto; width:auto\9;' alt='White Label Product' src='images/white-label.png'><br><br><br></div>"; 
+        echo "<a id='b'></a>"; // anchor for demo options only; don't need on live your server 
   
   
         // PAYMENT BOX 
@@ -660,7 +661,6 @@
   
         $custom_text = "<p class='lead'>Demo Text - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>";
         $custom_text .= "<p class='lead'>Please contact us for any questions on aaa@example.com</p>";
-        echo "<a name='b' id='b'></a>"; // anchor for demo options only; don't need on live your server 
         
         // use function display_cryptobox_bootstrap ($coins = array(), $def_coin = "", $def_language = "en", $custom_text = "", $coinImageSize = 70, $qrcodeSize = 200, $show_languages = true, $logoimg_path = "default", $resultimg_path = "default", $resultimgSize = 250, $redirect = "", $method = "ajax", $debug = false)
         echo $box->display_cryptobox_bootstrap($coins, $def_coin, $def_language, $custom_text, $coinImageSize, $qrcodeSize, $show_languages, $logoimg_path, $resultimg_path, $resultimgSize, "", $method, $debug);
