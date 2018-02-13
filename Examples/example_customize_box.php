@@ -623,9 +623,9 @@
             Data Methods (White Label/Ajax)
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton10">
-            <a class="dropdown-item<?php if ($method == "ajax") echo " active#b"; ?>" href="<?php echo $page . "method=ajax&boxtype=1" ?>"><b>AJAX</b> - Prefer Method (users don't need click any submit buttons)</a>
+            <a class="dropdown-item<?php if ($method == "ajax") echo " active"; ?>" href="<?php echo $page . "method=ajax&boxtype=1#b" ?>"><b>AJAX</b> - Prefer Method (users don't need click any submit buttons)</a>
             <a class="dropdown-item disabled" href="#a">ajax - User browser receive payment data directly from our server and auto show successful message</a>
-            <a class="dropdown-item<?php if ($method == "curl") echo " active#b"; ?>" href="<?php echo $page . "method=curl&boxtype=1" ?>"><b>CURL</b> + Your Own Logo (White Label Product), user need to click on button when payment is sent</a>
+            <a class="dropdown-item<?php if ($method == "curl") echo " active"; ?>" href="<?php echo $page . "method=curl&boxtype=1#b" ?>"><b>CURL</b> + Your Own Logo (White Label Product), user need to click on button when payment is sent</a>
             <a class="dropdown-item disabled" href="#a">curl - User browser receive payment data from your server only; your server receive data from our server</a>
           </div>
         </div>
