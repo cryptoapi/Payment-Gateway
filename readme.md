@@ -99,7 +99,7 @@ Installation - PHP Script
 ----------------------------
 * [Free Register](https://gourl.io/view/registration/New_User_Registration.html) or [Login](https://gourl.io/info/memberarea/My_Account.html) on the website and [create new payment box](https://gourl.io/editrecord/coin_boxes/0)
 * [Download](https://coins.gourl.io/lib/cryptoapi_php.rar) Free PHP/MySQL Script and read [How It Works](https://gourl.io/#section8)
-* Edit file [cryptobox_config.php](https://github.com/cryptoapi/Payment-Gateway/blob/master/cryptobox.config.php), add your db details and your private key ([screenshot](https://gourl.io/images/instruction-config1.png))
+* Edit file [cryptobox_config.php](https://github.com/cryptoapi/Payment-Gateway/blob/master/lib/cryptobox.config.php), add your db details and your private key ([screenshot](https://gourl.io/images/instruction-config1.png))
 * Run [SQL query](https://github.com/cryptoapi/Payment-Gateway#mysql-table) in your database to create new table crypto_payments
 * Place your public/private keys from new created payment box in any [example](https://github.com/cryptoapi/Payment-Gateway/tree/master/Examples)
 * You can use this [example](https://github.com/cryptoapi/Payment-Gateway/blob/master/Examples/pay-per-product.php) ([screenshot](https://gourl.io/images/instruction-config2.png)) and run it
@@ -206,4 +206,4 @@ PHP Examples / Live Demo :
 * **Pay-Per-Page-Access**: Example19 - [multiple crypto](https://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](https://gourl.io/lib/examples/pay-per-page.php)
 * **Pay-Per-Membership**: Example11 - [multiple crypto](https://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](https://gourl.io/lib/examples/pay-per-membership.php)
 
-       
+   

@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)       
+ * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo) 
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2018 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
@@ -629,7 +629,7 @@
 
   <?php 
     
-        if ($method == "curl" && !in_array($theme, array("black", "grey"))) echo "<div class='text-center'><br><img style='max-width:100%; height:auto; width:auto\9;' alt='White Label Product' src='images/white-label.png'><br><br><br></div>"; 
+        if ($method == "curl" && !in_array($theme, array("black", "greyred", "greygreen"))) echo "<div class='text-center'><br><img style='max-width:100%; height:auto; width:auto\9;' alt='White Label Product' src='images/white-label.png'><br><br><br></div>"; 
   
   
         // PAYMENT BOX 
