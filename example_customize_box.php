@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo) 
+ * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)          
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2018 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
@@ -181,6 +181,25 @@
 
         
         
+        // Reset Settings
+        // ---------------------
+        if (isset($_GET["reset"]))
+        {
+            $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+            foreach($cookies as $cookie) {
+                $parts = explode('=', $cookie);
+                $name = trim($parts[0]);
+                setcookie($name, '', time()-1000);
+                setcookie($name, '', time()-1000, '/');
+            }
+            
+            header("Location: //".$_SERVER["HTTP_HOST"].$_SERVER["SCRIPT_NAME"]); 
+            echo "<script> window.location.href = '//".$_SERVER["HTTP_HOST"].$_SERVER["SCRIPT_NAME"]."'</script>";
+            die();
+        }
+        
+        
+        
         // Theme Selection
         // ---------------------
         if (isset($_GET["theme"])) 
@@ -280,10 +299,10 @@
             $numcoin = $_GET["numcoin"];
             setcookie("dnumcoin", $numcoin);
         }
-        else $numcoin = (isset($_COOKIE["dnumcoin"])) ? $_COOKIE["dnumcoin"] : 5;
+        else $numcoin = (isset($_COOKIE["dnumcoin"])) ? $_COOKIE["dnumcoin"] : 6;
         $numcoin = intval($numcoin);
         
-        if ($numcoin > 15) $numcoin = 5;
+        if ($numcoin > 15) $numcoin = 6;
         $coins = array_slice($coins, 0, $numcoin);
         // -- End numcoin ---------------------
         
@@ -437,7 +456,7 @@
     <div class="d-flex flex-column flex-md-row align-items-center card card-body bg-light border-bottom" style="border-bottom: 1px solid #e5e5e5;">
       <h5 class="my-0 mr-md-auto font-weight-normal" style="line-height:30px"><b>GoUrl Crypto Payment Box Example</b> (json, bootstrap4, mobile friendly, optional - free <b><a target="_blank" href="https://www.google.com/search?q=white+label+product">White Label Product</a></b> - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source).</h5>
       <nav class="my-3 my-md-0 mr-md-3">
-        <a class="p-2" href="https://github.com/cryptoapi/Payment-Gateway/blob/master/Examples/example_basic.php">Page Source</a>
+        <a class="p-2" href="https://github.com/cryptoapi/Payment-Gateway/blob/master/example_basic.php">Page Source</a>
         <a class="p-2" href="https://gourl.io/api-php.html">Instruction</a>
         <a class="p-2" href="https://gourl.io/bitcoin-payment-gateway-api.html">Other Examples</a>
       </nav>
@@ -457,19 +476,19 @@
             Colour Themes
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <a class="dropdown-item<?php if ($theme == "default") echo " active"; ?>" href="<?php echo $page . "theme=default" ?>">Default</a>
-            <a class="dropdown-item<?php if ($theme == "black") echo " active"; ?>" href="<?php echo $page . "theme=black" ?>">Black</a>
-            <a class="dropdown-item<?php if ($theme == "greyred") echo " active"; ?>" href="<?php echo $page . "theme=greyred" ?>">Grey/Red</a>
-            <a class="dropdown-item<?php if ($theme == "greygreen") echo " active"; ?>" href="<?php echo $page . "theme=greygreen" ?>">Grey/Green</a>
-            <a class="dropdown-item<?php if ($theme == "whiteblue") echo " active"; ?>" href="<?php echo $page . "theme=whiteblue" ?>">White/Blue</a>
-            <a class="dropdown-item<?php if ($theme == "whitered") echo " active"; ?>" href="<?php echo $page . "theme=whitered" ?>">White/Red</a>
-            <a class="dropdown-item<?php if ($theme == "whitegreen") echo " active"; ?>" href="<?php echo $page . "theme=whitegreen" ?>">White/Green</a>
-            <a class="dropdown-item<?php if ($theme == "sandstone") echo " active"; ?>" href="<?php echo $page . "theme=sandstone" ?>">White/Lime Green</a>
-            <a class="dropdown-item<?php if ($theme == "whiteblack") echo " active"; ?>" href="<?php echo $page . "theme=whiteblack" ?>">White/Black</a>
-            <a class="dropdown-item<?php if ($theme == "whitepurple") echo " active"; ?>" href="<?php echo $page . "theme=whitepurple" ?>">White/Purple</a>
-            <a class="dropdown-item<?php if ($theme == "litera") echo " active"; ?>" href="<?php echo $page . "theme=litera" ?>">Light Blue (Rounded)</a>
-            <a class="dropdown-item<?php if ($theme == "minty") echo " active"; ?>" href="<?php echo $page . "theme=minty" ?>">Light Green (Rounded)</a>
-            <a class="dropdown-item<?php if ($theme == "sketchy") echo " active"; ?>" href="<?php echo $page . "theme=sketchy" ?>">Sketchy :)</a>
+            <a class="dropdown-item<?php if ($theme == "default") echo " active"; ?>" href="<?php echo $page . "theme=default#b" ?>">Default</a>
+            <a class="dropdown-item<?php if ($theme == "black") echo " active"; ?>" href="<?php echo $page . "theme=black#b" ?>">Black</a>
+            <a class="dropdown-item<?php if ($theme == "greyred") echo " active"; ?>" href="<?php echo $page . "theme=greyred#b" ?>">Grey/Red</a>
+            <a class="dropdown-item<?php if ($theme == "greygreen") echo " active"; ?>" href="<?php echo $page . "theme=greygreen#b" ?>">Grey/Green</a>
+            <a class="dropdown-item<?php if ($theme == "whiteblue") echo " active"; ?>" href="<?php echo $page . "theme=whiteblue#b" ?>">White/Blue</a>
+            <a class="dropdown-item<?php if ($theme == "whitered") echo " active"; ?>" href="<?php echo $page . "theme=whitered#b" ?>">White/Red</a>
+            <a class="dropdown-item<?php if ($theme == "whitegreen") echo " active"; ?>" href="<?php echo $page . "theme=whitegreen#b" ?>">White/Green</a>
+            <a class="dropdown-item<?php if ($theme == "sandstone") echo " active"; ?>" href="<?php echo $page . "theme=sandstone#b" ?>">White/Lime Green</a>
+            <a class="dropdown-item<?php if ($theme == "whiteblack") echo " active"; ?>" href="<?php echo $page . "theme=whiteblack#b" ?>">White/Black</a>
+            <a class="dropdown-item<?php if ($theme == "whitepurple") echo " active"; ?>" href="<?php echo $page . "theme=whitepurple#b" ?>">White/Purple</a>
+            <a class="dropdown-item<?php if ($theme == "litera") echo " active"; ?>" href="<?php echo $page . "theme=litera#b" ?>">Light Blue (Rounded)</a>
+            <a class="dropdown-item<?php if ($theme == "minty") echo " active"; ?>" href="<?php echo $page . "theme=minty#b" ?>">Light Green (Rounded)</a>
+            <a class="dropdown-item<?php if ($theme == "sketchy") echo " active"; ?>" href="<?php echo $page . "theme=sketchy#b" ?>">Sketchy :)</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" target="_blank" href="https://bootswatch.com/">More ...</a>
           </div>
@@ -481,8 +500,8 @@
             Payment Box Type
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-            <a class="dropdown-item<?php if ($boxtype == 1) echo " active"; ?>" href="<?php echo $page . "boxtype=1" ?>">Awaiting Payment</a>
-            <a class="dropdown-item<?php if ($boxtype == 2) echo " active"; ?>" href="<?php echo $page . "boxtype=2" ?>">Payment Received (demo)</a>
+            <a class="dropdown-item<?php if ($boxtype == 1) echo " active"; ?>" href="<?php echo $page . "boxtype=1#b" ?>">Awaiting Payment</a>
+            <a class="dropdown-item<?php if ($boxtype == 2) echo " active"; ?>" href="<?php echo $page . "boxtype=2#b" ?>">Payment Received (demo)</a>
           </div>
         </div>
     
@@ -492,9 +511,9 @@
             Box Logo
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-            <a class="dropdown-item<?php if ($logo == "default") echo " active"; ?>" href="<?php echo $page . "logo=default" ?>">Default Logo</a>
-            <a class="dropdown-item<?php if ($logo == "custom") echo " active"; ?>" href="<?php echo $page . "logo=custom" ?>">Your Own Logo</a>
-            <a class="dropdown-item<?php if ($logo == "no") echo " active"; ?>" href="<?php echo $page . "logo=no" ?>">No Logo</a>
+            <a class="dropdown-item<?php if ($logo == "default") echo " active"; ?>" href="<?php echo $page . "logo=default#b" ?>">Default Logo</a>
+            <a class="dropdown-item<?php if ($logo == "custom") echo " active"; ?>" href="<?php echo $page . "logo=custom#b" ?>">Your Own Logo</a>
+            <a class="dropdown-item<?php if ($logo == "no") echo " active"; ?>" href="<?php echo $page . "logo=no#b" ?>">No Logo</a>
           </div>
         </div>
     
@@ -504,8 +523,8 @@
             Language Menu
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-            <a class="dropdown-item<?php if ($lan == "yes") echo " active"; ?>" href="<?php echo $page . "lan=yes" ?>">Show</a>
-            <a class="dropdown-item<?php if ($lan == "no") echo " active"; ?>" href="<?php echo $page . "lan=no" ?>">Hide</a>
+            <a class="dropdown-item<?php if ($lan == "yes") echo " active"; ?>" href="<?php echo $page . "lan=yes#b" ?>">Show</a>
+            <a class="dropdown-item<?php if ($lan == "no") echo " active"; ?>" href="<?php echo $page . "lan=no#b" ?>">Hide</a>
           </div>
         </div>
     
@@ -515,13 +534,13 @@
             Coins Menu
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
-            <a class="dropdown-item<?php if ($numcoin == 1) echo " active"; ?>" href="<?php echo $page . "numcoin=1" ?>">Single Coin</a>
-            <a class="dropdown-item<?php if ($numcoin == 2) echo " active"; ?>" href="<?php echo $page . "numcoin=2" ?>">Two Coins</a>
-            <a class="dropdown-item<?php if ($numcoin == 3) echo " active"; ?>" href="<?php echo $page . "numcoin=3" ?>">Three Coins</a>
-            <a class="dropdown-item<?php if ($numcoin == 4) echo " active"; ?>" href="<?php echo $page . "numcoin=4" ?>">Four Coins</a>
-            <a class="dropdown-item<?php if ($numcoin == 5) echo " active"; ?>" href="<?php echo $page . "numcoin=5" ?>">Five Coins</a>
-            <a class="dropdown-item<?php if ($numcoin == 6) echo " active"; ?>" href="<?php echo $page . "numcoin=6" ?>">Six Coins</a>
-            <a class="dropdown-item<?php if ($numcoin == 15) echo " active"; ?>" href="<?php echo $page. "numcoin=15" ?>">All Coins</a>
+            <a class="dropdown-item<?php if ($numcoin == 1) echo " active"; ?>" href="<?php echo $page . "numcoin=1#b" ?>">Single Coin</a>
+            <a class="dropdown-item<?php if ($numcoin == 2) echo " active"; ?>" href="<?php echo $page . "numcoin=2#b" ?>">Two Coins</a>
+            <a class="dropdown-item<?php if ($numcoin == 3) echo " active"; ?>" href="<?php echo $page . "numcoin=3#b" ?>">Three Coins</a>
+            <a class="dropdown-item<?php if ($numcoin == 4) echo " active"; ?>" href="<?php echo $page . "numcoin=4#b" ?>">Four Coins</a>
+            <a class="dropdown-item<?php if ($numcoin == 5) echo " active"; ?>" href="<?php echo $page . "numcoin=5#b" ?>">Five Coins</a>
+            <a class="dropdown-item<?php if ($numcoin == 6) echo " active"; ?>" href="<?php echo $page . "numcoin=6#b" ?>">Six Coins</a>
+            <a class="dropdown-item<?php if ($numcoin == 15) echo " active"; ?>" href="<?php echo $page. "numcoin=15#b" ?>">All Coins</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" target="_blank" href="https://github.com/cryptoapi/Payment-Gateway/tree/master/images">Edit images ...</a>
           </div>
@@ -533,15 +552,15 @@
             Coin Images Size
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton6">
-            <a class="dropdown-item<?php if ($coinImageSize == 50) echo " active"; ?>" href="<?php echo $page . "coinImageSize=50" ?>">50px</a>
-            <a class="dropdown-item<?php if ($coinImageSize == 60) echo " active"; ?>" href="<?php echo $page . "coinImageSize=60" ?>">60px</a>
-            <a class="dropdown-item<?php if ($coinImageSize == 70 || $coinImageSize == 71) echo " active"; ?>" href="<?php echo $page . "coinImageSize=70" ?>">Default (70px)</a>
-            <a class="dropdown-item<?php if ($coinImageSize == 80) echo " active"; ?>" href="<?php echo $page . "coinImageSize=80" ?>">80px</a>
-            <a class="dropdown-item<?php if ($coinImageSize == 90) echo " active"; ?>" href="<?php echo $page . "coinImageSize=90" ?>">90px</a>
-            <a class="dropdown-item<?php if ($coinImageSize == 110) echo " active"; ?>" href="<?php echo $page . "coinImageSize=110" ?>">110px</a>
-            <a class="dropdown-item<?php if ($coinImageSize == 130) echo " active"; ?>" href="<?php echo $page . "coinImageSize=130" ?>">130px</a>
-            <a class="dropdown-item<?php if ($coinImageSize == 150) echo " active"; ?>" href="<?php echo $page . "coinImageSize=150" ?>">150px</a>
-            <a class="dropdown-item<?php if ($coinImageSize == 200) echo " active"; ?>" href="<?php echo $page. "coinImageSize=200" ?>">200px</a>
+            <a class="dropdown-item<?php if ($coinImageSize == 50) echo " active"; ?>" href="<?php echo $page . "coinImageSize=50#b" ?>">50px</a>
+            <a class="dropdown-item<?php if ($coinImageSize == 60) echo " active"; ?>" href="<?php echo $page . "coinImageSize=60#b" ?>">60px</a>
+            <a class="dropdown-item<?php if ($coinImageSize == 70 || $coinImageSize == 71) echo " active"; ?>" href="<?php echo $page . "coinImageSize=70#b" ?>">Default (70px)</a>
+            <a class="dropdown-item<?php if ($coinImageSize == 80) echo " active"; ?>" href="<?php echo $page . "coinImageSize=80#b" ?>">80px</a>
+            <a class="dropdown-item<?php if ($coinImageSize == 90) echo " active"; ?>" href="<?php echo $page . "coinImageSize=90#b" ?>">90px</a>
+            <a class="dropdown-item<?php if ($coinImageSize == 110) echo " active"; ?>" href="<?php echo $page . "coinImageSize=110#b" ?>">110px</a>
+            <a class="dropdown-item<?php if ($coinImageSize == 130) echo " active"; ?>" href="<?php echo $page . "coinImageSize=130#b" ?>">130px</a>
+            <a class="dropdown-item<?php if ($coinImageSize == 150) echo " active"; ?>" href="<?php echo $page . "coinImageSize=150#b" ?>">150px</a>
+            <a class="dropdown-item<?php if ($coinImageSize == 200) echo " active"; ?>" href="<?php echo $page. "coinImageSize=200#b" ?>">200px</a>
           </div>
         </div>
 
@@ -551,17 +570,17 @@
             QR Code Size 
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton7">
-            <a class="dropdown-item<?php if ($qrcodeSize == 0) echo " active"; ?>" href="<?php echo $page . "qrcodeSize=no&boxtype=1" ?>">Hide in Payment Box</a>
-            <a class="dropdown-item<?php if ($qrcodeSize == 50) echo " active"; ?>" href="<?php echo $page . "qrcodeSize=50&boxtype=1" ?>">50px</a>
-            <a class="dropdown-item<?php if ($qrcodeSize == 100) echo " active"; ?>" href="<?php echo $page . "qrcodeSize=100&boxtype=1" ?>">100px</a>
-            <a class="dropdown-item<?php if ($qrcodeSize == 150) echo " active"; ?>" href="<?php echo $page . "qrcodeSize=150&boxtype=1" ?>">150px</a>
-            <a class="dropdown-item<?php if ($qrcodeSize == 200) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=200&boxtype=1" ?>">Default (200px)</a>
-            <a class="dropdown-item<?php if ($qrcodeSize == 250) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=250&boxtype=1" ?>">250px</a>
-            <a class="dropdown-item<?php if ($qrcodeSize == 300) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=300&boxtype=1" ?>">300px</a>
-            <a class="dropdown-item<?php if ($qrcodeSize == 350) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=350&boxtype=1" ?>">350px</a>
-            <a class="dropdown-item<?php if ($qrcodeSize == 400) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=400&boxtype=1" ?>">400px</a>
-            <a class="dropdown-item<?php if ($qrcodeSize == 450) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=450&boxtype=1" ?>">450px</a>
-            <a class="dropdown-item<?php if ($qrcodeSize == 500) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=500&boxtype=1" ?>">500px</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 0) echo " active"; ?>" href="<?php echo $page . "qrcodeSize=no&boxtype=1#b" ?>">Hide in Payment Box</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 50) echo " active"; ?>" href="<?php echo $page . "qrcodeSize=50&boxtype=1#b" ?>">50px</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 100) echo " active"; ?>" href="<?php echo $page . "qrcodeSize=100&boxtype=1#b" ?>">100px</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 150) echo " active"; ?>" href="<?php echo $page . "qrcodeSize=150&boxtype=1#b" ?>">150px</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 200) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=200&boxtype=1#b" ?>">Default (200px)</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 250) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=250&boxtype=1#b" ?>">250px</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 300) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=300&boxtype=1#b" ?>">300px</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 350) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=350&boxtype=1#b" ?>">350px</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 400) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=400&boxtype=1#b" ?>">400px</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 450) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=450&boxtype=1#b" ?>">450px</a>
+            <a class="dropdown-item<?php if ($qrcodeSize == 500) echo " active"; ?>" href="<?php echo $page. "qrcodeSize=500&boxtype=1#b" ?>">500px</a>
           </div>
         </div>
 
@@ -571,10 +590,10 @@
             Payment Received Image
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton8">
-            <a class="dropdown-item<?php if ($resimage == "default") echo " active"; ?>" href="<?php echo $page . "resimage=default&boxtype=2" ?>">Default Image</a>
-            <a class="dropdown-item<?php if ($resimage == "image2") echo " active"; ?>" href="<?php echo $page . "resimage=image2&boxtype=2" ?>">Image #2</a>
-            <a class="dropdown-item<?php if ($resimage == "image3") echo " active"; ?>" href="<?php echo $page . "resimage=image3&boxtype=2" ?>">Image #3</a>
-            <a class="dropdown-item<?php if ($resimage == "custom") echo " active"; ?>" href="<?php echo $page . "resimage=custom&boxtype=2" ?>">Your Own Image</a>
+            <a class="dropdown-item<?php if ($resimage == "default") echo " active"; ?>" href="<?php echo $page . "resimage=default&boxtype=2#b" ?>">Default Image</a>
+            <a class="dropdown-item<?php if ($resimage == "image2") echo " active"; ?>" href="<?php echo $page . "resimage=image2&boxtype=2#b" ?>">Image #2</a>
+            <a class="dropdown-item<?php if ($resimage == "image3") echo " active"; ?>" href="<?php echo $page . "resimage=image3&boxtype=2#b" ?>">Image #3</a>
+            <a class="dropdown-item<?php if ($resimage == "custom") echo " active"; ?>" href="<?php echo $page . "resimage=custom&boxtype=2#b" ?>">Your Own Image</a>
           </div>
         </div>
 
@@ -584,17 +603,17 @@
             Payment Res Image Size
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton9">
-            <a class="dropdown-item<?php if ($resultimgSize == 0) echo " active"; ?>" href="<?php echo $page . "resultimgSize=no&boxtype=2" ?>">Hide in Result Box</a>
-            <a class="dropdown-item<?php if ($resultimgSize == 50) echo " active"; ?>" href="<?php echo $page . "resultimgSize=50&boxtype=2" ?>">50px</a>
-            <a class="dropdown-item<?php if ($resultimgSize == 100) echo " active"; ?>" href="<?php echo $page . "resultimgSize=100&boxtype=2" ?>">100px</a>
-            <a class="dropdown-item<?php if ($resultimgSize == 150) echo " active"; ?>" href="<?php echo $page . "resultimgSize=150&boxtype=2" ?>">150px</a>
-            <a class="dropdown-item<?php if ($resultimgSize == 200) echo " active"; ?>" href="<?php echo $page. "resultimgSize=200&boxtype=2" ?>">200px</a>
-            <a class="dropdown-item<?php if ($resultimgSize == 250) echo " active"; ?>" href="<?php echo $page. "resultimgSize=250&boxtype=2" ?>">Default (250px)</a>
-            <a class="dropdown-item<?php if ($resultimgSize == 300) echo " active"; ?>" href="<?php echo $page. "resultimgSize=300&boxtype=2" ?>">300px</a>
-            <a class="dropdown-item<?php if ($resultimgSize == 350) echo " active"; ?>" href="<?php echo $page. "resultimgSize=350&boxtype=2" ?>">350px</a>
-            <a class="dropdown-item<?php if ($resultimgSize == 400) echo " active"; ?>" href="<?php echo $page. "resultimgSize=400&boxtype=2" ?>">400px</a>
-            <a class="dropdown-item<?php if ($resultimgSize == 450) echo " active"; ?>" href="<?php echo $page. "resultimgSize=450&boxtype=2" ?>">450px</a>
-            <a class="dropdown-item<?php if ($resultimgSize == 500) echo " active"; ?>" href="<?php echo $page. "resultimgSize=500&boxtype=2" ?>">500px</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 0) echo " active"; ?>" href="<?php echo $page . "resultimgSize=no&boxtype=2#b" ?>">Hide in Result Box</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 50) echo " active"; ?>" href="<?php echo $page . "resultimgSize=50&boxtype=2#b" ?>">50px</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 100) echo " active"; ?>" href="<?php echo $page . "resultimgSize=100&boxtype=2#b" ?>">100px</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 150) echo " active"; ?>" href="<?php echo $page . "resultimgSize=150&boxtype=2#b" ?>">150px</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 200) echo " active"; ?>" href="<?php echo $page. "resultimgSize=200&boxtype=2#b" ?>">200px</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 250) echo " active"; ?>" href="<?php echo $page. "resultimgSize=250&boxtype=2#b" ?>">Default (250px)</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 300) echo " active"; ?>" href="<?php echo $page. "resultimgSize=300&boxtype=2#b" ?>">300px</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 350) echo " active"; ?>" href="<?php echo $page. "resultimgSize=350&boxtype=2#b" ?>">350px</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 400) echo " active"; ?>" href="<?php echo $page. "resultimgSize=400&boxtype=2#b" ?>">400px</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 450) echo " active"; ?>" href="<?php echo $page. "resultimgSize=450&boxtype=2#b" ?>">450px</a>
+            <a class="dropdown-item<?php if ($resultimgSize == 500) echo " active"; ?>" href="<?php echo $page. "resultimgSize=500&boxtype=2#b" ?>">500px</a>
           </div>
         </div>
 
@@ -604,9 +623,9 @@
             Data Methods (White Label/Ajax)
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton10">
-            <a class="dropdown-item<?php if ($method == "ajax") echo " active"; ?>" href="<?php echo $page . "method=ajax&boxtype=1" ?>"><b>AJAX</b> - Prefer Method (users don't need click any submit buttons)</a>
+            <a class="dropdown-item<?php if ($method == "ajax") echo " active#b"; ?>" href="<?php echo $page . "method=ajax&boxtype=1" ?>"><b>AJAX</b> - Prefer Method (users don't need click any submit buttons)</a>
             <a class="dropdown-item disabled" href="#a">ajax - User browser receive payment data directly from our server and auto show successful message</a>
-            <a class="dropdown-item<?php if ($method == "curl") echo " active"; ?>" href="<?php echo $page . "method=curl&boxtype=1" ?>"><b>CURL</b> + Your Own Logo (White Label Product), user need to click on button when payment is sent</a>
+            <a class="dropdown-item<?php if ($method == "curl") echo " active#b"; ?>" href="<?php echo $page . "method=curl&boxtype=1" ?>"><b>CURL</b> + Your Own Logo (White Label Product), user need to click on button when payment is sent</a>
             <a class="dropdown-item disabled" href="#a">curl - User browser receive payment data from your server only; your server receive data from our server</a>
           </div>
         </div>
@@ -617,10 +636,14 @@
             Debug Raw Values Box
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton11">
-            <a class="dropdown-item<?php if ($deb == "yes") echo " active"; ?>" href="<?php echo $page . "deb=yes" ?>">Show</a>
-            <a class="dropdown-item<?php if ($deb == "no") echo " active"; ?>" href="<?php echo $page . "deb=no" ?>">Hide</a>
+            <a class="dropdown-item<?php if ($deb == "yes") echo " active"; ?>" href="<?php echo $page . "deb=yes#b" ?>">Show</a>
+            <a class="dropdown-item<?php if ($deb == "no") echo " active"; ?>" href="<?php echo $page . "deb=no#b" ?>">Hide</a>
           </div>
         </div>
+
+        <div class="d-inline-block mx-3 my-3">
+			<a class="btn btn-secondary" href="<?php echo $page . "reset=yes" ?>" role="button">Reset All Settings</a>
+		</div>
 
 		</div>
 	</div>
@@ -637,6 +660,7 @@
   
         $custom_text = "<p class='lead'>Demo Text - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>";
         $custom_text .= "<p class='lead'>Please contact us for any questions on aaa@example.com</p>";
+        echo "<a name='b' id='b'></a>"; // anchor for demo options only; don't need on live your server 
         
         // use function display_cryptobox_bootstrap ($coins = array(), $def_coin = "", $def_language = "en", $custom_text = "", $coinImageSize = 70, $qrcodeSize = 200, $show_languages = true, $logoimg_path = "default", $resultimg_path = "default", $resultimgSize = 250, $redirect = "", $method = "ajax", $debug = false)
         echo $box->display_cryptobox_bootstrap($coins, $def_coin, $def_language, $custom_text, $coinImageSize, $qrcodeSize, $show_languages, $logoimg_path, $resultimg_path, $resultimgSize, "", $method, $debug);
@@ -653,7 +677,7 @@
   	<div id='dmgnpcode' class='mncrpt px-2 py-3 mx-auto my-4 text-center' style='max-width:1450px; white-space:normal; display:none'>
 
 		<h1 class="display-6">Generated paymentbox php code for your website</h1>
-		 <p class='lead'>create new php file with this code; ready to use (php, json, bootstrap4, mobile friendly, white label product / your own logo)</p>  
+		 <p class='lead'>create new php file with this code (default <a target="_blank" href="https://github.com/cryptoapi/Payment-Gateway">location</a> ); ready to use (php, json, bootstrap4, mobile friendly, white label product / your own logo). <a href='https://gourl.io/bitcoin-payment-gateway-api.html#p8'>Read instruction</a></p>  
       	<div class="form-group my-4">
         	<textarea class="form-control bg-light" id="exampleFormControlTextarea1" rows="50" readonly>
 &lt;?php
@@ -835,8 +859,21 @@
   &lt;/body&gt;
 &lt;/html&gt;</textarea>
       	</div>
-  
+  <br>
+
+<br><br>
+<p><b>Next Steps</b></p>
+<ul class="list-group">
+  <li class="list-group-item"><a target="_blank" href="https://gourl.io/lib/examples/box_only.php">1. View Payment Box Only (without menu)</a></li>
+  <li class="list-group-item"><a target="_blank" href="https://gourl.io/api-php.html">2. Payment Class Installation Instruction</a></li>
+  <li class="list-group-item"><a target="_blank" href="https://github.com/cryptoapi/Payment-Gateway">3. PHP Bitcoin Payment Class on GitHub (free open source)</a></li>
+  <li class="list-group-item"><a target="_blank" href="https://gourl.io/bitcoin-payment-gateway-api.html#p8">4. JSON Payment Box Instruction</a></li>
+</ul>
+
+
   	</div>
+  
+  
   
   
 
