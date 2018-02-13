@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)          
+ * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo) 
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2018 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
@@ -652,7 +652,7 @@
 
   <?php 
     
-        if ($method == "curl" && !in_array($theme, array("black", "greyred", "greygreen"))) echo "<div class='text-center'><br><img style='max-width:100%; height:auto; width:auto\9;' alt='White Label Product' src='images/white-label.png'><br><br><br></div>"; 
+        if ($method == "curl" && !in_array($theme, array("black", "greyred", "greygreen"))) echo "<div class='text-center'><br><img style='max-width:100%; height:auto; width:auto\9;' alt='White Label Product' src='../images/white-label.png'><br><br><br></div>"; 
         echo "<a id='b'></a>"; // anchor for demo options only; don't need on live your server 
   
   
@@ -853,7 +853,13 @@
      
     // Display payment box 	
     echo $box-&gt;display_cryptobox_bootstrap(<?php echo "\$coins, \$def_coin, \$def_language, \$custom_text, $coinImageSize, $qrcodeSize, ".($show_languages?"true":"false").", \"$logoimg_path\", \"$resultimg_path\", $resultimgSize, \"\", \"$method\", ".($debug?"true":"false"); ?>);
-    	        	
+    
+
+    // You can setup method='curl' in function above and use code below on this webpage -
+    // if successful bitcoin payment received .... allow user to access your premium data/files/products, etc.
+    // if ($box-&gt;is_paid()) { ... your code here ... }
+
+
    ?&gt;
   
   &lt;/body&gt;
@@ -864,7 +870,7 @@
 <br><br>
 <p><b>Next Steps</b></p>
 <ul class="list-group">
-  <li class="list-group-item"><a target="_blank" href="https://gourl.io/lib/examples/box_only.php">1. View Payment Box Only (without menu)</a></li>
+  <li class="list-group-item"><a target="_blank" href="https://gourl.io/lib/examples/box_only.php">1. View Payment Box Only (default settings, no menu, no footer)</a></li>
   <li class="list-group-item"><a target="_blank" href="https://gourl.io/api-php.html">2. Payment Class Installation Instruction</a></li>
   <li class="list-group-item"><a target="_blank" href="https://github.com/cryptoapi/Payment-Gateway">3. PHP Bitcoin Payment Class on GitHub (free open source)</a></li>
   <li class="list-group-item"><a target="_blank" href="https://gourl.io/bitcoin-payment-gateway-api.html#p8">4. JSON Payment Box Instruction</a></li>

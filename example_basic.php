@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)    
+ * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)   
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2018 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
@@ -212,7 +212,13 @@
      
     // Display payment box 	
     echo $box->display_cryptobox_bootstrap($coins, $def_coin, $def_language, $custom_text, 70, 200, true, "default", "default", 250, "", "ajax", true);
-    	   
+    
+
+    // You can setup method='curl' in function above and use code below on this webpage -
+    // if successful bitcoin payment received .... allow user to access your premium data/files/products, etc.
+    // if ($box->is_paid()) { ... your code here ... }
+
+
    ?>
   
   </body>
