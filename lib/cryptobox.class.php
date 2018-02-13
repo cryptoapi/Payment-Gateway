@@ -776,7 +776,7 @@ class Cryptobox {
 	 *  <style>
             html { font-size: 14px; }
             @media (min-width: 768px) { html { font-size: 16px; } .tooltip-inner { max-width: 350px; } }
-            .mncrpt .container { max-width: 970px; }
+            .mncrpt .container { max-width: 980px; }
             .mncrpt .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
             img.radioimage-select { padding: 7px; border: solid 2px #ffffff; margin: 7px 1px; cursor: pointer; box-shadow: none; }
             img.radioimage-select:hover { border: solid 2px #a5c1e5; }
