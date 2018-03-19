@@ -1757,55 +1757,69 @@ class Cryptobox {
 		$to_Currency   = trim(strtoupper(urlencode($to_Currency)));
 
 		if ($from_Currency == "TRL") $from_Currency = "TRY"; // fix for Turkish Lyra
-		if ($from_Currency == "ZWD") $from_Currency = "ZWL"; // fix for Zimbabwe Dollar
+		if ($from_Currency == "ZWL") $from_Currency = "ZWD"; // fix for Zimbabwe Dollar
 		if ($from_Currency == "RM")  $from_Currency = "MYR"; // fix for Malaysian Ringgit
+		if ($from_Currency == "BTC") $from_Currency = "XBT"; // fix for Bitcoin
+		if ($to_Currency == "BTC")   $to_Currency = "XBT";   // fix for Bitcoin
 		
 		if ($from_Currency == "RIAL") $from_Currency = "IRR"; // fix for Iranian Rial
 		if ($from_Currency == "IRT") { $from_Currency = "IRR"; $amount = $amount * 10; } // fix for Iranian Toman; 1IRT = 10IRR
 
 		$key  = $from_Currency."_".$to_Currency;
 		
+		
+		
+		// from buffer
+		// ----------------
 		if (isset($arr[$key])) 
 		{
 		    if ($arr[$key] > 0) 
 		    {
-		        $total = $arr[$key]*$amount;
-		        if ($to_Currency=="BTC" || $total<0.01) return sprintf('%.5f', round($total, 5));
-		        else return round($total, 2);
+		        $val = $arr[$key];
+		        $total = $val*$amount;
+		        if ($to_Currency=="XBT" || $total<0.01) $total = sprintf('%.5f', round($total, 5));
+		        else $total = round($total, 2);
+		        if ($total == 0) $total = sprintf('%.5f', 0.00001);
+		        return $total;
 		    }
 		    else return -1;
 		}
+
 		
 		
-		$url = "https://finance.google.com/finance/converter?a=1&from=".$from_Currency."&to=".$to_Currency;
+		// get data from xe.com
+		// ----------------
+		$val = 0;
+		$url = "http://www.xe.com/currencyconverter/convert/?Amount=1&From=".$from_Currency."&To=".$to_Currency;
 		
 		$rawdata = get_url_contents( $url );
 		
-		$data = explode('bld>', $rawdata);
-		$data = (isset($data[1])) ? explode($to_Currency, $data[1]) : array();
-		$data[0] = (isset($data[0])) ? floatval($data[0]) : 0;
-		
-		// alternative
-		// not working - https://finance.google.com/finance/converter?a=1&from=IRR&to=USD
-		// working - https://finance.google.com/finance/converter?a=1&from=USD&to=IRR
-		if ($data[0] <= 0)
+		if (strpos($rawdata, "1 ".$from_Currency." = "))
 		{
-		    $url = "https://finance.google.com/finance/converter?a=1&from=".$to_Currency."&to=".$from_Currency;
-		    $rawdata = get_url_contents( $url );
-		    $data = explode('bld>', $rawdata);
-		    $data = (isset($data[1])) ? explode($to_Currency, $data[1]) : array();
-		    $data[0] = (isset($data[0])) ? floatval($data[0]) : 0;
-
-		    if ($data[0] > 0) $data[0] = 1 / $data[0];
-		}		
+		    $data = explode("uccResultAmount'>", $rawdata);
+		    if (isset($data[1]))
+		    {
+		        $pos = stripos($data[1], "</span>");
+		        if ($pos)
+		        {
+		              $data = substr($data[1], 0, $pos);
+		              if (is_numeric($data) && $data > 0) $val = floatval($data);
+		        }
+		    }
+		}
 		
-
-		if ($data[0] > 0)
+		
+		
+		// result
+		// ------------
+		if ($val > 0)
 		{
-		    $arr[$key] = $data[0];
-		    $total = $arr[$key]*$amount;
-		    if ($to_Currency=="BTC" || $total<0.01) return sprintf('%.5f', round($total, 5));
-		    else return round($total, 2);
+		    $arr[$key] = $val;
+		    $total = $val*$amount;
+		    if ($to_Currency=="XBT" || $total<0.01) $total = sprintf('%.5f', round($total, 5));
+		    else $total = round($total, 2);
+		    if ($total == 0) $total = sprintf('%.5f', 0.00001);
+		    return $total;
 		}
 		else 
 		{
