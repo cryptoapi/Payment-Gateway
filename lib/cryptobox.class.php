@@ -1790,7 +1790,7 @@ class Cryptobox {
 		// get data from xe.com
 		// ----------------
 		$val = 0;
-		$url = "http://www.xe.com/currencyconverter/convert/?Amount=1&From=".$from_Currency."&To=".$to_Currency;
+		$url = "https://www.xe.com/currencyconverter/convert/?Amount=1&From=".$from_Currency."&To=".$to_Currency;
 		
 		$rawdata = get_url_contents( $url );
 		
