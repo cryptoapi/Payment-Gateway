@@ -5,27 +5,27 @@
  * ##########################################
  *
  *
- * PHP Cryptocurrency Payment Class       
+ * PHP Cryptocurrency Payment Class      
  *
  * @package     GoUrl PHP Bitcoin/Altcoin Payments and Crypto Captcha
  * @copyright   2014-2018 Delta Consultants
  * @category    Libraries
- * @website     https://gourl.io
+ * @website     https://gourl.io      
  * @api         https://gourl.io/bitcoin-payment-gateway-api.html
  * @example     https://gourl.io/lib/examples/example_customize_box.php    <----
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     2.0
+ * @version     2.1
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
  *  --------------------------------------
  *  1a. function display_cryptobox(..)			// Show Cryptocoin Payment Box and automatically displays successful payment message. If $submit_btn = true, display user submit button 'Click Here if you have already sent coins' or not
- *  1b. function display_cryptobox_bootstrap(..) // Show Customize Mobile Friendly Payment Box and automatically displays successful payment message if use ajax. 
+ *  1b. function display_cryptobox_bootstrap(..) // Show Customize Mobile Friendly Payment Box and automatically displays successful payment message if use ajax.
  *                                               // optional - FREE WHITE-LABEL PRODUCT - BITCOIN/ALTCOIN PAYMENT BOX WITH YOUT LOGO THROUGH YOUR SERVER.  
- *                                               // This function use bootstrap4 template; you can use your own template without this function  
+ *                                               // This function use bootstrap4 template; you can use your own template without this function
  *  2. function cryptobox_json_url()            // It generates url with your parameters to gourl.io payment gateway. Using this url you can get bitcoin/altcoin payment box values in JSON format and use it on html page with Jquery/Ajax.
- *  3. function get_json_values()               // Alternatively, you can receive JSON values though php curl on server side and use it in your php file without using Javascript and Jquery/Ajax. 
+ *  3. function get_json_values()               // Alternatively, you can receive JSON values though php curl on server side and use it in your php file without using Javascript and Jquery/Ajax.
  *  4. function cryptobox_hash(..)              // It generates security md5 hash for all values used in payment box 
  *  5. function is_paid(..)	 					// If payment received - return true, otherwise return false
  *  6. function is_confirmed()					// Returns true if transaction/payment have 6+ confirmations. Average transaction/payment confirmation time - 10-20min for 6 confirmations (altcoins)
@@ -50,10 +50,10 @@
  *  B. function payment_unrecognised(..) 		// Returns array with unrecognised payments for custom period - $time (users paid wrong amount on your internal wallet address)
  *  C. function cryptobox_sellanguage(..)       // Get cryptobox current selected language by user (english, spanish, etc)
  *  D. function cryptobox_selcoin(..)			// Get cryptobox current selected coin by user (bitcoin, dogecoin, etc. - for multiple coin payment boxes) 
- *  E. function display_language_box(..)		// Language selection dropdown list for cryptocoin payment box 
+ *  E. function display_language_box(..)		// Language selection dropdown list for cryptocoin payment box
  *  F. function display_currency_box(..)		// Multiple crypto currency selection list. You can accept payments in multiple crypto currencies (for example: bitcoin, bitcoincash, litecoin, dogecoin)
  *  G. function get_country_name(..)			// Get country name by country code or reverse
- *  H. function convert_currency_live(..)		// Fiat currency converter using Google Finance live exchange rates
+ *  H. function convert_currency_live(..)		// Fiat currency converter using XE.COM live exchange rates
  *  I. function validate_gourlkey(..)			// Validate gourl private/public/affiliate keys 
  *  J. function run_sql(..)						// Run SQL queries and return result in array/object formats
  *
@@ -62,7 +62,7 @@
  *  -------------------------------------
  *  CRYPTOBOX_LANGUAGE - cryptobox current selected language
  *  CRYPTOBOX_LOCALISATION - all cryptobox localisations 
- *  
+ *
  *  Note: Complete Description of the Functions, see on the page below or here - https://gourl.io/api-php.html
  *
  *
@@ -79,7 +79,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "2.0");
+define("CRYPTOBOX_VERSION", "2.1");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency')));
@@ -112,7 +112,7 @@ class Cryptobox {
 	 * If you use multiple stores/sites online, please create separate GoUrl Payment Box (with unique payment box public/private keys) for each of your stores/websites. 
 	 * Do not use the same GoUrl Payment Box with the same public/private keys on your different websites/stores.
 	 * if you use the same $public_key, $orderID and $userID in your multiple cryptocoin payment boxes on different website pages and a user has made payment; a successful result for that user will be returned on all those pages (if $period time valid). 
-	 * if you change - $public_key or $orderID or $userID - new cryptocoin payment box will be shown for exisiting paid user. (function $this->is_paid() starts to return 'false'). 
+	 * if you change - $public_key or $orderID or $userID - new cryptocoin payment box will be shown for exisiting paid user. (function $this->is_paid() starts to return 'false').
 	 * */
 
 	
@@ -354,6 +354,7 @@ class Cryptobox {
 	        "us"	=> $this->userFormat,
 	        "j"     => 1, // json   
 	        "d" 	=> base64_encode($ip),
+	        "f"     => base64_encode($this->ua(false)),
 	        "h" 	=> $hash
 	    );
 	     
@@ -362,7 +363,7 @@ class Cryptobox {
 	    
 	    $url = "https://coins.gourl.io";
 	    foreach($data as $k=>$v) $url .= "/".$k."/".rawurlencode($v);
-	    
+ 
 	    return $url;
 	}
 	
@@ -390,7 +391,7 @@ class Cryptobox {
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		curl_setopt( $ch, CURLOPT_HEADER, 0);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt( $ch, CURLOPT_USERAGENT, 'Get_Json_Values PHP Class '.CRYPTOBOX_VERSION);
+		curl_setopt( $ch, CURLOPT_USERAGENT, $this->ua());
 		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 20);
 		curl_setopt( $ch, CURLOPT_TIMEOUT, 20);
 		$res = curl_exec( $ch );
@@ -407,7 +408,9 @@ class Cryptobox {
 		      if (strtolower($arr["data_hash"]) == strtolower(hash("sha512", $this->private_key.json_encode($arr2).$this->private_key))) $f = true;
 		  }
 		}
-		if (!$f) $arr = array();    
+		if (!$f) $arr = array();
+
+		if ($arr && $arr["status"] == "payment_received" && !$this->paid) $this->check_payment(true);
 		
 		return $arr;
 	}
@@ -769,9 +772,9 @@ class Cryptobox {
 	 *  <!-- or you can use other Themes, for example from https://bootswatch.com/; replace line with bootstrap.min.css above to line below -->
 	 *  <!-- <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.css"> -->
 	 *  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
-	 *  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+	 *  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
 	 *  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
-	 *  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+	 *  <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" crossorigin="anonymous"></script>
 	 *  script src="<?php echo CRYPTOBOX_JS_FILES_PATH; ?>support.min.js" crossorigin="anonymous"></script>
 	 *  <style>
             html { font-size: 14px; }
@@ -793,8 +796,8 @@ class Cryptobox {
 	* $def_language - default language in payment box
 	* $custom_text - your own text above payment box 
 	* $coinImageSize - coin selection list - image sizes; default 70px 
-	* $qrcodeSize - QRCode size; default 200px 
-	* $show_languages - show or hide language selection menu above payment box 
+	* $qrcodeSize - QRCode size; default 200px
+	* $show_languages - show or hide language selection menu above payment box
 	* $logoimg_path - show or hide (when empty value) logo above payment box. You can use default logo or place path to your own logo
 	* $resultimg_path - after payment is received, you can customize successful image in payment box (image with your company text for example)
 	* $resultimgSize - result image size; default 250px
@@ -813,15 +816,15 @@ class Cryptobox {
 	* Payment received successfully - https://coins.gourl.io/b/20/c/Bitcoin/p/20AAvZCcgBitcoin77BTCPUB0xyyeKkxMUmeTJRWj7IZrbJ0oL/a/0/au/0.1/pe/NOEXPIRY/l/en/o/invoice1/u/demo/us/MANUAL/j/1/d/ODIuMTEuOTQuMTIx/h/ac7733d264421c8410a218548b2d2a2a
 	 *  
 	 */
-	
+
 	public function display_cryptobox_bootstrap ($coins = array(), $def_coin = "", $def_language = "en", $custom_text = "", $coinImageSize = 70, $qrcodeSize = 200, $show_languages = true, $logoimg_path = "default", $resultimg_path = "default", $resultimgSize = 250, $redirect = "", $method = "ajax", $debug = false)
 	{
 
-	    
+
 	    $logoimg_path = preg_replace('/[^A-Za-z0-9\-\_\=\?\&\.\;\:\/]/', '', $logoimg_path);
 	    $resultimg_path = preg_replace('/[^A-Za-z0-9\-\_\=\?\&\.\;\:\/]/', '', $resultimg_path);
 	    $redirect = preg_replace('/[^A-Za-z0-9\-\_\=\?\&\.\;\:\/]/', '', $redirect);
-	     
+
 	    $custom_text = strip_tags($custom_text, '<p><a><br>');
 	    
 	    $coinImageSize    = intval($coinImageSize);
@@ -829,7 +832,7 @@ class Cryptobox {
 	    
 	    $qrcodeSize    = intval($qrcodeSize);
 	    if ($qrcodeSize > 500) $qrcodeSize = 200;
-	     
+
 	    $resultimgSize    = intval($resultimgSize);
 	    if ($resultimgSize > 500) $resultimgSize = 250;
 	    
@@ -850,15 +853,12 @@ class Cryptobox {
 	    
 	    if (!in_array($method, array("ajax", "curl"))) $method = "ajax";
 	     
-	     
+
 	    // Language selection list for payment box (html code)
-	    $languages_list = display_language_box($def_language, $ext2, false);
-	
-	     
-	    // Coin selection list (html code)
-	    $coins_list = "";
-	    if (!$this->is_paid()) $coins_list = display_currency_box($coins, $def_coin, $def_language, intval($coinImageSize), "margin: 20px 0 80px 0", $imgdir_path, $ext2, true);
-	
+	    if ($show_languages) $languages_list = display_language_box($def_language, $ext2, false);
+
+
+
 	
 	     
 	    // ---------------------------
@@ -883,7 +883,7 @@ class Cryptobox {
 	        if (!$debug) unset($data["err"]);
 	        $data = json_encode($data, JSON_FORCE_OBJECT | JSON_HEX_APOS);
 	        $tmp .= '<script>jQuery(document).ready(function(){ cryptobox_update_page("'.base64_encode($data).'", "' . base64_encode($imgdir_path) . '", "' . base64_encode($logoimg_path) . '", "' . base64_encode($ext) . '") })</script>';
-	        if ($redirect) $tmp .= '<script>setTimeout(function() { window.location = "'.$redirect.'"; }, 3000);</script>';
+	        if ($this->is_paid() && $redirect) $tmp .= '<script>setTimeout(function() { window.location = "'.$redirect.'"; }, 3000);</script>';
 	    } 
 	     
 	     
@@ -898,7 +898,7 @@ class Cryptobox {
 	    if ($custom_text)
 	    {
     	    $tmp .= "<br>";
-    	    if (strip_tags($custom_text) == $custom_text) $tmp .= "<p class='lead'>" . $custom_text . "</p>"; else $tmp .= $custom_text;
+    	    if (stripos($custom_text, "<p") === false) $tmp .= "<p class='lead'>" . $custom_text . "</p>"; else $tmp .= $custom_text;
 	    }
 	    $tmp .= "</div>";
 	     
@@ -941,7 +941,7 @@ class Cryptobox {
 	    	    
 	    
 	    
-	    
+
 	    // ----------------------------
 	    // Area above Payment Box
 	    // ----------------------------
@@ -955,7 +955,7 @@ class Cryptobox {
 	            $tmp .= "<div class='row ".$ext."msg mx-2'>";
 	            $tmp .= "<div class='container'>";
 	            $tmp .= "<div class='row'>";	
-	            $tmp .= "<div class='col-12 col-sm-10 offset-sm-1 mb-5 mt-2'>";
+	            $tmp .= "<div class='col-12 col-sm-10 offset-sm-1 mb-5 mt-2 text-left'>";
 	                        
                 if ($this->is_paid(true)) 
                     $tmp .= "<span class='badge badge-success ".$ext."paymentcaptcha_statustext'>Successfully Received</span>"; 
@@ -985,8 +985,12 @@ class Cryptobox {
 	     
 	     // A2. Coin selection list (bitcoin/litecoin/etc)
 	     // --------------------
-	     if ($coins_list) 
+	     if (!$this->is_paid())
 	     {
+	        // Coin selection list (html code)
+	        $coins_list = display_currency_box($coins, $def_coin, $def_language, $coinImageSize, "margin: 20px 0 80px 0", $imgdir_path, $ext2, true);
+
+	         if (!$custom_text) $tmp .= "<br>";
 	         $tmp .= "<div class='container ".$ext."coins_list'><div class='row'><div class='col-12 text-center col-sm-10 offset-sm-1 col-md-8 offset-md-2 text-center'>" . $coins_list . "</div></div></div>";
 	     }
 	     
@@ -1007,7 +1011,7 @@ class Cryptobox {
 	     if ($show_languages)
 	     {
     	     $offset = ($logoimg_path) ? "text-center mb-2" : "mb-3";
-    	     $tmp .= "<div class='".$ext."box_language col-12 col-sm-4 offset-sm-1 text-sm-left col-md-4 offset-md-2 text-md-left mt-sm-4 $offset'>";
+    	     $tmp .= "<div class='".$ext."box_language col-12 ".(CRYPTOBOX_WORDPRESS?"text-left col-sm-2 col-md-3 offset-md-1":"col-sm-4 offset-sm-1 text-sm-left col-md-4 offset-md-2 text-md-left")." mt-sm-4 $offset'>";
     	     $tmp .= "<div class='btn-group'>";
     	     $tmp .= "<button type='button' class='btn btn-outline-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
     	     $tmp .= "Language" . " - " . $this->localisation['name'];
@@ -1018,7 +1022,7 @@ class Cryptobox {
 	     }
 	     // End - A3. Box Language
 	     
-	                  
+
 	     // A4. Logo
 	     // --------------------
 	     if ($logoimg_path)
@@ -1061,7 +1065,7 @@ class Cryptobox {
 	     $tmp .= "<div class='container ".$ext."cryptobox_unpaid' " . $hide . ">";
 	     $tmp .= "<div class='row'>";	
 	           
-	     $tmp .= "<div class='col-12 text-center col-sm-10 offset-sm-1 col-md-8 offset-md-2'>";
+	     $tmp .= "<div class='col-12 ".(CRYPTOBOX_WORDPRESS?"col-md-10 offset-md-1":"text-center col-sm-10 offset-sm-1 col-md-8 offset-md-2")."'>";
 	           
 	     $tmp .= "<form action='" . $page_url . "' method='post'>";
 	     $tmp .= "<div class='card box-shadow'>";
@@ -1069,20 +1073,22 @@ class Cryptobox {
 	                 
 	     $tmp .= "<h4 class='my-0 font-weight-normal ".$ext."addr_title'><span class='".$ext."texts_coin_address'>&#160;</span>";
 	     $tmp .= "<button type='submit' class='".$ext."refresh btn btn-sm btn-outline-secondary float-right'><i class='fas fa-sync-alt'></i></button>";
+	     $tmp .= "<span class='".$ext."loading_icon mr-3 float-left' " . $hide . "> <i class='fas fa-laptop'></i></span>";
+	     $tmp .= "<span class='".$ext."loading_icon mr-3 float-left' " . $hide . "> <i class='fas fa-sync-alt fa-spin'></i></span>";
 	     $tmp .= "</h4>";
 	                 
 	     $tmp .= "</div>";
 	                 
 	     $tmp .= "<div class='card-body'>";
 
-	     if ($qrcodeSize) $tmp .= "<a class='".$ext."copy_address' href='#a'><img class='".$ext."qrcode_image' style='max-width:100%; height:auto; width:auto\9;' alt='qrcode' data-size='".intval($qrcodeSize)."' src='#'></a>";
+	     if ($qrcodeSize) $tmp .= "<div class='".$ext."copy_address'><a href='#a'><img class='".$ext."qrcode_image' style='max-width:100%; height:auto; width:auto\9;' alt='qrcode' data-size='".intval($qrcodeSize)."' src='#'></a></div>";
 	                     
 	     $tmp .= "<h1 class='mt-3 mb-4 pb-1 card-title ".$ext."copy_amount'><span class='".$ext."amount'>&#160;</span> <small class='text-muted'><span class='".$ext."coinlabel'></span></small></h1>";
 	     $tmp .= "<div class='lead ".$ext."copy_amount ".$ext."texts_send'></div>";
 	     $tmp .= "<div class='lead ".$ext."texts_no_include_fee'></div>";
 	     $tmp .= "<br>";
 	     $tmp .= "<h4 class='card-title'>";
-	     $tmp .= "<a class='".$ext."wallet_address' href='#a'></a> &#160;&#160;"; 
+	     $tmp .= "<a class='".$ext."wallet_address' style='line-height:1.5;' href='#a'></a> &#160;&#160;"; 
 	     $tmp .= "<a class='".$ext."copy_address' href='#a'><i class='fas fa-copy'></i></a> &#160;&#160;";  
 	     $tmp .= "<a class='".$ext."wallet_open' href='#a'><i class='fas fa-external-link-alt'></i></a>";
 	     $tmp .= "</h4>";
@@ -1105,13 +1111,12 @@ class Cryptobox {
 	     
 	     $tmp .= "</div>";
 	     
-	     
 	     if ($method != "ajax" && !$this->is_paid())
 	     {
-	         $tmp .= "<div class='col-12 text-center col-sm-10 offset-sm-1 col-md-8 offset-md-2'>";
+	         $tmp .= "<div class='col-12 text-center ".(CRYPTOBOX_WORDPRESS?"col-md-10 offset-md-1":"col-sm-10 offset-sm-1 col-md-8 offset-md-2")."'>";
 	         $tmp .= "<form action='" . $page_url . "' method='post'>";
 	         $tmp .= "<input type='hidden' id='".$ext."refresh2_' name='".$ext."refresh2_' value='1'>";
-	         $tmp .= "<br><button type='submit' class='".$ext."button_confirm btn btn-lg btn-block btn-primary my-2' style='white-space:normal'>".str_replace(array("%coinName%", "%coinNames%", "%coinLabel%"), array($this->coinName, (in_array($this->coinLabel, array('BCH', 'DASH'))?$this->coinName:$this->coinName.'s'), $this->coinLabel), $this->localisation["button"])." &#187;</button>";
+	         $tmp .= "<br><button type='submit' class='".$ext."button_confirm btn btn-lg btn-block btn-primary my-2' style='white-space:normal'><i class='fas fa-angle-double-right'></i> &#160; ".str_replace(array("%coinName%", "%coinNames%", "%coinLabel%"), array($this->coinName, (in_array($this->coinLabel, array('BCH', 'DASH'))?$this->coinName:$this->coinName.'s'), $this->coinLabel), $this->localisation["button"])." &#160; <i class='fas fa-angle-double-right'></i></button>";
 	         $tmp .= "</form>";
 	         $tmp .= "</div>";
 	     }
@@ -1137,13 +1142,16 @@ class Cryptobox {
 	     
 	     $tmp .= "<div class='container ".$ext."cryptobox_paid' " . $hide . ">";
 	     $tmp .= "<div class='row'>";
-	     $tmp .= "<div class='col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 text-center'>";
+	     $tmp .= "<div class='col-12 ".(CRYPTOBOX_WORDPRESS?"col-md-10 offset-md-1":"col-sm-10 offset-sm-1 col-md-8 offset-md-2 text-center")."'>";
 	           
 	     $tmp .= "<div class='card box-shadow'>";
 	     $tmp .= "<div class='card-header'>";
 	                 
-	     $tmp .= "<h4 class='my-0 font-weight-normal ".$ext."addr_title'><span class='".$ext."texts_title'>&#160;</span></h4>";
-	                 
+	     $tmp .= "<h4 class='my-0 font-weight-normal ".$ext."addr_title'><span class='".$ext."texts_title'>&#160;</span>";
+	     $tmp .= "<span class='".$ext."loading_icon mr-3 float-left' " . $hide . "> <i class='fas fa-laptop'></i></span>";
+	     $tmp .= "<span class='".$ext."loading_icon mr-3 float-left' " . $hide . "> <i class='fas fa-sync-alt fa-spin'></i></span>";
+	     $tmp .= "</h4>";
+	     
 	     $tmp .= "</div>";
 	                 
 	     $tmp .= "<div class='card-body'>";
@@ -1154,7 +1162,7 @@ class Cryptobox {
 	     $tmp .= "<br>";
 	     if (!$resultimg_path || $resultimg_path == "default") $resultimg_path = $imgdir_path."paid.png";
 	     if ($resultimgSize) $tmp .= "<div class='".$ext."copy_transaction'><img class='".$ext."paidimg' style='max-width: 100%; width: ".$resultimgSize."px; height: auto;' src='".$resultimg_path."' alt='Paid'></div><br><br>";
-	     $tmp .= "<h1 class='display-4 ".$ext."paymentcaptcha_successful'>.</h1>";
+	     $tmp .= "<h1 class='display-4 ".$ext."paymentcaptcha_successful' style='line-height:1.5;'>.</h1>";
 	     $tmp .= "<br>";
 	     $tmp .= "<div class='lead ".$ext."paymentcaptcha_date'></div>";
 	     $tmp .= "<br>";
@@ -1187,7 +1195,7 @@ class Cryptobox {
 	     if ($debug)
 	     {    
 	     
-	     $tmp .= "<div class='container ".$ext."cryptobox_rawdata px-4 py-3' style='overflow-wrap: break-word; display:none;'>";
+	     $tmp .= "<div class='mncrpt_debug container ".$ext."cryptobox_rawdata px-4 py-3' style='overflow-wrap: break-word; display:none;'>";
 	     $tmp .= "<div class='row'>";
 	     $tmp .= "<div class='col-12'>";
 	     $tmp .= "<br><br><br><br><br>";
@@ -1303,6 +1311,7 @@ class Cryptobox {
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query($data));
 		curl_setopt( $ch, CURLOPT_HEADER, 0);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt( $ch, CURLOPT_USERAGENT, $this->ua());
 		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 20);
 		curl_setopt( $ch, CURLOPT_TIMEOUT, 20);
 		$res = curl_exec( $ch );
@@ -1416,8 +1425,10 @@ class Cryptobox {
 		 
 		return $out;
 	}
-	
-	
+	private function ua($agent = true)
+	{
+	   return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER["SERVER_NAME"] . (isset($_SERVER["PHP_SELF"])?$_SERVER["PHP_SELF"]:"") . ' | GU ' . (CRYPTOBOX_WORDPRESS?'WORDPRESS':'PHP') . ' ' . CRYPTOBOX_VERSION . ($agent && isset($_SERVER["HTTP_USER_AGENT"])?' | '.$_SERVER["HTTP_USER_AGENT"]:'');
+	}
 	public function ip_address()
 	{
 		static $ip_address;
@@ -1543,14 +1554,14 @@ class Cryptobox {
 		if ($boxID && (!is_numeric($boxID) || $boxID < 1 || round($boxID) != $boxID))	return false;
 		if ($period && preg_replace('/[^A-Za-z0-9\ ]/', '', $period) != $period) return false;
 			
-		$res = run_sql("SELECT paymentID, boxID, boxType, coinLabel, amount, amountUSD, addr, txID, txDate, recordCreated       
+		$res = run_sql("SELECT paymentID, boxID, boxType, coinLabel, amount, amountUSD, addr, txID, txDate, recordCreated
 						FROM crypto_payments WHERE unrecognised = 1 ".($boxID?" && boxID = $boxID":"").($period?" && recordCreated > DATE_SUB('".gmdate("Y-m-d H:i:s")."', INTERVAL $period)":"")." ORDER BY txDate DESC LIMIT 10000");
 	
 		if ($res && !is_array($res)) $res = array($res);
 		
 		return $res;
 	}
-	
+
 	
 	
 	
@@ -1570,9 +1581,9 @@ class Cryptobox {
 	        if (!isset($localisation[CRYPTOBOX_LANGUAGE])) die("Invalid lanuage value '".CRYPTOBOX_LANGUAGE."' in CRYPTOBOX_LANGUAGE; function cryptobox_language()");
 	        else return CRYPTOBOX_LANGUAGE;
 	    }
-	    
-	    if (isset($_GET[$id]) && in_array($_GET[$id], array_keys($localisation))) { $lan = $_GET[$id]; setcookie($id, $lan, time()+7*24*3600, "/"); }
-	    elseif (isset($_COOKIE[$id]) && in_array($_COOKIE[$id], array_keys($localisation))) $lan = $_COOKIE[$id];
+
+	    if (isset($_GET[$id]) && in_array($_GET[$id], array_keys($localisation)) && !defined("CRYPTOBOX_LANGUAGE_HTMLID_IGNORE")) { $lan = $_GET[$id]; setcookie($id, $lan, time()+7*24*3600, "/"); }
+	    elseif (isset($_COOKIE[$id]) && in_array($_COOKIE[$id], array_keys($localisation)) && !defined("CRYPTOBOX_LANGUAGE_HTMLID_IGNORE")) $lan = $_COOKIE[$id];
 	    elseif (in_array($default, array_keys($localisation))) $lan = $default;
 	    else 	$lan = "en";
 	    
@@ -1592,11 +1603,11 @@ class Cryptobox {
 	function cryptobox_selcoin($coins = array(), $default = "")
 	{
 	    static $current = "";
-	    
+
 	    $default 			= strtolower($default);
 	    $available_payments = json_decode(CRYPTOBOX_COINS, true); // List of available crypto currencies
 	    $id 	 			= (defined("CRYPTOBOX_COINS_HTMLID")) ? CRYPTOBOX_COINS_HTMLID : "gourlcryptocoin";
-	
+
 	    if ($default && !in_array($default, $coins)) $coins[] = $default;
 	    if (!$default && $coins) $default = array_values($coins)[0];
 	     
@@ -1671,7 +1682,7 @@ class Cryptobox {
 	function display_currency_box($coins = array(), $def_coin = "", $def_language = "en", $iconWidth = 50, $style = "width:350px; margin: 10px 0 10px 320px", $directory = "images", $anchor = "gourlcryptocoins", $jquery = false)
 	{
 		if (!$coins) return "";
-		
+
 		$directory          = rtrim($directory, "/");
 		$def_coin 			= strtolower($def_coin);
 		$def_language 			= strtolower($def_language);
@@ -1711,8 +1722,8 @@ class Cryptobox {
 			if (strpos(CRYPTOBOX_PRIVATE_KEYS, ucfirst($v)."77") === false) die("Please add your Private Key for '$v' in variable \$cryptobox_private_keys, file cryptobox.config.php");
 			$url = $coin_url.$v."#".$anchor;
 			
-			if ($jquery) $tmp .= "<input type='radio' class='aradioimage' data-title='".str_replace("%coinName%", ucfirst($v), $localisation["pay_in"])."' ".($coinName==$v?"checked":"")." data-url='$url' data-width='$iconWidth' data-alt='".str_replace("%coinName%", $v, $localisation["pay_in"])."' data-image='".$directory."/".$v.($iconWidth>70?"2":"").".png' name='aradioname' value='$v'> &#160; ".($iconWidth>70?"&#160;":"");
-			else $tmp .= "<a href='".$url."' onclick=\"location.href='".$url."';\"><img style='box-shadow:none;margin:".round($iconWidth/10)."px ".round($iconWidth/6)."px;border:0;' width='$iconWidth' title='".str_replace("%coinName%", ucfirst($v), $localisation["pay_in"])."' alt='".str_replace("%coinName%", $v, $localisation["pay_in"])."' src='".$directory."/".$v.($iconWidth>70?"2":"").".png'></a>";
+			if ($jquery) $tmp .= "<input type='radio' class='aradioimage' data-title='".str_replace("%coinName%", ucfirst($v), $localisation["pay_in"])."' ".($coinName==$v?"checked":"")." data-url='$url' data-width='$iconWidth' data-alt='".str_replace("%coinName%", $v, $localisation["pay_in"])."' data-image='".$directory."/".$v.($iconWidth>70?"2":"").".png' name='aradioname' value='$v'>&#160; ".($iconWidth>70 || count($coins)<4?"&#160; ":"");
+			else $tmp .= "<a href='".$url."' onclick=\"location.href='".$url."';\"><img style='box-shadow:none;margin:".round($iconWidth/10)."px ".round($iconWidth/6)."px;border:0;display:inline;' width='$iconWidth' title='".str_replace("%coinName%", ucfirst($v), $localisation["pay_in"])."' alt='".str_replace("%coinName%", $v, $localisation["pay_in"])."' src='".$directory."/".$v.($iconWidth>70?"2":"").".png'></a>";
 		}
 		$tmp .= "</div>";
 		
@@ -1745,7 +1756,7 @@ class Cryptobox {
 	
 	/* H. Function convert_currency_live()
 	 * 
-	 * Currency Converter using Google Finance live exchange rates
+	 * Currency Converter using XE.COM live exchange rates
 	 * Example - convert_currency_live("EUR", "USD", 22.37) - convert 22.37euro to usd
 				 convert_currency_live("EUR", "BTC", 22.37) - convert 22.37euro to bitcoin
 	 */
@@ -2139,6 +2150,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);  
-	}     
+		unset($v); unset($cryptobox_private_keys);    
+	}
 ?>

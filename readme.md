@@ -2,7 +2,7 @@
 GoUrl.io Cryptocoin Payment Gateway API
 -----------------------------------------
 
-Version 2.0
+Version 2.1
 
 **Accept Bitcoin, Bitcoin Cash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, UniversalCurrency, MonetaryUnit Payments Online on your website**
 
@@ -14,6 +14,7 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 * 100% Free Open Source on Github.com
 * No Monthly Fee, Transaction Fee from 0%
 * No ID Required, No Bank Account Needed
+* White Label Solution - Bitcoin/Altcoin Payment Box with Your Own [Company Logo](https://gourl.io/lib/examples/example_customize_box.php)
 * Get payments straight to your bitcoin/altcoin wallets and convert to [USD/EUR/etc](https://gourl.io/#usd) later
 * [Custom Payment Box](https://gourl.io/lib/examples/example_customize_box.php) - json format; customise your bitcoin payment box with your own text / logo
 * [White Label Product](https://gourl.io/lib/examples/example_customize_box.php?logo=custom&method=curl&boxtype=1) - Bitcoin Payments with your own logo and all payment requests through your server

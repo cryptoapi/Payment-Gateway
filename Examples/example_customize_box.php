@@ -432,9 +432,9 @@
 
     <!-- JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
-	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" crossorigin="anonymous"></script>
     <script src="<?php echo CRYPTOBOX_JS_FILES_PATH; ?>support.min.js" crossorigin="anonymous"></script> 
 
     <!-- Custom styles for crypto payment box, copy it to your file also -->
@@ -626,7 +626,7 @@
             <a class="dropdown-item<?php if ($method == "ajax") echo " active"; ?>" href="<?php echo $page . "method=ajax&boxtype=1#b" ?>"><b>AJAX</b> - Prefer Method (users don't need click any submit buttons)</a>
             <a class="dropdown-item disabled" href="#a">ajax - User browser receive payment data directly from our server and auto show successful message</a>
             <a class="dropdown-item<?php if ($method == "curl") echo " active"; ?>" href="<?php echo $page . "method=curl&boxtype=1#b" ?>"><b>CURL</b> + Your Own Logo (White Label Product), user need to click on button when payment is sent</a>
-            <a class="dropdown-item disabled" href="#a">curl - User browser receive payment data from your server only; your server receive data from our server</a>
+            <a class="dropdown-item disabled" href="#a">curl - User browser receive payment data from your website only (not even know about gourl.io); your website receive data from our server gourl.io</a>
           </div>
         </div>
 
@@ -826,9 +826,9 @@
 	                       
     &lt;!-- JS --&gt;
     &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
-    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
+    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
     &lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
-    &lt;script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"&gt;&lt;/script&gt;
+    &lt;script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" crossorigin="anonymous"&gt;&lt;/script&gt;
     &lt;script src="&lt;?php echo CRYPTOBOX_JS_FILES_PATH; ?&gt;support.min.js" crossorigin="anonymous"&gt;&lt;/script&gt; 
 
     &lt;!-- CSS for Payment Box --&gt;

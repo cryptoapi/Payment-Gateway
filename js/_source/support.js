@@ -2,9 +2,9 @@
 	* @package     GoUrl Bitcoin/Altcoin Payment Box - Update HTML Payment Box values
 	* @copyright   2014-2018 Delta Consultants
 	* @category    Javascript
-	* @website     https://gourl.io
-	* @api         https://gourl.io/api.html
-	* @version     2.0
+	* @website     https://gourl.io   
+	* @api         https://gourl.io/api.html     
+	* @version     2.1
 	*/
 	
 	/**
@@ -60,7 +60,7 @@
 			if (!($('.'+ext+'button_confirm').length)) $('.'+ext+'button_wait').attr('data-original-title', data.texts.btn_wait_hint).attr('data-placement', 'top').attr('data-toggle', 'tooltip').tooltip();  
 			$('.'+ext+'button_confirm').attr('data-original-title', data.texts.btn_wait_hint).attr('data-placement', 'top').attr('data-toggle', 'tooltip').tooltip();  
 			$('.'+ext+'button_refresh, .'+ext+'refresh').attr('data-original-title', data.texts.refresh).attr('data-placement', 'top').attr('data-toggle', 'tooltip').tooltip();  
-			$('.'+ext+'copy_address').attr('data-original-title', data.texts.btn_copy).attr('data-placement', 'bottom').attr('data-toggle', 'tooltip').tooltip();  
+			$('.'+ext+'copy_address').attr('data-original-title', data.texts.btn_copy).attr('data-placement', 'top').attr('data-toggle', 'tooltip').tooltip();  
 			$('.'+ext+'copy_amount').css( 'cursor', 'pointer' ).attr('data-original-title', data.texts.copy_amount).attr('data-placement', 'bottom').attr('data-toggle', 'tooltip').tooltip();  
 			$('.'+ext+'copy_transaction').css( 'cursor', 'pointer' ).attr('data-original-title', 'Copy Transaction ID').attr('data-placement', 'bottom').attr('data-toggle', 'tooltip').tooltip();  
 		}
@@ -92,6 +92,10 @@
 		
 		$('.'+ext+'button_refresh').html('<i class="fas fa-sync-alt"></i>&#160; ' + data.texts.refresh);
 		
+		
+		$('.mncrpt a.dropdown-item, .'+ext+'button_confirm, .'+ext+'button_wait, .'+ext+'refresh').click(function() { $('.'+ext+'refresh, .'+ext+'msg').hide(); document.location.href = "#h"+ext.replace(/_\s*$/, ""); $('.'+ext+'loading_icon').show(); });
+		
+		
 	
 
 		// Payment Received Payment Box
@@ -103,11 +107,11 @@
 			$('.'+ext+'button_details').html('<span class="glyphicon glyphicon-'+((data.coinlabel=='BTC') ? 'bitcoin' : 'globe')+'"></span>&#160; ' + data.texts.btn_res);
 			$('.'+ext+'button_details').click(function() { newwindow=window.open(data.tx_url,'','height=800,width=1100'); if (window.focus) {newwindow.focus()} return false; });
 
-			
-			$('.'+ext+'coins_list').hide();
+			$('.'+ext+'texts_pay_now').hide();
 			$('.'+ext+'texts_intro1').hide();
 			$('.'+ext+'texts_intro2').hide();
 			$('.'+ext+'texts_intro3').hide();
+			$('.'+ext+'coins_list').hide();
 			//$('.'+ext+'box_language').addClass('col-md-offset-3');
 		}
 		else $('.'+ext+'coins_list').show();
