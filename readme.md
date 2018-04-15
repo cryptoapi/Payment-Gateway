@@ -65,7 +65,7 @@ The big benefit of Cryptocoin Payment Box is that it fully integrated on your we
 Your website will receive full user payment information immediately after cryptocoin payment is made and you can process it in automatic mode.
 
 
-# ![Payment-Box](https://gourl.io/images/bitcoinbox2.png)
+# ![Payment-Box](https://gourl.io/images/white_label_box.png)
 
 
 
@@ -205,6 +205,4 @@ PHP Examples / Live Demo :
 * **Pay-Per-Post**: Example5 - [multiple crypto](https://gourl.io/lib/examples/pay-per-post-multi.php), Example6 - [bitcoin](https://gourl.io/lib/examples/pay-per-post.php)
 * **Pay-Per-Registration**: Example7 - [multiple crypto](https://gourl.io/lib/examples/pay-per-registration-multi.php), Example8 - [bitcoin](https://gourl.io/lib/examples/pay-per-registration.php)
 * **Pay-Per-Page-Access**: Example19 - [multiple crypto](https://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](https://gourl.io/lib/examples/pay-per-page.php)
-* **Pay-Per-Membership**: Example11 - [multiple crypto](https://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](https://gourl.io/lib/examples/pay-per-membership.php)
-
- 
+* **Pay-Per-Membership**: Example11 - [multiple crypto](https://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](https://gourl.io/lib/examples/pay-per-membership.php) 
