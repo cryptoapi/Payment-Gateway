@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)   
+ * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)       
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2018 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
@@ -180,8 +180,14 @@
     <meta name="description" content="">
     <title>Payment Box</title>
 
-    <!-- Bootstrap CSS - -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">        
+
+    <!-- Bootstrap4 CSS - -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">   
+      
+    <!-- Note - If your website not use Bootstrap4 CSS as main style, please use custom css style below and delete css line above. 
+    It isolate Bootstrap CSS to a particular class 'bootstrapiso' to avoid css conflicts with your site main css style -->
+    <!-- <link rel="stylesheet" href="css/bootstrapcustom.min.css" crossorigin="anonymous"> -->
+
 	                       
     <!-- JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>

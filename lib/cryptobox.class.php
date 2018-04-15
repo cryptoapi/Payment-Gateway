@@ -15,7 +15,7 @@
  * @example     https://gourl.io/lib/examples/example_customize_box.php    <----
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     2.1
+ * @version     2.1.1
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -79,7 +79,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "2.1");
+define("CRYPTOBOX_VERSION", "2.1.1");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency')));
@@ -767,10 +767,17 @@ class Cryptobox {
 	 *  <meta charset="utf-8">
 	 *  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	 *  <meta name="viewport" content="width=device-width, initial-scale=1">
-	 *  <!-- Bootstrap CSS - Original Theme -->
+
+	 *  A. <!-- Bootstrap CSS - Original Theme -->
 	 *  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
-	 *  <!-- or you can use other Themes, for example from https://bootswatch.com/; replace line with bootstrap.min.css above to line below -->
+	 *  
+	 *  B. OR you can use other Themes, for example from https://bootswatch.com/; replace line with bootstrap.min.css above to line below -
 	 *  <!-- <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.css"> -->
+
+	 *  C. OR isolate Bootstrap CSS to a particular class to avoid css conflicts with your site main css style; use custom isolate css themes from /css folder 
+	 *  Bootstrap Isolated CSS (class='bootstrapiso') Original Theme - 
+	 *  <!-- <link rel="stylesheet" href="/css/bootstrapcustom.min.css"> -->
+	 *  
 	 *  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
 	 *  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
 	 *  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
@@ -866,7 +873,8 @@ class Cryptobox {
 	    // ----------------------------
 	     
 	    // All Payment Box Elements Area Start ...
-	    $tmp = "<div id='".$ext2."' class='".$ext."cryptobox_area mncrpt'>";
+	    $tmp  = "<div class='bootstrapiso'>";
+	    $tmp .= "<div id='".$ext2."' class='".$ext."cryptobox_area mncrpt'>";
 	     
 	    //JQuery Payment Box Script, see https://github.com/cryptoapi/Payment-Gateway/blob/master/js/source/ajax.js 
 	    if ($method == "ajax")
@@ -1226,7 +1234,8 @@ class Cryptobox {
 	     
 	     
 	     $tmp .= "</div>"; 
-	     // End - <div id='".$ext2."' class='".$ext."cryptobox_area'>
+	     $tmp .= "</div>";
+	     // End - <div class='bootstrapiso'>
 
 	     
 	     
@@ -2150,6 +2159,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys); 
+		unset($v); unset($cryptobox_private_keys);  
 	}
 ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)    
+ * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)       
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2018 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
@@ -30,7 +30,7 @@
 	
 	// Change path to your files
 	// --------------------------------------
-	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "../lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php; 
+	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "../lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php;   
                                                         // cryptobox.newpayment.php will be automatically call through ajax/php two times - payment received/confirmed
 	DEFINE("CRYPTOBOX_IMG_FILES_PATH", "../images/");      // path to directory with coin image files (directory 'images' by default)
 	DEFINE("CRYPTOBOX_JS_FILES_PATH", "../js/");			// path to directory with files: ajax.min.js/support.min.js
@@ -55,7 +55,7 @@
 	
 	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options
 	
-	$userID 			= "demo";	  // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
+	$userID 			= "";	  // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
 									  // You can use php $_SESSION["userABC"] for store userID, amount, etc
 									  // You don't need to use userID for unregistered website visitors - $userID = "";
 									  // if userID is empty, system will autogenerate userID and save it in cookies
@@ -180,8 +180,14 @@
     <meta name="description" content="">
     <title>Payment Box</title>
 
-    <!-- Bootstrap CSS - -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">        
+
+    <!-- Bootstrap4 CSS - -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">   
+      
+    <!-- Note - If your website not use Bootstrap4 CSS as main style, please use custom css style below and delete css line above. 
+    It isolate Bootstrap CSS to a particular class 'bootstrapiso' to avoid css conflicts with your site main css style -->
+    <!-- <link rel="stylesheet" href="../css/bootstrapcustom.min.css" crossorigin="anonymous"> -->
+
 	                       
     <!-- JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>

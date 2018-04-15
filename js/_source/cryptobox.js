@@ -4,7 +4,7 @@
 	* @category    Javascript
 	* @website     https://gourl.io
 	* @api         https://gourl.io/api.html
-	* @version     2.1
+	* @version     2.1.1
 	*/
 
 	/**
@@ -68,5 +68,5 @@
 	function cryptobox_msghide (id)
 	{
 		setTimeout(function(){ document.getElementById(id).style.display='none';}, 15000 );
-	}   
+	} 
 

@@ -2,7 +2,7 @@
 GoUrl.io Cryptocoin Payment Gateway API
 -----------------------------------------
 
-Version 2.1
+Version 2.1.1
 
 **Accept Bitcoin, Bitcoin Cash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, UniversalCurrency, MonetaryUnit Payments Online on your website**
 
@@ -207,4 +207,4 @@ PHP Examples / Live Demo :
 * **Pay-Per-Page-Access**: Example19 - [multiple crypto](https://gourl.io/lib/examples/pay-per-page-multi.php), Example10 - [bitcoin](https://gourl.io/lib/examples/pay-per-page.php)
 * **Pay-Per-Membership**: Example11 - [multiple crypto](https://gourl.io/lib/examples/pay-per-membership-multi.php), Example12 - [bitcoin](https://gourl.io/lib/examples/pay-per-membership.php)
 
-   
+ 

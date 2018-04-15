@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)             
+ * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2018 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
@@ -30,7 +30,7 @@
 	
 	// Change path to your files
 	// --------------------------------------
-	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php; 
+	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php;  
                                                         // cryptobox.newpayment.php will be automatically call through ajax/php two times - payment received/confirmed
 	DEFINE("CRYPTOBOX_IMG_FILES_PATH", "images/");      // path to directory with coin image files (directory 'images' by default)
 	DEFINE("CRYPTOBOX_JS_FILES_PATH", "js/");			// path to directory with files: ajax.min.js/support.min.js
@@ -55,7 +55,7 @@
 	
 	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options
 	
-	$userID 			= "demo";	  // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
+	$userID 			= "";	  // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
 									  // You can use php $_SESSION["userABC"] for store userID, amount, etc
 									  // You don't need to use userID for unregistered website visitors - $userID = "";
 									  // if userID is empty, system will autogenerate userID and save it in cookies
@@ -164,14 +164,7 @@
 	// IPN function cryptobox_new_payment(..) will automatically appear for each new payment two times - payment received and payment confirmed
 	// Read more - https://gourl.io/api-php.html#ipn
 	
-?>
 
-
-
-
-
-
-    <?php 
     
         // Change payment box parameters online
         // Code for demo page below
@@ -209,20 +202,36 @@
         }
         else $theme = (isset($_COOKIE["dtheme"])) ? $_COOKIE["dtheme"] : "default"; 
       
-        if ($theme == "black")          $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.css">';
-        elseif ($theme == "greyred")    $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.css">';
-        elseif ($theme == "greygreen")  $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/solar/bootstrap.css">';
-        elseif ($theme == "whiteblue")  $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/cerulean/bootstrap.css">';
-        elseif ($theme == "whitered")   $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.css">';
-        elseif ($theme == "whitegreen") $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.css">';
-        elseif ($theme == "whiteblack") $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.css">';
-        elseif ($theme == "whitepurple")$css =  '<link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.css">';
-        elseif ($theme == "litera")     $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.css">';
-        elseif ($theme == "minty")      $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">';
-        elseif ($theme == "sandstone")  $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.css">';
-        elseif ($theme == "sketchy")    $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/sketchy/bootstrap.css">';
+        if ($theme == "black")          $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "greyred")    $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "greygreen")  $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/solar/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "whiteblue")  $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/cerulean/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "whitered")   $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "whitegreen") $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "whiteblack") $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "whitepurple")$css =  '<link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "litera")     $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "minty")      $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "sandstone")  $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.css" crossorigin="anonymous">';
+        elseif ($theme == "sketchy")    $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/sketchy/bootstrap.css" crossorigin="anonymous">';
         else                            $css =  '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">';
-        
+
+        // If your website not use Bootstrap4 as main style, please use custom css style below.
+        // It isolate Bootstrap CSS to a particular class 'bootstrapiso' to avoid css conflicts with your site main css style
+        if ($theme == "black")          $css2 =  '<link rel="stylesheet" href="css/darkly.min.css" crossorigin="anonymous">';
+        elseif ($theme == "greyred")    $css2 =  '<link rel="stylesheet" href="css/superhero.min.css" crossorigin="anonymous">';
+        elseif ($theme == "greygreen")  $css2 =  '<link rel="stylesheet" href="css/solar.min.css" crossorigin="anonymous">';
+        elseif ($theme == "whiteblue")  $css2 =  '<link rel="stylesheet" href="css/cerulean.min.css" crossorigin="anonymous">';
+        elseif ($theme == "whitered")   $css2 =  '<link rel="stylesheet" href="css/united.min.css" crossorigin="anonymous">';
+        elseif ($theme == "whitegreen") $css2 =  '<link rel="stylesheet" href="css/flatly.min.css" crossorigin="anonymous">';
+        elseif ($theme == "whiteblack") $css2 =  '<link rel="stylesheet" href="css/lux.min.css" crossorigin="anonymous">';
+        elseif ($theme == "whitepurple")$css2 =  '<link rel="stylesheet" href="css/pulse.min.css" crossorigin="anonymous">';
+        elseif ($theme == "litera")     $css2 =  '<link rel="stylesheet" href="css/litera.min.css" crossorigin="anonymous">';
+        elseif ($theme == "minty")      $css2 =  '<link rel="stylesheet" href="css/minty.min.css" crossorigin="anonymous">';
+        elseif ($theme == "sandstone")  $css2 =  '<link rel="stylesheet" href="css/sandstone.min.css" crossorigin="anonymous">';
+        elseif ($theme == "sketchy")    $css2 =  '<link rel="stylesheet" href="css/sketchy.min.css" crossorigin="anonymous">';
+        else                            $css2 =  '<link rel="stylesheet" href="css/bootstrapcustom.min.css" crossorigin="anonymous">';
+
         // -- End Theme ---------------------
         
         
@@ -409,11 +418,9 @@
         
     ?>
 
-
-
-
-
 <!-- More info - https://gourl.io/bitcoin-payment-gateway-api.html -->
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -471,15 +478,15 @@
 		<h1 class="display-4">Customize GoUrl Bitcoin/ Altcoin Payment Box (2018 year)</h1>
 		<p class='lead'>See live <a href='#dmgnpcode'>generated php/html code</a> for your website below (<a target="_blank" href="https://github.com/cryptoapi/Payment-Gateway">open source class</a>)</p>
 
-        <div class="d-inline-block dropdown mx-3 my-3">
+        <div id="dropdown1" class="d-inline-block dropdown mx-3 my-3">
           <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Colour Themes
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <a class="dropdown-item<?php if ($theme == "default") echo " active"; ?>" href="<?php echo $page . "theme=default#b" ?>">Default</a>
             <a class="dropdown-item<?php if ($theme == "black") echo " active"; ?>" href="<?php echo $page . "theme=black#b" ?>">Black</a>
-            <a class="dropdown-item<?php if ($theme == "greyred") echo " active"; ?>" href="<?php echo $page . "theme=greyred#b" ?>">Grey/Red</a>
-            <a class="dropdown-item<?php if ($theme == "greygreen") echo " active"; ?>" href="<?php echo $page . "theme=greygreen#b" ?>">Grey/Green</a>
+            <a class="dropdown-item<?php if ($theme == "greyred") echo " active"; ?>" href="<?php echo $page . "theme=greyred#b" ?>">LightGrey/Red</a>
+            <a class="dropdown-item<?php if ($theme == "greygreen") echo " active"; ?>" href="<?php echo $page . "theme=greygreen#b" ?>">DarkGrey/Green</a>
             <a class="dropdown-item<?php if ($theme == "whiteblue") echo " active"; ?>" href="<?php echo $page . "theme=whiteblue#b" ?>">White/Blue</a>
             <a class="dropdown-item<?php if ($theme == "whitered") echo " active"; ?>" href="<?php echo $page . "theme=whitered#b" ?>">White/Red</a>
             <a class="dropdown-item<?php if ($theme == "whitegreen") echo " active"; ?>" href="<?php echo $page . "theme=whitegreen#b" ?>">White/Green</a>
@@ -626,7 +633,7 @@
             <a class="dropdown-item<?php if ($method == "ajax") echo " active"; ?>" href="<?php echo $page . "method=ajax&boxtype=1#b" ?>"><b>AJAX</b> - Prefer Method (users don't need click any submit buttons)</a>
             <a class="dropdown-item disabled" href="#a">ajax - User browser receive payment data directly from our server and auto show successful message</a>
             <a class="dropdown-item<?php if ($method == "curl") echo " active"; ?>" href="<?php echo $page . "method=curl&boxtype=1#b" ?>"><b>CURL</b> + Your Own Logo (White Label Product), user need to click on button when payment is sent</a>
-            <a class="dropdown-item disabled" href="#a">curl - User browser receive payment data from your server only; your server receive data from our server</a>
+            <a class="dropdown-item disabled" href="#a">curl - User browser receive payment data from your website only (not even know about gourl.io); your website receive data from our server gourl.io</a>
           </div>
         </div>
 
@@ -674,8 +681,12 @@
         
   ?>
   
-  	<div id='dmgnpcode' class='mncrpt px-2 py-3 mx-auto my-4 text-center' style='max-width:1450px; white-space:normal; display:none'>
+  	<?php if ($debug) { ?><div style="margin-top:-60px" class="text-center"><a href='<?php echo $page . "deb=no#b" ?>'>Hide Debug Log</a> <small>(or use dropdown <a href="#dropdown1">menu</a> above "Debug Raw Values Box")</small></div><?php } ?>
+  
 
+  
+  	<div id='dmgnpcode' class='mncrpt px-2 py-3 mx-auto my-4 text-center' style='max-width:1450px; white-space:normal; display:none'>
+		<br><br><br><br>
 		<h1 class="display-6">Generated paymentbox php code for your website</h1>
 		 <p class='lead'>create new php file with this code (default <a target="_blank" href="https://github.com/cryptoapi/Payment-Gateway">location</a> ); ready to use (php, json, bootstrap4, mobile friendly, white label product / your own logo). <a href='https://gourl.io/bitcoin-payment-gateway-api.html#p8'>Read instruction</a></p>  
       	<div class="form-group my-4">
@@ -801,7 +812,7 @@
 	
 	// coin name
 	$coinName = $box-&gt;coin_name();
-	
+
 	// php code end :)
 	// ---------------------
 	
@@ -821,15 +832,20 @@
     &lt;meta name="description" content=""&gt;
     &lt;title&gt;Payment Box&lt;/title&gt;
 
-    &lt;!-- Bootstrap CSS - --&gt;
-    <?php echo $css; ?>        
-	                       
+    &lt;!-- Bootstrap4 CSS - --&gt;
+    <?php echo $css; ?>   
+      
+    &lt;!-- Note - If your website not use Bootstrap4 CSS as main style, please use custom css style below and delete css line above. 
+    It isolate Bootstrap CSS to a particular class 'bootstrapiso' to avoid css conflicts with your site main css style --&gt;
+    &lt;!-- <?php echo $css2; ?> --&gt;
+
+
     &lt;!-- JS --&gt;
     &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
     &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
     &lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
     &lt;script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" crossorigin="anonymous"&gt;&lt;/script&gt;
-    &lt;script src="&lt;?php echo CRYPTOBOX_JS_FILES_PATH; ?&gt;support.min.js" crossorigin="anonymous"&gt;&lt;/script&gt; 
+    &lt;script src="&lt;?php echo CRYPTOBOX_JS_FILES_PATH; ?&gt;support.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
 
     &lt;!-- CSS for Payment Box --&gt;
     &lt;style&gt;
@@ -889,7 +905,7 @@
             <img class="mb-2" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
             <small class="d-block mb-3 text-muted">&copy; 2014-2018</small>
             <br>
-            <div><a target="_blank" href="http://validator.w3.org/check?uri=<?php echo "https://".$_SERVER[HTTP_HOST].urlencode($_SERVER[REQUEST_URI]); ?>"><img title="Markup Validation Service" src="https://gourl.io/images/w3c.png" alt="Valid HTML 5"></a></div>
+            <div><a target="_blank" href="https://validator.w3.org/nu/?showsource=yes&amp;doc=<?php echo "https://".$_SERVER[HTTP_HOST].urlencode($_SERVER[REQUEST_URI]); ?>"><img title="Markup Validation Service" src="https://gourl.io/images/w3c.png" alt="Valid HTML 5"></a></div>
           </div>
           <div class="col-6 col-md">
             <h5>Features</h5>
@@ -924,6 +940,6 @@
       </footer>
 
   </body>
-  
+
 </html>
 

@@ -1,4 +1,12 @@
 ===============================================================================
+== Version 2.1.1 (April 2018)    
+===============================================================================
+
+- Isolate Bootstrap CSS to a particular class 'bootstrapiso' to avoid css conflicts with your site css style
+
+
+
+===============================================================================
 == Version 2.1 (April 2018)    
 ===============================================================================
 
@@ -120,4 +128,4 @@ Instruction - https://gourl.io/bitcoin-payment-gateway-api.html#p8
 
 - Several new enhancements
 
-     
+ 

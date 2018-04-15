@@ -150,7 +150,7 @@
 	
 	
 	// Optional - Coin selection list (html code)
-	$coins_list = display_currency_box($available_payments, $def_payment, $def_language, 60, "margin: 80px 0 0 0", "images");
+	$coins_list = display_currency_box($available_payments, $def_payment, $def_language, 60, "margin: 80px 0 0 0", "../images");
 
 
 
