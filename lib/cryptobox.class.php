@@ -15,7 +15,7 @@
  * @example     https://gourl.io/lib/examples/example_customize_box.php    <----
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     2.1.2
+ * @version     2.1.3
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -79,7 +79,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "2.1.2");
+define("CRYPTOBOX_VERSION", "2.1.3");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency')));
@@ -402,6 +402,10 @@ class Cryptobox {
 		if ($res)
 		{
 		  $arr = $arr2 = json_decode($res, true);
+		  
+		  // if error
+		  if (!$arr && $res) return array("status" => "error", "err" => substr(strip_tags($res), 0, 250)); 
+
 		  if (isset($arr2["data_hash"]))
 		  {
 		      unset($arr2["data_hash"]);
@@ -811,8 +815,8 @@ class Cryptobox {
 	* redirect - redirect to another page after payment is received (3 seconds delay)
 	*    
 	* method - "ajax" or "curl". 
-	*    AJAX - Prefer Method (users don't need click any submit buttons)
-	*    CURL + Your Own Logo (White Label Product - https://www.google.com/search?q=white+label+product), user need to click on button below payment form when payment is sent
+	*    AJAX - user don't need click any submit buttons
+	*    CURL + White Label Payment Box with Your Own Logo (White Label Product - https://www.google.com/search?q=white+label+product), user need to click on button below payment form when payment is sent
 	*    with ajax - user browser receive payment data directly from our server and automatically show successful payment notification message on page (without page reload, any clicks on buttons). 
 	*    with curl - User browser receive payment data in json format from your server only; and your server receive json data from our server
 	* 
@@ -884,7 +888,7 @@ class Cryptobox {
 	    else
 	    {
 	        $data = $this->get_json_values();
-	        unset($data["public_key"]); unset($data["box"]); unset($data["texts"]["website"]);
+	        unset($data["public_key"]); unset($data["texts"]["website"]);
 	        if (isset($data["private_key"])) unset($data["private_key"]);
 	        if (isset($data["private_key_hash"])) unset($data["private_key_hash"]);
 	        unset($data["data_hash"]);
@@ -913,6 +917,7 @@ class Cryptobox {
 
 	     // Coin selection list (bitcoin/litecoin/etc)
 	     // --------------------
+	     $coins_list_html = "";
 	     if (!$this->is_paid())
 	     {
 	        // Coin selection list (html code)
@@ -952,6 +957,7 @@ class Cryptobox {
 	    $tmp .= "<br>";
 	    $tmp .= "</div>";
 	    $tmp .= "</div>";
+	    $tmp .= "<br><br><br><br><br>";
 	    $tmp .= "</div>";
 	    $tmp .= "</div>";
 	    $tmp .= "</div>";
@@ -2222,6 +2228,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);   
+		unset($v); unset($cryptobox_private_keys);      
 	}
 ?>

@@ -30,7 +30,7 @@
 	
 	// Change path to your files
 	// --------------------------------------
-	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php;   
+	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php;
                                                         // cryptobox.newpayment.php will be automatically call through ajax/php two times - payment received/confirmed
 	DEFINE("CRYPTOBOX_IMG_FILES_PATH", "images/");      // path to directory with coin image files (directory 'images' by default)
 	DEFINE("CRYPTOBOX_JS_FILES_PATH", "js/");			// path to directory with files: ajax.min.js/support.min.js
@@ -55,7 +55,7 @@
 	
 	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options
 	
-	$userID 			= "";	  // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
+	$userID 			= "";         // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
 									  // You can use php $_SESSION["userABC"] for store userID, amount, etc
 									  // You don't need to use userID for unregistered website visitors - $userID = "";
 									  // if userID is empty, system will autogenerate userID and save it in cookies
@@ -630,7 +630,7 @@
             Data Methods (White Label/Ajax)
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton10">
-            <a class="dropdown-item<?php if ($method == "ajax") echo " active"; ?>" href="<?php echo $page . "method=ajax&boxtype=1#b" ?>"><b>AJAX</b> - Prefer Method (users don't need click any submit buttons)</a>
+            <a class="dropdown-item<?php if ($method == "ajax") echo " active"; ?>" href="<?php echo $page . "method=ajax&boxtype=1#b" ?>"><b>AJAX</b> - user don't need click any submit buttons</a>
             <a class="dropdown-item disabled" href="#a">ajax - User browser receive payment data directly from our server and auto show successful message</a>
             <a class="dropdown-item<?php if ($method == "curl") echo " active"; ?>" href="<?php echo $page . "method=curl&boxtype=1#b" ?>"><b>CURL</b> + Your Own Logo (White Label Product), user need to click on button when payment is sent</a>
             <a class="dropdown-item disabled" href="#a">curl - User browser receive payment data from your website only (not even know about gourl.io); your website receive data from our server gourl.io</a>
@@ -722,7 +722,7 @@
 	
 	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options
 	
-	$userID 			= "";		// place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
+	$userID 				= "";			  // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
 									// You can use php $_SESSION["userABC"] for store userID, amount, etc
 									// You don't need to use userID for unregistered website visitors - $userID = "";
 									// if userID is empty, system will autogenerate userID and save it in cookies

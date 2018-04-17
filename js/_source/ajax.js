@@ -4,7 +4,7 @@
 	* @category    Javascript
 	* @website     https://gourl.io
 	* @api         https://gourl.io/api.html
-	* @version     2.1.2
+	* @version     2.1.3
 	*/
 	
 	/**
@@ -61,13 +61,26 @@
 			})
 
 			.fail(function() 
-			{	
-				//$('.'+ext+'error_message').html('Error loading data ! &#160; <a target="_blank" href="'+url+'">Raw details here &#187;</a>');
-				$('.'+ext+'error_message').html('Error loading data ! Please contact the website administrator.');
-				$('.'+ext+'loader_button' ).fadeOut(400, function(){ $('.'+ext+'loader').show(); $('.'+ext+'cryptobox_error').fadeIn(400);  })
-				$('.'+ext+'cryptobox_error .'+ext+'coins_list').show();
-				$('.'+ext+'button_error, .mncrpt img.radioimage-select').click(function() { $('.'+ext+'refresh, .'+ext+'msg').hide(); document.location.href = "#h"+ext.replace(/_\s*$/, ""); $('.'+ext+'loading_icon').show(); });
-				return false;
+			{
+					var err_message = "";
+					$.ajax({
+						type: 'GET', 
+						url: url,
+						cache: false,
+						dataType: 'text'
+					})
+					.done(function( err_data ) {
+						if (err_data != '') err_message = '<br><br><b>' + err_data.substr(0, 250) + '</b><br><br>';
+					})
+					.always(function() 
+					{ 
+						//$('.'+ext+'error_message').html('Error loading data ! &#160; <a target="_blank" href="'+url+'">Raw details here &#187;</a>');
+						$('.'+ext+'error_message').html('Error loading data ! ' + err_message + ' Please contact the website administrator.');
+						$('.'+ext+'loader_button' ).fadeOut(400, function(){ $('.'+ext+'loader').show(); $('.'+ext+'cryptobox_error').fadeIn(400);  })
+						$('.'+ext+'cryptobox_error .'+ext+'coins_list').show();
+						$('.'+ext+'button_error, .mncrpt img.radioimage-select').click(function() { $('.'+ext+'refresh, .'+ext+'msg').hide(); document.location.href = "#h"+ext.replace(/_\s*$/, ""); $('.'+ext+'loading_icon').show(); });
+					});
+					return false;
 			})
 
 			.done(function( data ) 
@@ -121,4 +134,4 @@
 		 
 	}
 	
-	
+	  

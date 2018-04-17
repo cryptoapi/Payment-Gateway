@@ -4,7 +4,7 @@
 	* @category    Javascript
 	* @website     https://gourl.io   
 	* @api         https://gourl.io/api.html     
-	* @version     2.1.2
+	* @version     2.1.3
 	*/
 	
 	/**
@@ -29,7 +29,7 @@
 		
 		if (jQuery.type( data.coinname ) !== "string" || jQuery.type( data.texts ) !== "object" || jQuery.type( data.status ) !== "string" || (data.status  != "payment_received" && data.status  != "payment_not_received"))
 		{
-				if (jQuery.type( data.err ) === "string" && data.err) $('.'+ext+'error_message').html('Error loading data !<br><br><b>'+data.err+'</b>');
+				if (jQuery.type( data.err ) === "string" && data.err) $('.'+ext+'error_message').html('Error loading data !<br><br><b>'+data.err+'</b>'+(jQuery.type( data.box ) === 'undefined' ? '<br><br>Please contact the website administrator.' : ''));
 				else $('.'+ext+'error_message').html('Error loading data ! Please contact the website administrator.');
 				$('.'+ext+'loader_button' ).fadeOut(400, function(){ $('.'+ext+'loader').show(); $('.'+ext+'cryptobox_error').fadeIn(400);  })
 				$('.'+ext+'cryptobox_error .'+ext+'coins_list').show();
@@ -276,5 +276,4 @@
 				} );
 			});
 		}
-	}) (jQuery);    
-
+	}) (jQuery);     
