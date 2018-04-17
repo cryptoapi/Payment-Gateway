@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)       
+ * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)      
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2018 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
@@ -55,7 +55,7 @@
 	
 	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options
 	
-	$userID 			= "demo";	  // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
+	$userID 			= "";	  // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
 									  // You can use php $_SESSION["userABC"] for store userID, amount, etc
 									  // You don't need to use userID for unregistered website visitors - $userID = "";
 									  // if userID is empty, system will autogenerate userID and save it in cookies

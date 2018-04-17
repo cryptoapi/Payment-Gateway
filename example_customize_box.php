@@ -30,7 +30,7 @@
 	
 	// Change path to your files
 	// --------------------------------------
-	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php;  
+	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php;   
                                                         // cryptobox.newpayment.php will be automatically call through ajax/php two times - payment received/confirmed
 	DEFINE("CRYPTOBOX_IMG_FILES_PATH", "images/");      // path to directory with coin image files (directory 'images' by default)
 	DEFINE("CRYPTOBOX_JS_FILES_PATH", "js/");			// path to directory with files: ajax.min.js/support.min.js
@@ -277,7 +277,7 @@
             $logo = $_GET["logo"];
             setcookie("dlogo", $logo);
         }
-        else $logo = (isset($_COOKIE["dlogo"])) ? $_COOKIE["dlogo"] : "default";
+        else $logo = (isset($_COOKIE["dlogo"])) ? $_COOKIE["dlogo"] : "custom";
         
         if ($logo == "custom")         $logoimg_path =  CRYPTOBOX_IMG_FILES_PATH.'your_logo.png';
         elseif ($logo == "no")         $logoimg_path =  '';
@@ -722,7 +722,7 @@
 	
 	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options
 	
-	$userID 			= "demo";		// place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
+	$userID 			= "";		// place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
 									// You can use php $_SESSION["userABC"] for store userID, amount, etc
 									// You don't need to use userID for unregistered website visitors - $userID = "";
 									// if userID is empty, system will autogenerate userID and save it in cookies
@@ -942,4 +942,3 @@
   </body>
 
 </html>
-

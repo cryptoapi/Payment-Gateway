@@ -4,7 +4,7 @@
 	* @category    Javascript
 	* @website     https://gourl.io   
 	* @api         https://gourl.io/api.html     
-	* @version     2.1.1
+	* @version     2.1.2
 	*/
 	
 	/**
@@ -24,6 +24,17 @@
 		if (typeof logoimg_path !== 'string') 	logoimg_path = 'default';  	else 	logoimg_path = atob(logoimg_path);
 		if (typeof ext !== 'string') 			ext = 'acrypto_';			else 	ext = atob(ext);
 		
+		$('.mncrpt a.dropdown-item, .'+ext+'button_confirm, .'+ext+'button_wait, .'+ext+'button_error, .'+ext+'refresh, .mncrpt img.radioimage-select').click(function() { $('.'+ext+'refresh, .'+ext+'msg').hide(); document.location.href = "#h"+ext.replace(/_\s*$/, ""); $('.'+ext+'loading_icon').show(); });
+
+		
+		if (jQuery.type( data.coinname ) !== "string" || jQuery.type( data.texts ) !== "object" || jQuery.type( data.status ) !== "string" || (data.status  != "payment_received" && data.status  != "payment_not_received"))
+		{
+				if (jQuery.type( data.err ) === "string" && data.err) $('.'+ext+'error_message').html('Error loading data !<br><br><b>'+data.err+'</b>');
+				else $('.'+ext+'error_message').html('Error loading data ! Please contact the website administrator.');
+				$('.'+ext+'loader_button' ).fadeOut(400, function(){ $('.'+ext+'loader').show(); $('.'+ext+'cryptobox_error').fadeIn(400);  })
+				$('.'+ext+'cryptobox_error .'+ext+'coins_list').show();
+				return false;
+		}
 		
 		var coinName = data.coinname.toLowerCase();
 		
@@ -92,8 +103,6 @@
 		
 		$('.'+ext+'button_refresh').html('<i class="fas fa-sync-alt"></i>&#160; ' + data.texts.refresh);
 		
-		
-		$('.mncrpt a.dropdown-item, .'+ext+'button_confirm, .'+ext+'button_wait, .'+ext+'refresh').click(function() { $('.'+ext+'refresh, .'+ext+'msg').hide(); document.location.href = "#h"+ext.replace(/_\s*$/, ""); $('.'+ext+'loading_icon').show(); });
 		
 		
 	
@@ -267,5 +276,5 @@
 				} );
 			});
 		}
-	}) (jQuery);
+	}) (jQuery);    
 

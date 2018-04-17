@@ -5,7 +5,7 @@
  * ##########################################
  *
  *
- * PHP Cryptocurrency Payment Class
+ * PHP Cryptocurrency Payment Class  
  *
  * @package     GoUrl PHP Bitcoin/Altcoin Payments and Crypto Captcha
  * @copyright   2014-2018 Delta Consultants
@@ -15,7 +15,7 @@
  * @example     https://gourl.io/lib/examples/example_customize_box.php    <----
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     2.1.1
+ * @version     2.1.2
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -79,7 +79,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "2.1.1");
+define("CRYPTOBOX_VERSION", "2.1.2");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency')));
@@ -876,7 +876,7 @@ class Cryptobox {
 	    $tmp  = "<div class='bootstrapiso'>";
 	    $tmp .= "<div id='".$ext2."' class='".$ext."cryptobox_area mncrpt'>";
 	     
-	    //JQuery Payment Box Script, see https://github.com/cryptoapi/Payment-Gateway/blob/master/js/source/ajax.js 
+	    //JQuery Payment Box Script, see https://github.com/cryptoapi/Payment-Gateway/blob/master/js/source/ajax.js
 	    if ($method == "ajax")
 	    {
 	        $tmp .= "<script>jQuery.getScript('".$jsdir_path."ajax.min.js',  function() { cryptobox_ajax('" . base64_encode($this->cryptobox_json_url()) . "', " . intval($this->is_paid()) . ", " . intval($this->is_confirmed()) . ", '" . base64_encode($phpdir_path) . "', '" . base64_encode($imgdir_path) . "', '" . base64_encode($logoimg_path) . "', '" . base64_encode($ext) . "', '" . base64_encode($redirect) . "'); })</script>";
@@ -888,7 +888,6 @@ class Cryptobox {
 	        if (isset($data["private_key"])) unset($data["private_key"]);
 	        if (isset($data["private_key_hash"])) unset($data["private_key_hash"]);
 	        unset($data["data_hash"]);
-	        if (!$debug) unset($data["err"]);
 	        $data = json_encode($data, JSON_FORCE_OBJECT | JSON_HEX_APOS);
 	        $tmp .= '<script>jQuery(document).ready(function(){ cryptobox_update_page("'.base64_encode($data).'", "' . base64_encode($imgdir_path) . '", "' . base64_encode($logoimg_path) . '", "' . base64_encode($ext) . '") })</script>';
 	        if ($this->is_paid() && $redirect) $tmp .= '<script>setTimeout(function() { window.location = "'.$redirect.'"; }, 3000);</script>';
@@ -909,45 +908,61 @@ class Cryptobox {
     	    if (stripos($custom_text, "<p") === false) $tmp .= "<p class='lead'>" . $custom_text . "</p>"; else $tmp .= $custom_text;
 	    }
 	    $tmp .= "</div>";
-	     
-	    
-	    
+
+
+
+	     // Coin selection list (bitcoin/litecoin/etc)
+	     // --------------------
+	     if (!$this->is_paid())
+	     {
+	        // Coin selection list (html code)
+	        $coins_list = display_currency_box($coins, $def_coin, $def_language, $coinImageSize, "margin: 20px 0 80px 0", $imgdir_path, $ext2, true);
+	        $coins_list_html = "<div class='container ".$ext."coins_list'><div class='row'><div class='col-12 text-center col-sm-10 offset-sm-1 col-md-8 offset-md-2 text-center'>" . $coins_list . "</div></div></div>";
+	     }
+
+
 	    // ------------------------------
 	    // Payment Box Ajax Loading ...
 	    // ------------------------------
 	    $tmp .= "<div class='".$ext."loader' style='height:700px'>";
-	    
+
 	    $tmp .= "<form action='" . $page_url. "' method='post'>";
 	    $tmp .= "<div class='container text-center ".$ext."loader_button pt-5 mt-5'><br><br><br><br><br>";
 	    $tmp .= "<button type='submit' title='Click to Reload Page' class='btn btn-outline-secondary btn-lg'><i class='fas fa-spinner fa-spin'></i> &#160; " . $this->coin_name() . " " . $this->localisation["loading"] . "</button>";
 	    $tmp .= "</div>";
-	        
+
 	    $tmp .= "<div class='container'>";
 	    $tmp .= "<div class='row'>";
 	    $tmp .= "<div class='col-12 text-center col-sm-10 offset-sm-1 col-md-8 offset-md-2'>";
-	    $tmp .= "<div class='card box-shadow ".$ext."cryptobox_error' " . $hide . ">";
+	    $tmp .= "<div class='".$ext."cryptobox_error' " . $hide . ">";
+	    $tmp .= $coins_list_html;
+	    $tmp .= "<div class='card box-shadow'>";
 	    $tmp .= "<div class='card-header'>";
-	    $tmp .= "<h4 class='my-0 font-weight-normal'>Error Message</h4>";
+	    $tmp .= "<h4 class='my-0 font-weight-normal'>Error Message";
+	    $tmp .= "<span class='".$ext."loading_icon mr-3 float-left' " . $hide . "> <i class='fas fa-laptop'></i></span>";
+	    $tmp .= "<span class='".$ext."loading_icon mr-3 float-left' " . $hide . "> <i class='fas fa-sync-alt fa-spin'></i></span>";
+	    $tmp .= "</h4>";
 	    $tmp .= "</div>";
 	    $tmp .= "<div class='card-body'>";
 	    $tmp .= "<h1 class='card-title'>" . $this->coin_name() . " " . $this->localisation["loading"] . "</h1>";
 	    $tmp .= "<br>";
 	    $tmp .= "<div class='lead ".$ext."error_message'></div>";
 	    $tmp .= "<br><br>";
-	    $tmp .= "<button type='submit' class='btn btn-outline-primary btn-block btn-lg'><i class='fas fa-sync'></i> &#160; Reload Page</button>";
+	    $tmp .= "<button type='submit' class='".$ext."button_error btn btn-outline-primary btn-block btn-lg'><i class='fas fa-sync'></i> &#160; Reload Page</button>";
 	    $tmp .= "<br>";
 	    $tmp .= "</div>";
 	    $tmp .= "</div>";
 	    $tmp .= "</div>";
 	    $tmp .= "</div>";
 	    $tmp .= "</div>";
+	    $tmp .= "</div>";
 	    $tmp .= "</form>";
-	    
+
 	    $tmp .= "</div>";
 	    
 	    // End - Payment Box Ajax Loading ...
 	    	    
-	    
+
 	    
 
 	    // ----------------------------
@@ -989,20 +1004,17 @@ class Cryptobox {
 	                
 	     }  
 	    
-	    
+
 	     
 	     // A2. Coin selection list (bitcoin/litecoin/etc)
 	     // --------------------
 	     if (!$this->is_paid())
 	     {
-	        // Coin selection list (html code)
-	        $coins_list = display_currency_box($coins, $def_coin, $def_language, $coinImageSize, "margin: 20px 0 80px 0", $imgdir_path, $ext2, true);
-
 	         if (!$custom_text) $tmp .= "<br>";
-	         $tmp .= "<div class='container ".$ext."coins_list'><div class='row'><div class='col-12 text-center col-sm-10 offset-sm-1 col-md-8 offset-md-2 text-center'>" . $coins_list . "</div></div></div>";
+	         $tmp .= $coins_list_html;
 	     }
-	     
-	     
+
+
 	     
 	     
 	     // Language / logo Row
@@ -1084,7 +1096,7 @@ class Cryptobox {
 	     $tmp .= "<span class='".$ext."loading_icon mr-3 float-left' " . $hide . "> <i class='fas fa-laptop'></i></span>";
 	     $tmp .= "<span class='".$ext."loading_icon mr-3 float-left' " . $hide . "> <i class='fas fa-sync-alt fa-spin'></i></span>";
 	     $tmp .= "</h4>";
-	                 
+
 	     $tmp .= "</div>";
 	                 
 	     $tmp .= "<div class='card-body'>";
@@ -1118,7 +1130,7 @@ class Cryptobox {
 	     $tmp .= "</form>";
 	     
 	     $tmp .= "</div>";
-	     
+
 	     if ($method != "ajax" && !$this->is_paid())
 	     {
 	         $tmp .= "<div class='col-12 text-center ".(CRYPTOBOX_WORDPRESS?"col-md-10 offset-md-1":"col-sm-10 offset-sm-1 col-md-8 offset-md-2")."'>";
@@ -1202,7 +1214,7 @@ class Cryptobox {
 	    
 	     if ($debug)
 	     {    
-	     
+
 	     $tmp .= "<div class='mncrpt_debug container ".$ext."cryptobox_rawdata px-4 py-3' style='overflow-wrap: break-word; display:none;'>";
 	     $tmp .= "<div class='row'>";
 	     $tmp .= "<div class='col-12'>";
@@ -1951,11 +1963,62 @@ class Cryptobox {
 			}
 			$mysqli->query("SET NAMES utf8");
 		}
-	
+
 		$query = $mysqli->query($sql);
-	
-		if ($query === FALSE) die("MySQL Error: ".$mysqli->error."; SQL: $sql");
-		elseif (is_object($query) && $query->num_rows)
+
+		if ($query === FALSE)
+        {
+            if (!CRYPTOBOX_WORDPRESS && stripos(str_replace('"', '', str_replace("'", "", $mysqli->error)), "crypto_payments doesnt exist"))
+            {
+                // Try to create new table - https://github.com/cryptoapi/Payment-Gateway#mysql-table
+                $mysqli->query("CREATE TABLE `crypto_payments` (
+                              `paymentID` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                              `boxID` int(11) unsigned NOT NULL DEFAULT '0',
+                              `boxType` enum('paymentbox','captchabox') NOT NULL,
+                              `orderID` varchar(50) NOT NULL DEFAULT '',
+                              `userID` varchar(50) NOT NULL DEFAULT '',
+                              `countryID` varchar(3) NOT NULL DEFAULT '',
+                              `coinLabel` varchar(6) NOT NULL DEFAULT '',
+                              `amount` double(20,8) NOT NULL DEFAULT '0.00000000',
+                              `amountUSD` double(20,8) NOT NULL DEFAULT '0.00000000',
+                              `unrecognised` tinyint(1) unsigned NOT NULL DEFAULT '0',
+                              `addr` varchar(34) NOT NULL DEFAULT '',
+                              `txID` char(64) NOT NULL DEFAULT '',
+                              `txDate` datetime DEFAULT NULL,
+                              `txConfirmed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+                              `txCheckDate` datetime DEFAULT NULL,
+                              `processed` tinyint(1) unsigned NOT NULL DEFAULT '0',
+                              `processedDate` datetime DEFAULT NULL,
+                              `recordCreated` datetime DEFAULT NULL,
+                              PRIMARY KEY (`paymentID`),
+                              KEY `boxID` (`boxID`),
+                              KEY `boxType` (`boxType`),
+                              KEY `userID` (`userID`),
+                              KEY `countryID` (`countryID`),
+                              KEY `orderID` (`orderID`),
+                              KEY `amount` (`amount`),
+                              KEY `amountUSD` (`amountUSD`),
+                              KEY `coinLabel` (`coinLabel`),
+                              KEY `unrecognised` (`unrecognised`),
+                              KEY `addr` (`addr`),
+                              KEY `txID` (`txID`),
+                              KEY `txDate` (`txDate`),
+                              KEY `txConfirmed` (`txConfirmed`),
+                              KEY `txCheckDate` (`txCheckDate`),
+                              KEY `processed` (`processed`),
+                              KEY `processedDate` (`processedDate`),
+                              KEY `recordCreated` (`recordCreated`),
+                              KEY `key1` (`boxID`,`orderID`),
+                              KEY `key2` (`boxID`,`orderID`,`userID`),
+                              UNIQUE KEY `key3` (`boxID`, `orderID`, `userID`, `txID`, `amount`, `addr`)
+                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;");
+
+                $query = $mysqli->query($sql);  // re-run previous query
+            }
+            if ($query === FALSE) die("MySQL Error: ".$mysqli->error."; SQL: $sql");
+        }
+
+		if (is_object($query) && $query->num_rows)
 		{
 			while($row = $query->fetch_object())
 			{
@@ -2159,6 +2222,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);  
+		unset($v); unset($cryptobox_private_keys);   
 	}
 ?>
