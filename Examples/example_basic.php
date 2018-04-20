@@ -1,6 +1,6 @@
 <?php
 /**
- * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)       
+ * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)          
  * @package     GoUrl Cryptocurrency Payment API
  * copyright 	(c) 2014-2018 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
@@ -60,8 +60,8 @@
 									  // You don't need to use userID for unregistered website visitors - $userID = "";
 									  // if userID is empty, system will autogenerate userID and save it in cookies
 	$userFormat		= "COOKIE";       // save userID in cookies (or you can use IPADDRESS, SESSION, MANUAL)
-	$orderID		= "invoice1";	  // invoice number - 000383
-	$amountUSD		= 2.21;			  // invoice amount - 2.21 USD; or you can use - $amountUSD = convert_currency_live("EUR", "USD", 22.37); // convert 22.37EUR to USD
+	$orderID		= "invoice000383";	  // invoice #000383
+	$amountUSD		= 0.12;			  // invoice amount - 0.12 USD; or you can use - $amountUSD = convert_currency_live("EUR", "USD", 22.37); // convert 22.37EUR to USD
 	
 	$period			= "NOEXPIRY";	  // one time payment, not expiry
 	$def_language	= "en";			  // default Language in payment box
@@ -217,7 +217,7 @@
     $custom_text .= "<p class='lead'>Please contact us for any questions on aaa@example.com</p>";
      
     // Display payment box 	
-    echo $box->display_cryptobox_bootstrap($coins, $def_coin, $def_language, $custom_text, 70, 200, true, "default", "default", 250, "", "ajax", true);
+    echo $box->display_cryptobox_bootstrap($coins, $def_coin, $def_language, $custom_text, 70, 200, true, "default", "default", 250, "", "curl", true);
     
 
     // You can setup method='curl' in function above and use code below on this webpage -

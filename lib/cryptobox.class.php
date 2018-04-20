@@ -815,9 +815,9 @@ class Cryptobox {
 	* redirect - redirect to another page after payment is received (3 seconds delay)
 	*    
 	* method - "ajax" or "curl". 
-	*    AJAX - user don't need click any submit buttons
+	*    AJAX - user don't need click payment submit button on form. Payment box show successful paid message automatically
 	*    CURL + White Label Payment Box with Your Own Logo (White Label Product - https://www.google.com/search?q=white+label+product), user need to click on button below payment form when payment is sent
-	*    with ajax - user browser receive payment data directly from our server and automatically show successful payment notification message on page (without page reload, any clicks on buttons). 
+	*    with ajax - user browser receive payment data directly from our server and automatically show successful payment notification message on the page (without page reload, any clicks on buttons). 
 	*    with curl - User browser receive payment data in json format from your server only; and your server receive json data from our server
 	* 
 	* debug - show raw payment data from gourl.io on the page also, for debug purposes.  
@@ -828,7 +828,7 @@ class Cryptobox {
 	 *  
 	 */
 
-	public function display_cryptobox_bootstrap ($coins = array(), $def_coin = "", $def_language = "en", $custom_text = "", $coinImageSize = 70, $qrcodeSize = 200, $show_languages = true, $logoimg_path = "default", $resultimg_path = "default", $resultimgSize = 250, $redirect = "", $method = "ajax", $debug = false)
+	public function display_cryptobox_bootstrap ($coins = array(), $def_coin = "", $def_language = "en", $custom_text = "", $coinImageSize = 70, $qrcodeSize = 200, $show_languages = true, $logoimg_path = "default", $resultimg_path = "default", $resultimgSize = 250, $redirect = "", $method = "curl", $debug = false)
 	{
 
 
@@ -847,7 +847,7 @@ class Cryptobox {
 	    $resultimgSize    = intval($resultimgSize);
 	    if ($resultimgSize > 500) $resultimgSize = 250;
 	    
-	    if (!in_array($method, array("ajax", "curl"))) $method = "ajax";
+	    if (!in_array($method, array("ajax", "curl"))) $method = "curl";
 	     
 	    
 	    $ext           = (defined("CRYPTOBOX_PREFIX_HTMLID")) ? CRYPTOBOX_PREFIX_HTMLID : "acrypto_";      // any prefix for all html elements; default 'acrypto_'
@@ -862,9 +862,6 @@ class Cryptobox {
 	     
 	    
 	    
-	    if (!in_array($method, array("ajax", "curl"))) $method = "ajax";
-	     
-
 	    // Language selection list for payment box (html code)
 	    if ($show_languages) $languages_list = display_language_box($def_language, $ext2, false);
 

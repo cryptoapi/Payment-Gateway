@@ -30,7 +30,7 @@
 	
 	// Change path to your files
 	// --------------------------------------
-	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "../lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php;     
+	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "../lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php;    
                                                         // cryptobox.newpayment.php will be automatically call through ajax/php two times - payment received/confirmed
 	DEFINE("CRYPTOBOX_IMG_FILES_PATH", "../images/");      // path to directory with coin image files (directory 'images' by default)
 	DEFINE("CRYPTOBOX_JS_FILES_PATH", "../js/");			// path to directory with files: ajax.min.js/support.min.js
@@ -55,13 +55,13 @@
 	
 	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options
 	
-	$userID 			= "";         // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
+	$userID 			= "";        // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
 									  // You can use php $_SESSION["userABC"] for store userID, amount, etc
 									  // You don't need to use userID for unregistered website visitors - $userID = "";
 									  // if userID is empty, system will autogenerate userID and save it in cookies
 	$userFormat		= "COOKIE";       // save userID in cookies (or you can use IPADDRESS, SESSION, MANUAL)
-	$orderID		= "invoice1";	  // invoice number - 000383
-	$amountUSD		= 2.21;			  // invoice amount - 2.21 USD; or you can use - $amountUSD = convert_currency_live("EUR", "USD", 22.37); // convert 22.37EUR to USD
+	$orderID		= "invoice1";	  // invoice #1
+	$amountUSD		= 0.10;			  // invoice amount - 0.10 USD; or you can use - $amountUSD = convert_currency_live("EUR", "USD", 22.37); // convert 22.37EUR to USD
 	
 	$period			= "NOEXPIRY";	  // one time payment, not expiry
 	$def_language	= "en";			  // default Language in payment box
@@ -393,9 +393,9 @@
             $method = $_GET["method"];
             setcookie("dmethod", $method);
         }
-        else $method = (isset($_COOKIE["dmethod"])) ? $_COOKIE["dmethod"] : "ajax";
+        else $method = (isset($_COOKIE["dmethod"])) ? $_COOKIE["dmethod"] : "curl";
         
-        if (!in_array($method, array("ajax", "curl"))) $method = "ajax";
+        if (!in_array($method, array("ajax", "curl"))) $method = "curl";
         
         // -- End data method ---------------------        
         
@@ -630,10 +630,10 @@
             Data Methods (White Label/Ajax)
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton10">
-            <a class="dropdown-item<?php if ($method == "ajax") echo " active"; ?>" href="<?php echo $page . "method=ajax&boxtype=1#b" ?>"><b>AJAX</b> - user don't need click any submit buttons</a>
-            <a class="dropdown-item disabled" href="#a">ajax - User browser receive payment data directly from our server and auto show successful message</a>
             <a class="dropdown-item<?php if ($method == "curl") echo " active"; ?>" href="<?php echo $page . "method=curl&boxtype=1#b" ?>"><b>CURL</b> + Your Own Logo (White Label Product), user need to click on button when payment is sent</a>
             <a class="dropdown-item disabled" href="#a">curl - User browser receive payment data from your website only (not even know about gourl.io); your website receive data from our server gourl.io</a>
+            <a class="dropdown-item<?php if ($method == "ajax") echo " active"; ?>" href="<?php echo $page . "method=ajax&boxtype=1#b" ?>"><b>AJAX</b> - user don't need click any submit buttons</a>
+            <a class="dropdown-item disabled" href="#a">ajax - User browser receive payment data directly from our server and payment box show successful paid message automatically</a>
           </div>
         </div>
 
@@ -669,7 +669,7 @@
         $custom_text = "<p class='lead'>Demo Text - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>";
         $custom_text .= "<p class='lead'>Please contact us for any questions on aaa@example.com</p>";
         
-        // use function display_cryptobox_bootstrap ($coins = array(), $def_coin = "", $def_language = "en", $custom_text = "", $coinImageSize = 70, $qrcodeSize = 200, $show_languages = true, $logoimg_path = "default", $resultimg_path = "default", $resultimgSize = 250, $redirect = "", $method = "ajax", $debug = false)
+        // use function display_cryptobox_bootstrap ($coins = array(), $def_coin = "", $def_language = "en", $custom_text = "", $coinImageSize = 70, $qrcodeSize = 200, $show_languages = true, $logoimg_path = "default", $resultimg_path = "default", $resultimgSize = 250, $redirect = "", $method = "curl", $debug = false)
         echo $box->display_cryptobox_bootstrap($coins, $def_coin, $def_language, $custom_text, $coinImageSize, $qrcodeSize, $show_languages, $logoimg_path, $resultimg_path, $resultimgSize, "", $method, $debug);
         
         // End --------------------------------------------------------
@@ -722,7 +722,7 @@
 	
 	// IMPORTANT: Please read description of options here - https://gourl.io/api-php.html#options
 	
-	$userID 				= "";			  // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
+	$userID 				= "";			 // place your registered userID or md5(userID) here (user1, user7, uo43DC, etc).
 									// You can use php $_SESSION["userABC"] for store userID, amount, etc
 									// You don't need to use userID for unregistered website visitors - $userID = "";
 									// if userID is empty, system will autogenerate userID and save it in cookies
