@@ -1451,7 +1451,7 @@ class Cryptobox {
 	}
 	private function ua($agent = true)
 	{
-	   return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER["SERVER_NAME"] . (isset($_SERVER["REDIRECT_URL"])?$_SERVER["REDIRECT_URL"]:$_SERVER["PHP_SELF"]) . ' | GU ' . (CRYPTOBOX_WORDPRESS?'WORDPRESS':'PHP') . ' ' . CRYPTOBOX_VERSION . ($agent && isset($_SERVER["HTTP_USER_AGENT"])?' | '.$_SERVER["HTTP_USER_AGENT"]:'');
+	    return (isset($_SERVER['REQUEST_SCHEME'])?$_SERVER['REQUEST_SCHEME']:'http') . '://' . $_SERVER["SERVER_NAME"] . (isset($_SERVER["REDIRECT_URL"])?$_SERVER["REDIRECT_URL"]:$_SERVER["PHP_SELF"]) . ' | GU ' . (CRYPTOBOX_WORDPRESS?'WORDPRESS':'PHP') . ' ' . CRYPTOBOX_VERSION . ($agent && isset($_SERVER["HTTP_USER_AGENT"])?' | '.$_SERVER["HTTP_USER_AGENT"]:'');
 	}
 	public function ip_address()
 	{
@@ -2225,6 +2225,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);      
+		unset($v); unset($cryptobox_private_keys);            
 	}
 ?>
