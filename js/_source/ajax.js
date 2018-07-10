@@ -37,6 +37,7 @@
 	{
 		var start  = new Date().getTime();
 		var st = new Date().getTime();
+		var error = false; 
 		var received = false;
  
 		url = atob(url); 
@@ -62,6 +63,8 @@
 
 			.fail(function() 
 			{
+					error = true;
+
 					var err_message = "";
 					$.ajax({
 						type: 'GET', 
