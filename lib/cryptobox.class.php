@@ -10,12 +10,12 @@
  * @package     GoUrl PHP Bitcoin/Altcoin Payments and Crypto Captcha
  * @copyright   2014-2018 Delta Consultants
  * @category    Libraries
- * @website     https://gourl.io      
+ * @website     https://gourl.io   
  * @api         https://gourl.io/bitcoin-payment-gateway-api.html
  * @example     https://gourl.io/lib/examples/example_customize_box.php    <----
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     2.1.3
+ * @version     2.1.4
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -53,7 +53,7 @@
  *  E. function display_language_box(..)		// Language selection dropdown list for cryptocoin payment box
  *  F. function display_currency_box(..)		// Multiple crypto currency selection list. You can accept payments in multiple crypto currencies (for example: bitcoin, bitcoincash, litecoin, dogecoin)
  *  G. function get_country_name(..)			// Get country name by country code or reverse
- *  H. function convert_currency_live(..)		// Fiat currency converter using XE.COM live exchange rates
+ *  H. function convert_currency_live(..)		// Fiat currency converter using live exchange rates websites
  *  I. function validate_gourlkey(..)			// Validate gourl private/public/affiliate keys 
  *  J. function run_sql(..)						// Run SQL queries and return result in array/object formats
  *
@@ -79,7 +79,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "2.1.3");
+define("CRYPTOBOX_VERSION", "2.1.4");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency')));
@@ -1779,90 +1779,139 @@ class Cryptobox {
 	
 	
 	/* H. Function convert_currency_live()
-	 * 
-	 * Currency Converter using XE.COM live exchange rates
+	 *
+	 * Currency Converter using live exchange rates websites
 	 * Example - convert_currency_live("EUR", "USD", 22.37) - convert 22.37euro to usd
-				 convert_currency_live("EUR", "BTC", 22.37) - convert 22.37euro to bitcoin
+	 convert_currency_live("EUR", "BTC", 22.37) - convert 22.37euro to bitcoin
 	 */
 	function convert_currency_live($from_Currency, $to_Currency, $amount)
 	{
-		static $arr = array();
+	    static $arr = array();
 	    
-		$from_Currency = trim(strtoupper(urlencode($from_Currency)));
-		$to_Currency   = trim(strtoupper(urlencode($to_Currency)));
-
-		if ($from_Currency == "TRL") $from_Currency = "TRY"; // fix for Turkish Lyra
-		if ($from_Currency == "ZWL") $from_Currency = "ZWD"; // fix for Zimbabwe Dollar
-		if ($from_Currency == "RM")  $from_Currency = "MYR"; // fix for Malaysian Ringgit
-		if ($from_Currency == "BTC") $from_Currency = "XBT"; // fix for Bitcoin
-		if ($to_Currency == "BTC")   $to_Currency = "XBT";   // fix for Bitcoin
-		
-		if ($from_Currency == "RIAL") $from_Currency = "IRR"; // fix for Iranian Rial
-		if ($from_Currency == "IRT") { $from_Currency = "IRR"; $amount = $amount * 10; } // fix for Iranian Toman; 1IRT = 10IRR
-
-		$key  = $from_Currency."_".$to_Currency;
-		
-		
-		
-		// from buffer
-		// ----------------
-		if (isset($arr[$key])) 
-		{
-		    if ($arr[$key] > 0) 
-		    {
-		        $val = $arr[$key];
-		        $total = $val*$amount;
-		        if ($to_Currency=="XBT" || $total<0.01) $total = sprintf('%.5f', round($total, 5));
-		        else $total = round($total, 2);
-		        if ($total == 0) $total = sprintf('%.5f', 0.00001);
-		        return $total;
-		    }
-		    else return -1;
-		}
-
-		
-		
-		// get data from xe.com
-		// ----------------
-		$val = 0;
-		$url = "https://www.xe.com/currencyconverter/convert/?Amount=1&From=".$from_Currency."&To=".$to_Currency;
-		
-		$rawdata = get_url_contents( $url );
-		
-		if (strpos($rawdata, "1 ".$from_Currency." = "))
-		{
-		    $data = explode("uccResultAmount'>", $rawdata);
-		    if (isset($data[1]))
-		    {
-		        $pos = stripos($data[1], "</span>");
-		        if ($pos)
-		        {
-		              $data = substr($data[1], 0, $pos);
-		              if (is_numeric($data) && $data > 0) $val = floatval($data);
-		        }
-		    }
-		}
-		
-		
-		
-		// result
-		// ------------
-		if ($val > 0)
-		{
-		    $arr[$key] = $val;
-		    $total = $val*$amount;
-		    if ($to_Currency=="XBT" || $total<0.01) $total = sprintf('%.5f', round($total, 5));
-		    else $total = round($total, 2);
-		    if ($total == 0) $total = sprintf('%.5f', 0.00001);
-		    return $total;
-		}
-		else 
-		{
-		    $arr[$key] = -1;
-		    return -1;
-		}
+	    $from_Currency = trim(strtoupper(urlencode($from_Currency)));
+	    $to_Currency   = trim(strtoupper(urlencode($to_Currency)));
+	    
+	    if ($from_Currency == "TRL") $from_Currency = "TRY"; // fix for Turkish Lyra
+	    if ($from_Currency == "ZWD") $from_Currency = "ZWL"; // fix for Zimbabwe Dollar
+	    if ($from_Currency == "RM")  $from_Currency = "MYR"; // fix for Malaysian Ringgit
+	    if ($from_Currency == "XBT") $from_Currency = "BTC"; // fix for Bitcoin
+	    if ($to_Currency   == "XBT") $to_Currency   = "BTC"; // fix for Bitcoin
+	    
+	    if ($from_Currency == "RIAL") $from_Currency = "IRR"; // fix for Iranian Rial
+	    if ($from_Currency == "IRT") { $from_Currency = "IRR"; $amount = $amount * 10; } // fix for Iranian Toman; 1IRT = 10IRR
+	    
+	    $key  = $from_Currency."_".$to_Currency;
+	    
+	    
+	    
+	    // a. restore saved exchange rate
+	    // ----------------
+	    if (!isset($arr[$key]) && session_status() === PHP_SESSION_ACTIVE && isset($_SESSION["exch_".$key]) && is_numeric($_SESSION["exch_".$key]) && $_SESSION["exch_".$key] > 0) $arr[$key] = $_SESSION["exch_".$key];
+	    
+	    if (isset($arr[$key]))
+	    {
+	        if ($arr[$key] > 0)
+	        {
+	            $val = $arr[$key];
+	            $total = $val*$amount;
+	            if ($to_Currency=="BTC" || $total<0.01) $total = sprintf('%.5f', round($total, 5));
+	            else $total = round($total, 2);
+	            if ($total == 0) $total = sprintf('%.5f', 0.00001);
+	            return $total;
+	        }
+	        else return -1;
+	    }
+	    
+	    
+	    $val = 0;
+	    if ($from_Currency == $to_Currency)  $val = 1;
+	    
+	    
+	    
+	    // b. get BTC rates
+	    // ----------------
+	    $bitcoinUSD = 0;
+	    if (!$val && ($from_Currency == "BTC" || $to_Currency == "BTC"))
+	    {
+	        $aval = array ('BTC', 'USD', 'AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'DKK', 'EUR', 'GBP', 'HKD', 'INR', 'ISK', 'JPY', 'KRW', 'NZD', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TWD');
+	        if (in_array($from_Currency, $aval) && in_array($to_Currency, $aval))
+	        {
+	            $data = json_decode(get_url_contents("https://blockchain.info/ticker"), true);
+	            
+	            // rates BTC->...
+	            $rates = array("BTC" => 1);
+	            if ($data) foreach($data as $k => $v) $rates[$k] = ($v["15m"] > 1000) ? round($v["15m"]) : ($v["last"] > 1000 ? round($v["last"]) : 0);
+	            // convert BTC/USD, EUR/BTC, etc.
+	            if (isset($rates[$to_Currency]) && $rates[$to_Currency] > 0 && isset($rates[$from_Currency]) && $rates[$from_Currency] > 0) $val = $rates[$to_Currency] / $rates[$from_Currency];
+	            if (isset($rates["USD"]) && $rates["USD"] > 0) $bitcoinUSD = $rates["USD"];
+	        }
+	        
+	        if (!$val && $bitcoinUSD < 1000)
+	        {
+	            $data = json_decode(get_url_contents("https://www.bitstamp.net/api/ticker/"), true);
+	            if (isset($data["last"]) && isset($data["volume"]) && $data["last"] > 1000) $bitcoinUSD = round($data["last"]);
+	        }
+	        
+	        if ($from_Currency == "BTC" && $to_Currency == "USD" && $bitcoinUSD > 0) $val  =  $bitcoinUSD;
+	        if ($from_Currency == "USD" && $to_Currency == "BTC" && $bitcoinUSD > 0) $val  =  1 / $bitcoinUSD;
+	    }
+	    
+	    
+	    
+	    // c. get rates from European Central Bank https://www.ecb.europa.eu
+	    // ----------------
+	    $aval = array ('EUR', 'USD', 'JPY', 'BGN', 'CZK', 'DKK', 'GBP', 'HUF', 'PLN', 'RON', 'SEK', 'CHF', 'ISK', 'NOK', 'HRK', 'RUB', 'TRY', 'AUD', 'BRL', 'CAD', 'CNY', 'HKD', 'IDR', 'ILS', 'INR', 'KRW', 'MXN', 'MYR', 'NZD', 'PHP', 'SGD', 'THB', 'ZAR');
+	    if ($bitcoinUSD > 0) $aval[] = "BTC";
+	    if (!$val && in_array($from_Currency, $aval) && in_array($to_Currency, $aval))
+	    {
+	        $xml = simplexml_load_string(get_url_contents("https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"));
+	        $json = json_encode($xml);
+	        $data = json_decode($json,TRUE);
+	        
+	        if (isset($data["Cube"]["Cube"]))
+	        {
+	            $data = $data["Cube"]["Cube"];
+	            $time = $data["@attributes"]["time"];
+	            
+	            // rates EUR->...
+	            $rates = array("EUR" => 1);
+	            foreach($data["Cube"] as $v) $rates[$v["@attributes"]["currency"]] = floatval($v["@attributes"]["rate"]);
+	            if ($bitcoinUSD > 0 && $rates["USD"] > 0) $rates["BTC"] = $rates["USD"] / $bitcoinUSD;
+	            
+	            // convert USD/JPY, EUR/GBP, etc.
+	            if ($rates[$to_Currency] > 0 && $rates[$from_Currency] > 0) $val = $rates[$to_Currency] / $rates[$from_Currency];
+	        }
+	    }
+	    
+	    
+	    // d. get rates from https://free.currencyconverterapi.com/api/v6/convert?q=BTC_EUR&compact=y
+	    // ----------------
+	    if (!$val)
+	    {
+	        $data = json_decode(get_url_contents("https://free.currencyconverterapi.com/api/v6/convert?q=".$key."&compact=y"), TRUE);
+	        if (isset($data[$key]["val"]) && $data[$key]["val"] > 0) $val = $data[$key]["val"];
+	    }
+	    
+	    
+	    // e. result
+	    // ------------
+	    if ($val > 0)
+	    {
+	        if (session_status() === PHP_SESSION_ACTIVE) $_SESSION["exch_".$key] = $val;
+	        
+	        $arr[$key] = $val;
+	        $total = $val*$amount;
+	        if ($to_Currency=="BTC" || $total<0.01) $total = sprintf('%.5f', round($total, 5));
+	        else $total = round($total, 2);
+	        if ($total == 0) $total = sprintf('%.5f', 0.00001);
+	        return $total;
+	    }
+	    else
+	    {
+	        $arr[$key] = -1;
+	        return -1;
+	    }
 	}
-	
 
 	
 	
@@ -2225,6 +2274,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);            
+		unset($v); unset($cryptobox_private_keys);
 	}
 ?>

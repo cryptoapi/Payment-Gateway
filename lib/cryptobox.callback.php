@@ -11,7 +11,7 @@
  * @copyright   2014-2018 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     2.1.3
+ * @version     2.1.4
  * 
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
