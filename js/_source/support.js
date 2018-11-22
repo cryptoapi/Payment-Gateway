@@ -1,10 +1,10 @@
 	/**
 	* @package     GoUrl Bitcoin/Altcoin Payment Box - Update HTML Payment Box values
-	* @copyright   2014-2018 Delta Consultants
+	* @copyright   2014-2019 Delta Consultants
 	* @category    Javascript
 	* @website     https://gourl.io   
 	* @api         https://gourl.io/api.html     
-	* @version     2.1.4
+	* @version     2.1.5
 	*/
 	
 	/**

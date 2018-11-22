@@ -1,19 +1,19 @@
 <?php
 /**
- * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)
+ * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)     
  * @package     GoUrl Cryptocurrency Payment API
- * copyright 	(c) 2014-2018 Delta Consultants
+ * copyright 	(c) 2014-2019 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
- * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit, UniversalCurrency
+ * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, BitcoinSV, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit, UniversalCurrency
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p8
  * @live_demo   https://gourl.io/lib/examples/example_customize_box.php
  * @note	You can delete folders - 'Examples', 'Screenshots' from this archive
  */ 
     
 
-	/********************** NOTE - 2018 YEAR *******************************************************************************/ 
+	/********************** NOTE - 2018-2019 YEARS *************************************************************************/ 
 	/*****                                                                                                             *****/ 
-	/*****     This is NEW 2018 latest Bitcoin Payment Box Example  (mobile friendly JSON payment box)                 *****/ 
+	/*****     This is NEW 2018-2019 latest Bitcoin Payment Box Example  (mobile friendly JSON payment box)            *****/ 
 	/*****                                                                                                             *****/ 
 	/*****     You can generate php payment box code online - https://gourl.io/lib/examples/example_customize_box.php  *****/
 	/*****         White Label Product - https://gourl.io/lib/test/example_customize_box.php?method=curl&logo=custom   *****/
@@ -70,8 +70,8 @@
 	
 	
 	// List of coins that you accept for payments
-	//$coins = array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
-	$coins = array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'speedcoin');  // for example, accept payments in bitcoin, bitcoincash, litecoin, dash, speedcoin 
+	//$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
+	$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'speedcoin');  // for example, accept payments in bitcoin, bitcoincash, bitcoinsv, litecoin, dash, speedcoin 
 	
 	// Create record for each your coin - https://gourl.io/editrecord/coin_boxes/0 ; and get free gourl keys
 	// It is not bitcoin wallet private keys! Place GoUrl Public/Private keys below for all coins which you accept
@@ -88,6 +88,8 @@
 										"private_key" => "25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE"),
 					  "bitcoincash" => array("public_key" => "25656AAeOGaPBitcoincash77BCHPUBOGF20MLcgvHMoXHmMRx", 
 					  					"private_key" => "25656AAeOGaPBitcoincash77BCHPRV8quZcxPwfEc93ArGB6D"),
+					  "bitcoinsv" => array("public_key" => "36306AAQUmatBitcoinsv77BSVPUBlK6jR1TDDQUzaQV1AmWAE", 
+					  					"private_key" => "36306AAQUmatBitcoinsv77BSVPRVJQJx21y8kvd7xxEWzK3zA"),
 					  "litecoin" => array(	"public_key" => "25657AAOwwzoLitecoin77LTCPUB4PVkUmYCa2dR770wNNstdk", 
 					  					"private_key" => "25657AAOwwzoLitecoin77LTCPRV7hmp8s3ew6pwgOMgxMq81F"),
 					  "dash" => array(		"public_key" => "25658AAo79c3Dash77DASHPUBqwIefT1j9fqqMwUtMI0huVL0J", 
@@ -99,7 +101,8 @@
 	/* if you use demo keys above, please add to /lib/cryptobox.config.php - 
 		$cryptobox_private_keys = array("25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE", 
 					"25656AAeOGaPBitcoincash77BCHPRV8quZcxPwfEc93ArGB6D", "25657AAOwwzoLitecoin77LTCPRV7hmp8s3ew6pwgOMgxMq81F", 
-					"25658AAo79c3Dash77DASHPRVG7w3jg0Tc5Pfi34U8o5JEiTss", "20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c");
+					"25658AAo79c3Dash77DASHPRVG7w3jg0Tc5Pfi34U8o5JEiTss", "20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c",
+					"36306AAQUmatBitcoinsv77BSVPRVJQJx21y8kvd7xxEWzK3zA");
 	 	Also create table "crypto_payments" in your database, sql code - https://github.com/cryptoapi/Payment-Gateway#mysql-table
 	 	Instruction - https://gourl.io/api-php.html 	 	
  	*/				   
@@ -144,7 +147,7 @@
 	    "orderID"     	=> $orderID, 		// order id or product name
 	    "userID"      		=> $userID, 	// unique identifier for every user
 	    "userFormat"  	=> $userFormat, 	// save userID in COOKIE, IPADDRESS, SESSION  or MANUAL
-	    "amount"   	  	=> 0,			    // product price in btc/bch/ltc/doge/etc OR setup price in USD below
+	    "amount"   	  	=> 0,			    // product price in btc/bch/bsv/ltc/doge/etc OR setup price in USD below
 	    "amountUSD"   	=> $amountUSD,	    // we use product price in USD
 	    "period"      		=> $period, 	// payment valid period
 	    "language"	  	=> $def_language    // text on EN - english, FR - french, etc
@@ -475,7 +478,7 @@
 	<br>
 	<div class='card card-body bg-light d-inline-block'>
 			
-		<h1 class="display-4">Customize GoUrl Bitcoin/ Altcoin Payment Box (2018 year)</h1>
+		<h1 class="display-4">Customize GoUrl Bitcoin/ Altcoin Payment Box (2019 year)</h1>
 		<p class='lead'>See live <a href='#dmgnpcode'>generated php/html code</a> for your website below (<a target="_blank" href="https://github.com/cryptoapi/Payment-Gateway">open source class</a>)</p>
 
         <div id="dropdown1" class="d-inline-block dropdown mx-3 my-3">
@@ -736,9 +739,9 @@
 	
 	
 	// List of coins that you accept for payments
-	//$coins = array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
-	$coins = array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'speedcoin');  // for example, accept payments in bitcoin, bitcoincash, litecoin, dash, speedcoin 
-	<?php if ($numcoin == 1 && in_array($coinName, array('bitcoin', 'bitcoincash', 'litecoin', 'dash', 'speedcoin'))) echo "\$coins = array(\"$coinName\");  // accept payments in $coinName only \n\r"; ?>
+	//$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
+	$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'speedcoin');  // for example, accept payments in bitcoin, bitcoincash, litecoin, dash, speedcoin 
+	<?php if ($numcoin == 1 && in_array($coinName, array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'speedcoin'))) echo "\$coins = array(\"$coinName\");  // accept payments in $coinName only \n\r"; ?>
 
 	// Create record for each your coin - https://gourl.io/editrecord/coin_boxes/0 ; and get free gourl keys
 	// It is not bitcoin wallet private keys! Place GoUrl Public/Private keys below for all coins which you accept
@@ -752,6 +755,8 @@
 										"private_key" => "25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE"),
 					  "bitcoincash" => array("public_key" => "25656AAeOGaPBitcoincash77BCHPUBOGF20MLcgvHMoXHmMRx", 
 					  					"private_key" => "25656AAeOGaPBitcoincash77BCHPRV8quZcxPwfEc93ArGB6D"),
+					  "bitcoinsv" => array("public_key" => "36306AAQUmatBitcoinsv77BSVPUBlK6jR1TDDQUzaQV1AmWAE", 
+					  					"private_key" => "36306AAQUmatBitcoinsv77BSVPRVJQJx21y8kvd7xxEWzK3zA"),
 					  "litecoin" => array(	"public_key" => "25657AAOwwzoLitecoin77LTCPUB4PVkUmYCa2dR770wNNstdk", 
 					  					"private_key" => "25657AAOwwzoLitecoin77LTCPRV7hmp8s3ew6pwgOMgxMq81F"),
 					  "dogecoin" => array(	"public_key" => "25678AACxnGODogecoin77DOGEPUBZEaJlR9W48LUYagmT9LU8", 
@@ -765,7 +770,8 @@
 	/* if you use demo keys above, please add to /lib/cryptobox.config.php - 
 		$cryptobox_private_keys = array("25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE", "25678AACxnGODogecoin77DOGEPRVFvl6IDdisuWHVJLo5m4eq", 
 					"25656AAeOGaPBitcoincash77BCHPRV8quZcxPwfEc93ArGB6D", "25657AAOwwzoLitecoin77LTCPRV7hmp8s3ew6pwgOMgxMq81F", 
-					"25658AAo79c3Dash77DASHPRVG7w3jg0Tc5Pfi34U8o5JEiTss", "20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c");
+					"25658AAo79c3Dash77DASHPRVG7w3jg0Tc5Pfi34U8o5JEiTss", "20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c",
+					"36306AAQUmatBitcoinsv77BSVPRVJQJx21y8kvd7xxEWzK3zA");
 	 	Also create table "crypto_payments" in your database, sql code - https://github.com/cryptoapi/Payment-Gateway#mysql-table
 	 	Instruction - https://gourl.io/api-php.html 	 	
  	*/				   
@@ -801,7 +807,7 @@
 	    "orderID"     	=&gt; $orderID, 		// order id or product name
 	    "userID"      		=&gt; $userID, 		// unique identifier for every user
 	    "userFormat"  	=&gt; $userFormat, 	// save userID in COOKIE, IPADDRESS, SESSION  or MANUAL
-	    "amount"   	  	=&gt; 0,			// product price in btc/bch/ltc/doge/etc OR setup price in USD below
+	    "amount"   	  	=&gt; 0,			// product price in btc/bch/bsv/ltc/doge/etc OR setup price in USD below
 	    "amountUSD"   	=&gt; $amountUSD,	// we use product price in USD
 	    "period"      		=&gt; $period, 		// payment valid period
 	    "language"	  	=&gt; $def_language  // text on EN - english, FR - french, etc
@@ -903,7 +909,7 @@
         <div class="row">
           <div class="col-12 col-md">
             <img class="mb-2" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-            <small class="d-block mb-3 text-muted">&copy; 2014-2018</small>
+            <small class="d-block mb-3 text-muted">&copy; 2014-2019</small>
             <br>
             <div><a target="_blank" href="https://validator.w3.org/nu/?showsource=yes&amp;doc=<?php echo "https://".$_SERVER[HTTP_HOST].urlencode($_SERVER[REQUEST_URI]); ?>"><img title="Markup Validation Service" src="https://gourl.io/images/w3c.png" alt="Valid HTML 5"></a></div>
           </div>
