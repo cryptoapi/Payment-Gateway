@@ -1051,8 +1051,8 @@ class Cryptobox {
 	     if ($logoimg_path)
 	     {
 	         $offset = ($show_languages) ? "" : "offset-sm-5 offset-md-6";
-    	     $tmp .= "<div class='".$ext."box_logo col-12 col-sm-6 col-md-4 mt-4 $offset'>";
-    	     $tmp .= "<div class='text-right'><img class='".$ext."logo_image' alt='logo' src='#'></div>";
+	         $tmp .= "<div class='".$ext."box_logo col-12 ".(CRYPTOBOX_WORDPRESS?"col-sm-10 col-md-7":"col-sm-6 col-md-4")." mt-4 $offset'>";
+    	     $tmp .= "<div class='text-right'><img style='max-width:200px;max-height:40px;' class='".$ext."logo_image' alt='logo' src='#'></div>";
     	     $tmp .= "<br>";
     	     $tmp .= "</div>";
 	     }
@@ -2274,6 +2274,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);                
+		unset($v); unset($cryptobox_private_keys);                          
 	}
 ?>
