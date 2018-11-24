@@ -1225,10 +1225,10 @@ class Cryptobox {
 	     
 	     $tmp .= "<h1 class='display-4'>Raw JSON Data (from GoUrl.io payment gateway) -</h1>";
 	     $tmp .= "<br>";
-	     $tmp .= "<p class='lead'><b>PHP Language</b> - Please use function <a target='_blank' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/lib/cryptobox.class.php#L747'>\$box->display_cryptobox_bootstrap (...)</a>; it generate customize mobile friendly bitcoin/altcoin payment box and automatically displays successful payment message (bootstrap4, json, your own logo, white label product, etc)</p>";
+	     $tmp .= "<p class='lead'><b>PHP Language</b> - Please use function <a target='_blank' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/lib/cryptobox.class.php#L754'>\$box->display_cryptobox_bootstrap (...)</a>; it generate customize mobile friendly bitcoin/altcoin payment box and automatically displays successful payment message (bootstrap4, json, your own logo, white label product, etc)</p>";
 	     $tmp .= "<p class='lead'><b>ASP/Other Languages</b> - You can use function <a target='_blank' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/lib/cryptobox.class.php#L320'>\$box->cryptobox_json_url()</a>; It generates url with your parameters to gourl.io payment gateway. ";
 	     $tmp .= "Using this url you can get bitcoin/altcoin payment box values in JSON format and use it on html page with Jquery/Ajax (on the user side). ";
-	     $tmp .= "Or your server can receive JSON values through curl - function <a target='_blank' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/lib/cryptobox.class.php#L373'>\$box->get_json_values()</a>; and use it in your files/scripts directly without javascript when generating the webpage (on the server side).</p>";
+	     $tmp .= "Or your server can receive JSON values through curl - function <a target='_blank' href='https://github.com/cryptoapi/Payment-Gateway/blob/master/lib/cryptobox.class.php#L374'>\$box->get_json_values()</a>; and use it in your files/scripts directly without javascript when generating the webpage (on the server side).</p>";
 	     $tmp .= "<p class='lead'><a target='_blank' href='" . $this->cryptobox_json_url() . "'>JSON data source &#187;</a></p>";
 	     
 	     $tmp .= "<div class='card card-body bg-light'>";
