@@ -15,7 +15,7 @@
  * @example     https://gourl.io/lib/examples/example_customize_box.php    <----
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     2.1.5
+ * @version     2.1.6
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -79,7 +79,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "2.1.5");
+define("CRYPTOBOX_VERSION", "2.1.6");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency')));
@@ -1104,7 +1104,7 @@ class Cryptobox {
 	                 
 	     $tmp .= "<div class='card-body'>";
 
-	     if ($qrcodeSize) $tmp .= "<div class='".$ext."copy_address'><a href='#a'><img class='".$ext."qrcode_image' style='max-width:100%; height:auto; width:auto\9;' alt='qrcode' data-size='".intval($qrcodeSize)."' src='#'></a></div>";
+	     if ($qrcodeSize) $tmp .= "<div class='".$ext."copy_address'><a href='#a'><img class='".$ext."qrcode_image' style='max-width:".intval($qrcodeSize)."px; height:auto; width:auto\9;' alt='qrcode' data-size='".intval($qrcodeSize)."' src='#'></a></div>";
 	                     
 	     $tmp .= "<h1 class='mt-3 mb-4 pb-1 card-title ".$ext."copy_amount'><span class='".$ext."amount'>&#160;</span> <small class='text-muted'><span class='".$ext."coinlabel'></span></small></h1>";
 	     $tmp .= "<div class='lead ".$ext."copy_amount ".$ext."texts_send'></div>";
@@ -1782,9 +1782,10 @@ class Cryptobox {
 	 *
 	 * Currency Converter using live exchange rates websites
 	 * Example - convert_currency_live("EUR", "USD", 22.37) - convert 22.37euro to usd
-	 convert_currency_live("EUR", "BTC", 22.37) - convert 22.37euro to bitcoin
+	             convert_currency_live("EUR", "BTC", 22.37) - convert 22.37euro to bitcoin
+	   optional - currencyconverterapi_key you can get on https://free.currencyconverterapi.com/free-api-key
 	 */
-	function convert_currency_live($from_Currency, $to_Currency, $amount)
+	function convert_currency_live($from_Currency, $to_Currency, $amount, $currencyconverterapi_key = "")
 	{
 	    static $arr = array();
 	    
@@ -1888,8 +1889,9 @@ class Cryptobox {
 	    // ----------------
 	    if (!$val)
 	    {
-	        $data = json_decode(get_url_contents("https://free.currencyconverterapi.com/api/v6/convert?q=".$key."&compact=y"), TRUE);
-	        if (isset($data[$key]["val"]) && $data[$key]["val"] > 0) $val = $data[$key]["val"];
+	        $data = json_decode(get_url_contents("https://free.currencyconverterapi.com/api/v6/convert?q=".$key."&compact=ultra&apiKey=".$currencyconverterapi_key, 20, TRUE), TRUE);
+	        if (isset($data[$key]) && $data[$key] > 0) $val = $data[$key];
+	        elseif(isset($data["error"])) echo "<h1>Error in function convert_currency_live(...)! ". $data["error"] . "</h1>";
 	    }
 	    
 	    
@@ -1917,7 +1919,7 @@ class Cryptobox {
 	
 	/*	I. Get URL Data
 	*/
-	function get_url_contents( $url, $timeout = 20 )
+	function get_url_contents( $url, $timeout = 20, $ignore_httpcode = false )
 	{
 	    $ch = curl_init();
 	    curl_setopt ($ch, CURLOPT_URL, $url);
@@ -1931,7 +1933,7 @@ class Cryptobox {
 	    $httpcode 	= curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	    curl_close($ch);
 	
-	    return ($httpcode>=200 && $httpcode<300) ? $data : false;
+	    return (($httpcode>=200 && $httpcode<300) || $ignore_httpcode) ? $data : false;
 	}
 	
 	
@@ -2007,11 +2009,18 @@ class Cryptobox {
 				}
 			}
 			$mysqli = @mysqli_connect($dbhost, DB_USER, DB_PASSWORD, DB_NAME, $port, $socket);			
+			$err = (mysqli_connect_errno()) ? mysqli_connect_error() : "";
+			if ($err)
+			{
+				// try SSL connection
+				$mysqli = mysqli_init();
+				$mysqli->real_connect ($dbhost, DB_USER, DB_PASSWORD, DB_NAME, $port, $socket, MYSQLI_CLIENT_SSL);
+			}
 			if (mysqli_connect_errno())
 			{
 				echo "<br /><b>Error. Can't connect to your MySQL server.</b> You need to have PHP 5.2+ and MySQL 5.5+ with mysqli extension activated. <a href='http://crybit.com/how-to-enable-mysqli-extension-on-web-server/'>Instruction &#187;</a>\n";
 				if (!CRYPTOBOX_WORDPRESS) echo "<br />Also <b>please check DB username/password in file cryptobox.config.php</b>\n";
-				die("<br />Server has returned error - <b>".mysqli_connect_error()."</b>");
+				die("<br />Server has returned error - <b>".$err."</b>");
 			}
 			$mysqli->query("SET NAMES utf8");
 		}
@@ -2274,6 +2283,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);                          
+		unset($v); unset($cryptobox_private_keys);                  
 	}
 ?>
