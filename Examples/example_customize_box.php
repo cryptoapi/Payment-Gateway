@@ -1,8 +1,8 @@
 <?php
 /**
- * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)     
+ * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)   
  * @package     GoUrl Cryptocurrency Payment API
- * copyright 	(c) 2014-2019 Delta Consultants
+ * copyright 	(c) 2014-2020 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
  * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, BitcoinSV, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit, UniversalCurrency
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p8
@@ -11,9 +11,9 @@
  */ 
     
 
-	/********************** NOTE - 2018-2019 YEARS *************************************************************************/ 
+	/********************** NOTE - 2018-2020 YEARS *************************************************************************/ 
 	/*****                                                                                                             *****/ 
-	/*****     This is NEW 2018-2019 latest Bitcoin Payment Box Example  (mobile friendly JSON payment box)            *****/ 
+	/*****     This is NEW 2018-2020 latest Bitcoin Payment Box Example  (mobile friendly JSON payment box)            *****/ 
 	/*****                                                                                                             *****/ 
 	/*****     You can generate php payment box code online - https://gourl.io/lib/examples/example_customize_box.php  *****/
 	/*****         White Label Product - https://gourl.io/lib/test/example_customize_box.php?method=curl&logo=custom   *****/
@@ -30,7 +30,7 @@
 	
 	// Change path to your files
 	// --------------------------------------
-	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "../lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php;    
+	DEFINE("CRYPTOBOX_PHP_FILES_PATH", "../lib/");        	// path to directory with files: cryptobox.class.php / cryptobox.callback.php / cryptobox.newpayment.php;         
                                                         // cryptobox.newpayment.php will be automatically call through ajax/php two times - payment received/confirmed
 	DEFINE("CRYPTOBOX_IMG_FILES_PATH", "../images/");      // path to directory with coin image files (directory 'images' by default)
 	DEFINE("CRYPTOBOX_JS_FILES_PATH", "../js/");			// path to directory with files: ajax.min.js/support.min.js
@@ -70,8 +70,8 @@
 	
 	
 	// List of coins that you accept for payments
-	//$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
-	$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'speedcoin');  // for example, accept payments in bitcoin, bitcoincash, bitcoinsv, litecoin, dash, speedcoin 
+	//$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
+	$coins = array('bitcoin', 'bitcoincash', 'litecoin', 'dogecoin', 'dash', 'speedcoin');  // for example, accept payments in bitcoin, bitcoincash, litecoin, 'dogecoin', dash, speedcoin 
 	
 	// Create record for each your coin - https://gourl.io/editrecord/coin_boxes/0 ; and get free gourl keys
 	// It is not bitcoin wallet private keys! Place GoUrl Public/Private keys below for all coins which you accept
@@ -84,31 +84,31 @@
 					"litecoin" => 		array("public_key" => "-your public key for Litecoin box-", "private_key" => "-your private key for Litecoin box-")); // etc.
 			 
 	// Demo Keys; for tests	(example - 5 coins)
-	$all_keys = array(	"bitcoin" => array(		"public_key" => "25654AAo79c3Bitcoin77BTCPUBqwIefT1j9fqqMwUtMI0huVL",  
-										"private_key" => "25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE"),
+	$all_keys = array(	"bitcoin"   => array("public_key" => "25654AAo79c3Bitcoin77BTCPUBqwIefT1j9fqqMwUtMI0huVL",  
+										    "private_key" => "25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE"),
 					  "bitcoincash" => array("public_key" => "25656AAeOGaPBitcoincash77BCHPUBOGF20MLcgvHMoXHmMRx", 
-					  					"private_key" => "25656AAeOGaPBitcoincash77BCHPRV8quZcxPwfEc93ArGB6D"),
-					  "bitcoinsv" => array("public_key" => "36306AAQUmatBitcoinsv77BSVPUBlK6jR1TDDQUzaQV1AmWAE", 
-					  					"private_key" => "36306AAQUmatBitcoinsv77BSVPRVJQJx21y8kvd7xxEWzK3zA"),
-					  "litecoin" => array(	"public_key" => "25657AAOwwzoLitecoin77LTCPUB4PVkUmYCa2dR770wNNstdk", 
-					  					"private_key" => "25657AAOwwzoLitecoin77LTCPRV7hmp8s3ew6pwgOMgxMq81F"),
-					  "dash" => array(		"public_key" => "25658AAo79c3Dash77DASHPUBqwIefT1j9fqqMwUtMI0huVL0J", 
-					  					"private_key" => "25658AAo79c3Dash77DASHPRVG7w3jg0Tc5Pfi34U8o5JEiTss"),
-					  "speedcoin" => array(	"public_key" => "20116AA36hi8Speedcoin77SPDPUBjTMX31yIra1IBRssY7yFy", 
-					  					"private_key" => "20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c")); // Demo keys!
+					  					    "private_key" => "25656AAeOGaPBitcoincash77BCHPRV8quZcxPwfEc93ArGB6D"),
+					  "litecoin"   => array("public_key"  => "25657AAOwwzoLitecoin77LTCPUB4PVkUmYCa2dR770wNNstdk", 
+					  					    "private_key" => "25657AAOwwzoLitecoin77LTCPRV7hmp8s3ew6pwgOMgxMq81F"),
+					  "dogecoin"   => array("public_key"  => "25678AACxnGODogecoin77DOGEPUBZEaJlR9W48LUYagmT9LU8",
+					  					    "private_key" => "25678AACxnGODogecoin77DOGEPRVFvl6IDdisuWHVJLo5m4eq"),
+					  "dash"       => array("public_key"  => "25658AAo79c3Dash77DASHPUBqwIefT1j9fqqMwUtMI0huVL0J", 
+					  					    "private_key" => "25658AAo79c3Dash77DASHPRVG7w3jg0Tc5Pfi34U8o5JEiTss"),
+					  "speedcoin"  => array("public_key"  => "20116AA36hi8Speedcoin77SPDPUBjTMX31yIra1IBRssY7yFy", 
+					  					    "private_key" => "20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c")); // Demo keys!
 
 	//  IMPORTANT: Add in file /lib/cryptobox.config.php your database settings and your gourl.io coin private keys (need for Instant Payment Notifications) -
 	/* if you use demo keys above, please add to /lib/cryptobox.config.php - 
 		$cryptobox_private_keys = array("25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE", 
 					"25656AAeOGaPBitcoincash77BCHPRV8quZcxPwfEc93ArGB6D", "25657AAOwwzoLitecoin77LTCPRV7hmp8s3ew6pwgOMgxMq81F", 
-					"25658AAo79c3Dash77DASHPRVG7w3jg0Tc5Pfi34U8o5JEiTss", "20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c",
-					"36306AAQUmatBitcoinsv77BSVPRVJQJx21y8kvd7xxEWzK3zA");
+					"25678AACxnGODogecoin77DOGEPRVFvl6IDdisuWHVJLo5m4eq", "25658AAo79c3Dash77DASHPRVG7w3jg0Tc5Pfi34U8o5JEiTss", 
+					"20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c");
 	 	Also create table "crypto_payments" in your database, sql code - https://github.com/cryptoapi/Payment-Gateway#mysql-table
 	 	Instruction - https://gourl.io/api-php.html 	 	
  	*/				   
 	
 	
-	
+	    
 	
 	// Re-test - all gourl public/private keys
 	$def_coin = strtolower($def_coin);
@@ -217,7 +217,7 @@
         elseif ($theme == "minty")      $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css" crossorigin="anonymous">';
         elseif ($theme == "sandstone")  $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.css" crossorigin="anonymous">';
         elseif ($theme == "sketchy")    $css =  '<link rel="stylesheet" href="https://bootswatch.com/4/sketchy/bootstrap.css" crossorigin="anonymous">';
-        else                            $css =  '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">';
+        else                            $css =  '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">';
 
         // If your website not use Bootstrap4 as main style, please use custom css style below.
         // It isolate Bootstrap CSS to a particular class 'bootstrapiso' to avoid css conflicts with your site main css style
@@ -441,10 +441,10 @@
 
 
     <!-- JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
-	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.12.0/js/all.js" crossorigin="anonymous"></script>
     <script src="<?php echo CRYPTOBOX_JS_FILES_PATH; ?>support.min.js" crossorigin="anonymous"></script> 
 
     <!-- Custom styles for crypto payment box, copy it to your file also -->
@@ -478,7 +478,7 @@
 	<br>
 	<div class='card card-body bg-light d-inline-block'>
 			
-		<h1 class="display-4">Customize GoUrl Bitcoin/ Altcoin Payment Box (2019 year)</h1>
+		<h1 class="display-4">Customize GoUrl Bitcoin/ Altcoin Payment Box (2020 year)</h1>
 		<p class='lead'>See live <a href='#dmgnpcode'>generated php/html code</a> for your website below (<a target="_blank" href="https://github.com/cryptoapi/Payment-Gateway">open source class</a>)</p>
 
         <div id="dropdown1" class="d-inline-block dropdown mx-3 my-3">
@@ -739,9 +739,9 @@
 	
 	
 	// List of coins that you accept for payments
-	//$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
-	$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'speedcoin');  // for example, accept payments in bitcoin, bitcoincash, litecoin, dash, speedcoin 
-	<?php if ($numcoin == 1 && in_array($coinName, array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'speedcoin'))) echo "\$coins = array(\"$coinName\");  // accept payments in $coinName only \n\r"; ?>
+	//$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
+	$coins = array('bitcoin', 'litecoin', 'dogecoin', 'dash', 'speedcoin');  // for example, accept payments in bitcoin, bitcoincash, litecoin, dash, speedcoin 
+	<?php if ($numcoin == 1 && in_array($coinName, array('bitcoin', 'bitcoincash', 'litecoin', 'dogecoin', 'dash', 'speedcoin'))) echo "\$coins = array(\"$coinName\");  // accept payments in $coinName only \n\r"; ?>
 
 	// Create record for each your coin - https://gourl.io/editrecord/coin_boxes/0 ; and get free gourl keys
 	// It is not bitcoin wallet private keys! Place GoUrl Public/Private keys below for all coins which you accept
@@ -751,12 +751,10 @@
 					"litecoin" => 		array("public_key" => "-your public key for Litecoin box-", "private_key" => "-your private key for Litecoin box-")); // etc.
 			 
 	// Demo Keys; for tests	(example - 5 coins)
-	$all_keys = array(	"bitcoin" => array(		"public_key" => "25654AAo79c3Bitcoin77BTCPUBqwIefT1j9fqqMwUtMI0huVL",  
+	$all_keys = array("bitcoin" => array(	"public_key" => "25654AAo79c3Bitcoin77BTCPUBqwIefT1j9fqqMwUtMI0huVL",  
 										"private_key" => "25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE"),
 					  "bitcoincash" => array("public_key" => "25656AAeOGaPBitcoincash77BCHPUBOGF20MLcgvHMoXHmMRx", 
 					  					"private_key" => "25656AAeOGaPBitcoincash77BCHPRV8quZcxPwfEc93ArGB6D"),
-					  "bitcoinsv" => array("public_key" => "36306AAQUmatBitcoinsv77BSVPUBlK6jR1TDDQUzaQV1AmWAE", 
-					  					"private_key" => "36306AAQUmatBitcoinsv77BSVPRVJQJx21y8kvd7xxEWzK3zA"),
 					  "litecoin" => array(	"public_key" => "25657AAOwwzoLitecoin77LTCPUB4PVkUmYCa2dR770wNNstdk", 
 					  					"private_key" => "25657AAOwwzoLitecoin77LTCPRV7hmp8s3ew6pwgOMgxMq81F"),
 					  "dogecoin" => array(	"public_key" => "25678AACxnGODogecoin77DOGEPUBZEaJlR9W48LUYagmT9LU8", 
@@ -770,8 +768,8 @@
 	/* if you use demo keys above, please add to /lib/cryptobox.config.php - 
 		$cryptobox_private_keys = array("25654AAo79c3Bitcoin77BTCPRV0JG7w3jg0Tc5Pfi34U8o5JE", "25678AACxnGODogecoin77DOGEPRVFvl6IDdisuWHVJLo5m4eq", 
 					"25656AAeOGaPBitcoincash77BCHPRV8quZcxPwfEc93ArGB6D", "25657AAOwwzoLitecoin77LTCPRV7hmp8s3ew6pwgOMgxMq81F", 
-					"25658AAo79c3Dash77DASHPRVG7w3jg0Tc5Pfi34U8o5JEiTss", "20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c",
-					"36306AAQUmatBitcoinsv77BSVPRVJQJx21y8kvd7xxEWzK3zA");
+					"25678AACxnGODogecoin77DOGEPRVFvl6IDdisuWHVJLo5m4eq", "25658AAo79c3Dash77DASHPRVG7w3jg0Tc5Pfi34U8o5JEiTss", 
+					"20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c");
 	 	Also create table "crypto_payments" in your database, sql code - https://github.com/cryptoapi/Payment-Gateway#mysql-table
 	 	Instruction - https://gourl.io/api-php.html 	 	
  	*/				   
@@ -847,10 +845,10 @@
 
 
     &lt;!-- JS --&gt;
-    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
-    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
-    &lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
-    &lt;script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" crossorigin="anonymous"&gt;&lt;/script&gt;
+    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
+    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
+    &lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
+    &lt;script defer src="https://use.fontawesome.com/releases/v5.12.0/js/all.js" crossorigin="anonymous"&gt;&lt;/script&gt;
     &lt;script src="&lt;?php echo CRYPTOBOX_JS_FILES_PATH; ?&gt;support.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;
 
     &lt;!-- CSS for Payment Box --&gt;
@@ -908,8 +906,8 @@
    <footer class="container pt-4 my-md-5 pt-md-5" style="border-top: 1px solid #e5e5e5;">
         <div class="row">
           <div class="col-12 col-md">
-            <img class="mb-2" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-            <small class="d-block mb-3 text-muted">&copy; 2014-2019</small>
+            <img class="mb-2" src="https://getbootstrap.com/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+            <small class="d-block mb-3 text-muted">&copy; 2014-2020</small>
             <br>
             <div><a target="_blank" href="https://validator.w3.org/nu/?showsource=yes&amp;doc=<?php echo "https://".$_SERVER[HTTP_HOST].urlencode($_SERVER[REQUEST_URI]); ?>"><img title="Markup Validation Service" src="https://gourl.io/images/w3c.png" alt="Valid HTML 5"></a></div>
           </div>

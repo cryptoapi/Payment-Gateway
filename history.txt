@@ -1,5 +1,31 @@
 ===============================================================================
-== Version 2.1.6 (February 2019)   
+== Version 2.1.7 (January 2020)
+===============================================================================
+
+- Several new enhancements. Security updates!
+
+- Update Bootstrap 4.4.1, jQuery 3.4.1, FontAwesome 5.12
+
+- Added Albanian Language (Thanks to Meso J.)
+
+- Added Czech Language (Thanks to Kneebo T.)
+
+- Added Estonian Language (Thanks to Aimar)
+
+- Added Finnish Language (Thanks to Rami V.)
+
+- Added Greek Language (Thanks to Charalampos P, Bay)
+
+- Added Serbian Language (Thanks to Nikola L.)
+
+- Added Slovenian Language (Thanks to Grega J.)
+
+- Added Swedish Language (Thanks to Jack)
+
+
+
+===============================================================================
+== Version 2.1.6 (February 2019)
 ===============================================================================
 
 - Added support currencyconverterapi.com keys
@@ -7,7 +33,7 @@
 
 
 ===============================================================================
-== Version 2.1.5 (November 2018) 
+== Version 2.1.5 (November 2018)
 ===============================================================================
 
 - Added Bitcoin SV (BSV/BCHSV)
@@ -167,4 +193,3 @@ Instruction - https://gourl.io/bitcoin-payment-gateway-api.html#p8
 - Added Dutch Language (Thanks to Erik)
 
 - Several new enhancements
- 

@@ -2,7 +2,7 @@
 /**
  * @category    Example6 - Pay-Per-Post (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014-2019 Delta Consultants
+ * copyright 	(c) 2014-2020 Delta Consultants
  * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, BitcoinSV, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit, UniversalCurrency
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p3
  * @live_demo   https://gourl.io/lib/examples/pay-per-post-multi.php
@@ -12,7 +12,7 @@
 	/*****                                                                                                             *****/ 
 	/*****     This is iFrame Bitcoin Payment Box Example (2014 - 2017)                                                *****/ 
 	/*****                                                                                                             *****/ 
-	/*****     Available - new 2018 version; mobile friendly JSON payment box (own logo, white label product)          *****/
+	/*****     Available - new 2018-2020 version; mobile friendly JSON payment box (own logo, white label product)     *****/
 	/*****     New Demo with generation php payment box code - https://gourl.io/lib/examples/example_customize_box.php *****/
 	/*****         White Theme - https://gourl.io/lib/examples/example_customize_box.php?theme=black                   *****/
 	/*****         Black Theme - https://gourl.io/lib/examples/example_customize_box.php?theme=default     		   *****/

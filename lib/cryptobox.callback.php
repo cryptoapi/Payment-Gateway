@@ -8,10 +8,10 @@
  * Cryptobox Server Callbacks
  *
  * @package     Cryptobox callbacks
- * @copyright   2014-2019 Delta Consultants
+ * @copyright   2014-2020 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
- * @version     2.1.6
+ * @version     2.1.7
  * 
  * 
  * This file processes call-backs from Cryptocoin Payment Box server when new payment  
@@ -106,7 +106,7 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	
 	
 	$dt			= gmdate('Y-m-d H:i:s');
-	$obj 		= run_sql("select paymentID, txConfirmed from crypto_payments where boxID = ".$_POST["box"]." && orderID = '".$_POST["order"]."' && userID = '".$_POST["user"]."' && txID = '".$_POST["tx"]."' && amount = ".$_POST["amount"]." && addr = '".$_POST["addr"]."' limit 1");
+	$obj 		= run_sql("select paymentID, txConfirmed from crypto_payments where boxID = ".intval($_POST["box"])." && orderID = '".addslashes($_POST["order"])."' && userID = '".addslashes($_POST["user"])."' && txID = '".addslashes($_POST["tx"])."' && amount = ".floatval($_POST["amount"])." && addr = '".addslashes($_POST["addr"])."' limit 1");
 	
 	
 	$paymentID		= ($obj) ? $obj->paymentID : 0;
@@ -116,7 +116,7 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	if (!$paymentID)
 	{
 		$sql = "INSERT INTO crypto_payments (boxID, boxType, orderID, userID, countryID, coinLabel, amount, amountUSD, unrecognised, addr, txID, txDate, txConfirmed, txCheckDate, recordCreated)
-				VALUES (".$_POST["box"].", '".$_POST["boxtype"]."', '".$_POST["order"]."', '".$_POST["user"]."', '".$_POST["usercountry"]."', '".$_POST["coinlabel"]."', ".$_POST["amount"].", ".$_POST["amountusd"].", ".($_POST["status"]=="payment_received_unrecognised"?1:0).", '".$_POST["addr"]."', '".$_POST["tx"]."', '".$_POST["datetime"]."', ".$_POST["confirmed"].", '$dt', '$dt')";
+				VALUES (".intval($_POST["box"]).", '".addslashes($_POST["boxtype"])."', '".addslashes($_POST["order"])."', '".addslashes($_POST["user"])."', '".addslashes($_POST["usercountry"])."', '".addslashes($_POST["coinlabel"])."', ".floatval($_POST["amount"]).", ".floatval($_POST["amountusd"]).", ".($_POST["status"]=="payment_received_unrecognised"?1:0).", '".addslashes($_POST["addr"])."', '".addslashes($_POST["tx"])."', '".addslashes($_POST["datetime"])."', ".intval($_POST["confirmed"]).", '$dt', '$dt')";
 
 		$paymentID = run_sql($sql);
 		
@@ -125,7 +125,7 @@ if (isset($_POST["status"]) && in_array($_POST["status"], array("payment_receive
 	// Update transaction status to confirmed
 	elseif ($_POST["confirmed"] && !$txConfirmed)
 	{
-		$sql = "UPDATE crypto_payments SET txConfirmed = 1, txCheckDate = '$dt' WHERE paymentID = $paymentID LIMIT 1";
+		$sql = "UPDATE crypto_payments SET txConfirmed = 1, txCheckDate = '$dt' WHERE paymentID = ".intval($paymentID)." LIMIT 1";
 		run_sql($sql);
 		
 		$box_status = "cryptobox_updated";

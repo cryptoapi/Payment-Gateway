@@ -5,17 +5,17 @@
  * ##########################################
  *
  *
- * PHP Cryptocurrency Payment Class  
+ * PHP Cryptocurrency Payment Class
  *
  * @package     GoUrl PHP Bitcoin/Altcoin Payments and Crypto Captcha
- * @copyright   2014-2019 Delta Consultants
+ * @copyright   2014-2020 Delta Consultants
  * @category    Libraries
- * @website     https://gourl.io   
+ * @website     https://gourl.io 
  * @api         https://gourl.io/bitcoin-payment-gateway-api.html
  * @example     https://gourl.io/lib/examples/example_customize_box.php    <----
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     2.1.6
+ * @version     2.1.7
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -79,7 +79,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "2.1.6");
+define("CRYPTOBOX_VERSION", "2.1.7");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency')));
@@ -200,7 +200,7 @@ class Cryptobox {
 			{
 				case "COOKIE":
 					$this->cookieName = 'cryptoUsr'.$this->icrc32($this->boxID."*&*".$this->coinLabel."*&*".$this->orderID."*&*".$this->private_key);
-					if (isset($_COOKIE[$this->cookieName]) && trim($_COOKIE[$this->cookieName]) && strpos($_COOKIE[$this->cookieName], "__")) $this->userID = trim($_COOKIE[$this->cookieName]);
+					if (isset($_COOKIE[$this->cookieName]) && trim($_COOKIE[$this->cookieName]) && strpos($_COOKIE[$this->cookieName], "__") && preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $_COOKIE[$this->cookieName]) == $_COOKIE[$this->cookieName] && strlen($_COOKIE[$this->cookieName]) <= 30) $this->userID = trim($_COOKIE[$this->cookieName]);
 					else
 					{	 
 						$s = trim(strtolower($_SERVER['SERVER_NAME']), " /");
@@ -216,7 +216,7 @@ class Cryptobox {
 					
 					if (session_status() == PHP_SESSION_NONE) session_start();
 					$this->cookieName = 'cryptoUser'.$this->icrc32($this->private_key."*&*".$this->boxID."*&*".$this->coinLabel."*&*".$this->orderID);
-					if (isset($_SESSION[$this->cookieName]) && trim($_SESSION[$this->cookieName]) && strpos($_SESSION[$this->cookieName], "--")) $this->userID = trim($_SESSION[$this->cookieName]);
+					if (isset($_SESSION[$this->cookieName]) && trim($_SESSION[$this->cookieName]) && strpos($_SESSION[$this->cookieName], "--") && preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $_SESSION[$this->cookieName]) == $_SESSION[$this->cookieName] && strlen($_SESSION[$this->cookieName]) <= 30) $this->userID = trim($_SESSION[$this->cookieName]);
 					else
 					{	 
 						$d = time(); if ($d > 1410000000) $d -= 1410000000;
@@ -228,7 +228,7 @@ class Cryptobox {
 				case "IPADDRESS":
 					
 					if (session_status() == PHP_SESSION_NONE) session_start();
-					if (isset($_SESSION['cryptoUserIP']) && filter_var($_SESSION['cryptoUserIP'], FILTER_VALIDATE_IP))
+					if (isset($_SESSION['cryptoUserIP']) && filter_var($_SESSION['cryptoUserIP'], FILTER_VALIDATE_IP) && preg_replace('/[^A-Za-z0-9\.\:]/', '', $_SESSION['cryptoUserIP']) == $_SESSION['cryptoUserIP'])
 						 $ip = $_SESSION['cryptoUserIP'];
 					else $ip = $_SESSION['cryptoUserIP'] = $this->ip_address();
 					$this->userID = trim(md5($ip."*&*".$this->boxID."*&*".$this->coinLabel."*&*".$this->orderID));
@@ -551,7 +551,7 @@ class Cryptobox {
 		{
 			if (!$this->processed)
 			{
-				$sql = "UPDATE crypto_payments SET processed = 1, processedDate = '".gmdate("Y-m-d H:i:s")."' WHERE paymentID = $this->paymentID LIMIT 1";
+				$sql = "UPDATE crypto_payments SET processed = 1, processedDate = '".gmdate("Y-m-d H:i:s")."' WHERE paymentID = ".intval($this->paymentID)." LIMIT 1";
 				run_sql($sql);
 				$this->processed = true;
 			}
@@ -651,7 +651,7 @@ class Cryptobox {
 	*/
 	public function payment_info()
 	{
-		$obj = ($this->paymentID) ? run_sql("SELECT * FROM crypto_payments WHERE paymentID = $this->paymentID LIMIT 1") : false;
+		$obj = ($this->paymentID) ? run_sql("SELECT * FROM crypto_payments WHERE paymentID = ".intval($this->paymentID)." LIMIT 1") : false;
 		if ($obj) $obj->countryName = get_country_name($obj->countryID);
 		return $obj;
 	}
@@ -773,7 +773,7 @@ class Cryptobox {
 	 *  <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	 *  A. <!-- Bootstrap CSS - Original Theme -->
-	 *  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+	 *  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
 	 *  
 	 *  B. OR you can use other Themes, for example from https://bootswatch.com/; replace line with bootstrap.min.css above to line below -
 	 *  <!-- <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.css"> -->
@@ -782,10 +782,10 @@ class Cryptobox {
 	 *  Bootstrap Isolated CSS (class='bootstrapiso') Original Theme - 
 	 *  <!-- <link rel="stylesheet" href="/css/bootstrapcustom.min.css"> -->
 	 *  
-	 *  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous"></script>
-	 *  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
-	 *  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
-	 *  <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" crossorigin="anonymous"></script>
+	 *  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
+	 *  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" crossorigin="anonymous"></script>
+	 *  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	 *  <script defer src="https://use.fontawesome.com/releases/v5.12.0/js/all.js" crossorigin="anonymous"></script>
 	 *  script src="<?php echo CRYPTOBOX_JS_FILES_PATH; ?>support.min.js" crossorigin="anonymous"></script>
 	 *  <style>
             html { font-size: 14px; }
@@ -901,7 +901,12 @@ class Cryptobox {
 	    // ----------------------------------
 	    
 	    $tmp .= "<div class='".$ext."header px-3 py-3 pt-md-5 pb-md-4 mx-auto my-4 text-center' style='max-width:700px'>";
-	    $tmp .= "<h1 class='display-4 ".$ext."texts_pay_now'><span class='".$ext."texts_pay_now'>&#160;</span></h1>";
+	    $tmp .= "<h1 class='display-4'><span class='".$ext."texts_pay_now'>&#160;</span>";
+	    $tmp .= "<span class='".$ext."loading_icon mr-3 float-right' " . $hide . "><i style='font-size:50%;' class='fas fa-sync-alt fa-spin'></i></span>";
+	    $tmp .= "</h1>";
+		
+
+
 	    $custom_text = trim($custom_text);
 	    if ($custom_text)
 	    {
@@ -1033,12 +1038,9 @@ class Cryptobox {
 	     
 	     if ($show_languages)
 	     {
-    	     $offset = ($logoimg_path) ? "text-center mb-2" : "mb-3";
+    	     $offset = ($logoimg_path) ? "mb-2" : "mb-3";
     	     $tmp .= "<div class='".$ext."box_language col-12 ".(CRYPTOBOX_WORDPRESS?"text-left col-sm-2 col-md-3 offset-md-1":"col-sm-4 offset-sm-1 text-sm-left col-md-4 offset-md-2 text-md-left")." mt-sm-4 $offset'>";
     	     $tmp .= "<div class='btn-group'>";
-    	     $tmp .= "<button type='button' class='btn btn-outline-secondary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
-    	     $tmp .= "Language" . " - " . $this->localisation['name'];
-    	     $tmp .= "</button>";
     	     $tmp .= $languages_list;
     	     $tmp .= "</div>";
     	     $tmp .= "</div>";
@@ -1285,7 +1287,7 @@ class Cryptobox {
 	    
 		$this->paymentID = $diff = 0;
 		
-		$obj = run_sql("SELECT paymentID, amount, amountUSD, txConfirmed, txCheckDate, txDate, processed, boxType FROM crypto_payments WHERE boxID = $this->boxID && orderID = '$this->orderID' && userID = '$this->userID' ".($this->period=="NOEXPIRY"?"":"&& txDate >= DATE_SUB('".gmdate("Y-m-d H:i:s")."', INTERVAL ".$this->period.")")." ORDER BY txDate DESC LIMIT 1");
+		$obj = run_sql("SELECT paymentID, amount, amountUSD, txConfirmed, txCheckDate, txDate, processed, boxType FROM crypto_payments WHERE boxID = ".intval($this->boxID)." && orderID = '".addslashes($this->orderID)."' && userID = '".addslashes($this->userID)."' ".($this->period=="NOEXPIRY"?"":"&& txDate >= DATE_SUB('".gmdate("Y-m-d H:i:s")."', INTERVAL ".addslashes($this->period).")")." ORDER BY txDate DESC LIMIT 1");
 	
 		if ($obj)
 		{
@@ -1365,7 +1367,7 @@ class Cryptobox {
 
 			
 			$dt  = gmdate('Y-m-d H:i:s');
-			$obj = run_sql("select paymentID, processed, txConfirmed from crypto_payments where boxID = ".$res["box"]." && orderID = '".$res["order"]."' && userID = '".$res["user"]."' && txID = '".$res["tx"]."' && amount = ".$res["amount"]." && addr = '".$res["addr"]."' limit 1"); 
+			$obj = run_sql("select paymentID, processed, txConfirmed from crypto_payments where boxID = ".intval($res["box"])." && orderID = '".addslashes($res["order"])."' && userID = '".addslashes($res["user"])."' && txID = '".addslashes($res["tx"])."' && amount = ".floatval($res["amount"])." && addr = '".addslashes($res["addr"])."' limit 1"); 
 
 			if ($obj)
 			{ 
@@ -1384,7 +1386,7 @@ class Cryptobox {
 						 			txDate				= '".$res["datetime"]."',
 						 			txConfirmed			= ".$res["confirmed"].",
 						 			txCheckDate			= '".$dt."'
-						WHERE 		paymentID 			= $this->paymentID 
+						WHERE 		paymentID 			= ".intval($this->paymentID)."
 						LIMIT 		1";
 				
 				run_sql($sql);
@@ -1527,7 +1529,7 @@ class Cryptobox {
 		if ($period  	&& preg_replace('/[^A-Za-z0-9\ ]/', '', $period)  	!= $period)  		return false;
 		
 		$res = run_sql("SELECT paymentID, boxID, boxType, orderID, userID, countryID, coinLabel, amount, amountUSD, addr, txID, txDate, txConfirmed, processed, processedDate, recordCreated       
-						FROM crypto_payments WHERE unrecognised = 0 ".($boxID?" && boxID = $boxID":"").($orderID?" && orderID = '$orderID'":"").($userID?" && userID='$userID'":"").($countryID?" && countryID='".strtoupper($countryID)."'":"").($period?" && recordCreated > DATE_SUB('".gmdate("Y-m-d H:i:s")."', INTERVAL $period)":"")." ORDER BY txDate DESC LIMIT 10000");
+						FROM crypto_payments WHERE unrecognised = 0 ".($boxID?" && boxID = ".intval($boxID):"").($orderID?" && orderID = '".addslashes($orderID)."'":"").($userID?" && userID='".addslashes($userID)."'":"").($countryID?" && countryID='".addslashes(strtoupper($countryID))."'":"").($period?" && recordCreated > DATE_SUB('".gmdate("Y-m-d H:i:s")."', INTERVAL ".addslashes($period).")":"")." ORDER BY txDate DESC LIMIT 10000");
 	
 		if ($res && !is_array($res)) $res = array($res);
 		
@@ -1579,7 +1581,7 @@ class Cryptobox {
 		if ($period && preg_replace('/[^A-Za-z0-9\ ]/', '', $period) != $period) return false;
 			
 		$res = run_sql("SELECT paymentID, boxID, boxType, coinLabel, amount, amountUSD, addr, txID, txDate, recordCreated
-						FROM crypto_payments WHERE unrecognised = 1 ".($boxID?" && boxID = $boxID":"").($period?" && recordCreated > DATE_SUB('".gmdate("Y-m-d H:i:s")."', INTERVAL $period)":"")." ORDER BY txDate DESC LIMIT 10000");
+						FROM crypto_payments WHERE unrecognised = 1 ".($boxID?" && boxID = ".intval($boxID):"").($period?" && recordCreated > DATE_SUB('".gmdate("Y-m-d H:i:s")."', INTERVAL ".addslashes($period).")":"")." ORDER BY txDate DESC LIMIT 10000");
 	
 		if ($res && !is_array($res)) $res = array($res);
 		
@@ -1607,7 +1609,7 @@ class Cryptobox {
 	    }
 
 	    if (isset($_GET[$id]) && in_array($_GET[$id], array_keys($localisation)) && !defined("CRYPTOBOX_LANGUAGE_HTMLID_IGNORE")) { $lan = $_GET[$id]; setcookie($id, $lan, time()+7*24*3600, "/"); }
-	    elseif (isset($_COOKIE[$id]) && in_array($_COOKIE[$id], array_keys($localisation)) && !defined("CRYPTOBOX_LANGUAGE_HTMLID_IGNORE")) $lan = $_COOKIE[$id];
+	    elseif (isset($_COOKIE[$id]) && in_array($_COOKIE[$id], array_keys($localisation)) && !defined("CRYPTOBOX_LANGUAGE_HTMLID_IGNORE") && preg_replace('/[^A-Za-z0-9]/', '', $_COOKIE[$id]) == $_COOKIE[$id] && strlen($_COOKIE[$id]) <= 30) $lan = $_COOKIE[$id];
 	    elseif (in_array($default, array_keys($localisation))) $lan = $default;
 	    else 	$lan = "en";
 	    
@@ -1645,7 +1647,7 @@ class Cryptobox {
 	    
 	    // Current Selected Coin
 	    if (isset($_GET[$id]) && in_array($_GET[$id], $available_payments) && in_array($_GET[$id], $coins)) { $coinName = $_GET[$id]; setcookie($id, $coinName, time()+7*24*3600, "/"); }
-	    elseif (isset($_COOKIE[$id]) && in_array($_COOKIE[$id], $available_payments) && in_array($_COOKIE[$id], $coins)) $coinName = $_COOKIE[$id];
+	    elseif (isset($_COOKIE[$id]) && in_array($_COOKIE[$id], $available_payments) && in_array($_COOKIE[$id], $coins) && preg_replace('/[^A-Za-z0-9]/', '', $_COOKIE[$id]) == $_COOKIE[$id] && strlen($_COOKIE[$id]) <= 30) $coinName = $_COOKIE[$id];
 	    else $coinName = $default;
 	
 	    $current =  $coinName;
@@ -1676,19 +1678,47 @@ class Cryptobox {
 		$url = $_SERVER["REQUEST_URI"];
 		if (mb_strpos($url, "?")) $url = mb_substr($url, 0, mb_strpos($url, "?"));
 		
+		//sort
+		$l1 = array_slice ($localisation, 0, 8);
+		$l2 = array_slice ($localisation, 8);
+		asort ($l2);
+		$localisation = array_merge($l1, $l2);
+		
 		// <select> html tag list
 		if ($no_bootstrap)
 		{
     		$tmp  = "<select name='$id' id='$id' onchange='window.open(\"//".$_SERVER["HTTP_HOST"].$url."?".http_build_query($arr).($arr?"&amp;":"").$id."=\"+this.options[this.selectedIndex].value+\"#".$anchor."\",\"_self\")' style='width:130px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#666;border-radius:5px;-moz-border-radius:5px;border: #ccc 1px solid;margin:0;padding:3px 0 3px 6px;white-space:nowrap;overflow:hidden;display:inline;'>";
-    		foreach ($localisation as $k => $v) $tmp .= "<option ".($k==$lan?"selected":"")." value='$k'>".$v["name"]."</option>";
+    		foreach ($localisation as $k => $v)
+    		{
+    		    $tmp .= "<option ".($k==$lan?"selected":"")." value='$k'>".$v["name"]."</option>";
+    		    if ($k == "sv") $tmp .= "<option value='' disabled>---------</option>";
+    		}
     		$tmp .= "</select>";
 		}
 		else
 		// bootstrap4
 		{
-		    $tmp  = "<div class='dropdown-menu'>";
-		    foreach ($localisation as $k => $v) $tmp .= "<a href='//".$_SERVER["HTTP_HOST"].$url."?".http_build_query($arr).($arr?"&amp;":"").$id."=".$k."#".$anchor."' class='dropdown-item".($lan==$k?"  active":"")."'>".$v["name"]."</a>";
-		    $tmp  .= "</div>";
+		    
+		    $tmp = "<div class='dropdown'>";
+		    $tmp .= "<button type='button' class='btn btn-secondary dropdown-toggle' data-toggle='dropdown' id='dropdownMenuButtonLang' aria-haspopup='true' aria-expanded='false'>";
+		    $tmp .= "Language" . " - " . $localisation[$lan]['name'];
+		    $tmp .= "</button>";
+		    $tmp .= "<div class='dropdown-menu' aria-labelledby='dropdownMenuButtonLang' style='width:21em;margin:1px 0 1px -10px'>";
+		    $tmp .= "<div class='dropdown-row'>";
+		    
+		    $count = 0;
+		    foreach ($localisation as $k => $v) 
+		    {
+		        $count ++;
+		        $tmp .= "<a href='//".$_SERVER["HTTP_HOST"].$url."?".http_build_query($arr).($arr?"&amp;":"").$id."=".$k."#".$anchor."' class='dropdown-item".($k==$lan?" disabled":"")."' style='display:inline-block;width:49%;'>".$v["name"]."</a>";
+		        if (!($count % 2)) {
+		            $tmp .= "</div>";
+		            if ($count == 8) $tmp .= "<div class='dropdown-divider'></div>";
+		            $tmp .= "<div class='dropdown-row'>";
+		        }
+		        
+            }
+            $tmp .= '</div></div></div>';
 		}
 				
 		return $tmp; 
@@ -2107,6 +2137,9 @@ class Cryptobox {
 	
 	
 	// en - English, es - Spanish, fr - French, de - German, nl - Dutch, it - Italian, ru - Russian, pl - Polish, pt - Portuguese, fa - Persian, ko - Korean, ja - Japanese, id - Indonesian, tr - Turkish, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	// fi - Finnish, sv - Swedish, el - Greek, 	cs - Czech, sl - Slovenian, sr - Serbian, et - Estonian, sq - Albanian
+	
+	
 	$cryptobox_localisation	= array(
 							"en" => array("name"		=> "English", 
 							/*36*/	"button"			=> "Click Here if you have already sent %coinNames%",
@@ -2116,7 +2149,7 @@ class Cryptobox {
 							/*40*/	"payment"			=> "Select Payment Method",
 							/*42*/	"pay_in"			=> "Payment in %coinName%",
 							/*55*/	"loading"			=> "Loading ..."),
-
+	    
 							"es" => array("name"		=> "Spanish", 
 									"button"			=> "Click aqui si ya has mandado %coinNames%",
 									"msg_not_received" 	=> "<b>%coinNames% no han sido recibidos.</b><br>Si ya has enviado %coinNames% (la cantidad exacta de %coinName% en un s&oacute;lo pago como se muestra abajo), por favor espera unos minutos para recibirlas del %coinName% sistema de pagos. Si has enviado otra cantidad, el sistema de pagos ignorar&aacute; la transacci&oacute;n y necesitar&aacute;s mandar la cantidad correcta de nuevo, o contactar al propietario del sitio para recibir asistencia.",
@@ -2143,7 +2176,15 @@ class Cryptobox {
 									"payment"			=> "Zahlungmethode ausw&auml;hlen",
 									"pay_in"			=> "Zahlung in %coinName%",
 									"loading"			=> "Wird geladen ..."),
-	     
+	    
+							"it" => array("name"		=> "Italian",
+									"button"			=> "Clicca qui se hai gi&#224; inviato i %coinNames%",
+									"msg_not_received"  => "<b>%coinNames% non sono ancora stati ricevuti.</b><br>Se hai gi&#224; inviato i %coinNames% (l&#8217;esatta somma di %coinName% in un unico pagamento, come mostrato nel riquadro sottostante), si prega di attendere qualche minuto perch&#233; il sistema di pagamaneto di riceva. Se si invia qualsiasi altra somma, il sistema di pagamento ignorer&#224; la transazione e sar&#224; necessario inviare di nuovo la somma corretta, oppure contattare il supporto del sito.",
+									"msg_received"      => "Il sistema di pagamento %coinName% ha ricevuto %amountPaid% %coinLabel% con successo !",
+									"msg_received2"     => "Il %coinName% Captcha ha ricevuto %amountPaid% %coinLabel% con successo !",
+									"payment"           => "Seleziona metodo di pagamento",
+									"pay_in"            => "Pagamento in %coinName%",
+									"loading"			=> "Caricamento in corso ..."),
 	    
 							"nl" => array("name"		=> "Dutch",
 									"button"			=> "Klik hier als je al %coinNames% hebt verstuurd",
@@ -2153,16 +2194,6 @@ class Cryptobox {
 									"payment"           => "Kies uw betaalmethode",
 									"pay_in"            => "Betaling in %coinName%",
 									"loading"			=> "Bezig met laden ..."),
-							    	
-	         
-							"it" => array("name"		=> "Italian",
-									"button"			=> "Clicca qui se hai gi&#224; inviato i %coinNames%",
-									"msg_not_received"  => "<b>%coinNames% non sono ancora stati ricevuti.</b><br>Se hai gi&#224; inviato i %coinNames% (l&#8217;esatta somma di %coinName% in un unico pagamento, come mostrato nel riquadro sottostante), si prega di attendere qualche minuto perch&#233; il sistema di pagamaneto di riceva. Se si invia qualsiasi altra somma, il sistema di pagamento ignorer&#224; la transazione e sar&#224; necessario inviare di nuovo la somma corretta, oppure contattare il supporto del sito.",
-									"msg_received"      => "Il sistema di pagamento %coinName% ha ricevuto %amountPaid% %coinLabel% con successo !",
-									"msg_received2"     => "Il %coinName% Captcha ha ricevuto %amountPaid% %coinLabel% con successo !",
-									"payment"           => "Seleziona metodo di pagamento",
-									"pay_in"            => "Pagamento in %coinName%",
-									"loading"			=> "Caricamento in corso ..."),
 	     
 							"ru" => array("name"		=> "Russian",
 									"button"			=> "&#1053;&#1072;&#1078;&#1084;&#1080;&#1090;&#1077; &#1079;&#1076;&#1077;&#1089;&#1100; &#1077;&#1089;&#1083;&#1080; &#1074;&#1099; &#1091;&#1078;&#1077; &#1087;&#1086;&#1089;&#1083;&#1072;&#1083;&#1080; %coinNames%",
@@ -2172,7 +2203,16 @@ class Cryptobox {
 									"payment"			=> "&#1042;&#1099;&#1073;&#1077;&#1088;&#1080;&#1090;&#1077; &#1089;&#1087;&#1086;&#1089;&#1086;&#1073; &#1086;&#1087;&#1083;&#1072;&#1090;&#1099;",
 									"pay_in"			=> "&#1054;&#1087;&#1083;&#1072;&#1090;&#1072; &#1074; %coinName%",
 									"loading"			=> "&#1047;&#1072;&#1075;&#1088;&#1091;&#1078;&#1072;&#1077;&#1090;&#1089;&#1103; ..."),
-	     
+	    
+							"sv" => array("name"		=> "Swedish",
+									"button"			=> "Klicka h&auml;r om du redan har skickat %coinNames%",
+									"msg_not_received" 	=> "<b>%coinNames% har inte tagits emot &auml;n.</b><br>Om du redan har skickat Bticoins (den exakta summan %coinName% i en betalning som visat i rutan under), var v&auml;nlig v&auml;nta n&aring;gra minuter p&aring; att de ska tas emot av %coinName% Betalnings Systemet. Om du har skickat n&aring;gon annan summa kommer din betalning bli ignorerad, och du beh&ouml;ver skicka den korrekta summan igen, eller kontakta webbplats &auml;garen f&ouml;r assistans.",
+									"msg_received" 	 	=> "%coinName% Betalnings Systemet har tagit emot %amountPaid% %coinLabel% !",
+									"msg_received2" 	=> "%coinName% Captcha har tagit emot %amountPaid% %coinLabel% !",
+									"payment"			=> "V&auml;lj Betalnings Method",
+									"pay_in"			=> "Betalning i %coinName%",
+									"loading"			=> "L&auml;ser in ..."),
+	    
 							"pl" => array("name"		=> "Polish", 
 									"button"			=> "Kliknij tutaj, je&#347;li ju&#380; wys&#322;ane %coinNames%",
 									"msg_not_received" 	=> "<b>%coinNames% nie zosta&#322;y jeszcze otrzymane.</b><br>Je&#347;li ju&#380; wys&#322;a&#322;e&#347; %coinNames% (dok&#322;adn&#261; sum&#281; %coinName% w jednej p&#322;atno&#347;ci, jak pokazano w poni&#380;szym polu), prosz&#281; poczeka&#263; kilka minut, aby system p&#322;atno&#347;ci %coinName% m&#243;g&#322; j&#261; otrzyma&#263;. Je&#347;li wy&#347;lesz jak&#261;kolwiek inn&#261; sum&#281;, system p&#322;atno&#347;ci zignoruje transakcje i trzeba b&#281;dzie wys&#322;a&#263; poprawn&#261; sum&#281; ponownie lub skontaktowa&#263; si&#281; z w&#322;a&#347;cicielem witryny w celu uzyskania pomocy.",
@@ -2270,12 +2310,75 @@ class Cryptobox {
 									"msg_received2" 	=> "%coinName% &#2325;&#2376;&#2346;&#2381;&#2330;&#2366; &#2346;&#2381;&#2352;&#2366;&#2346;&#2381;&#2340; %amountPaid% %coinLabel% &#2360;&#2347;&#2354;&#2340;&#2366;&#2346;&#2370;&#2352;&#2381;&#2357;&#2325; !",
 									"payment"			=> "&#2330;&#2369;&#2344;&#2375;&#2306; &#2349;&#2369;&#2327;&#2340;&#2366;&#2344; &#2325;&#2366; &#2340;&#2352;&#2368;&#2325;&#2366;",
 									"pay_in"			=> "%coinName% &#2350;&#2375;&#2306; &#2349;&#2369;&#2327;&#2340;&#2366;&#2344;",
-									"loading"			=> "&#2354;&#2379;&#2337; &#2361;&#2379; &#2352;&#2361;&#2366; &#2361;&#2376; ...")
-	    
+									"loading"			=> "&#2354;&#2379;&#2337; &#2361;&#2379; &#2352;&#2361;&#2366; &#2361;&#2376; ..."),
+                    	    
+							"fi" => array("name"		=> "Finnish",
+									"button"			=> "Klikkaa t&auml;st&auml; jos olet jo l&auml;hett&auml;nyt %coinNames%",
+									"msg_not_received" 	=> "<b>%coinNames% ei ole viel&auml; vastaanotettu.</b><br>Jos olet jo l&auml;hett&auml;nyt %coinNames% (t&auml;sm&auml;llisen %coinName% -summan yhten&auml; maksuna, kuten maksulaatikossa n&auml;ytet&auml;&auml;n alapuolella), ole hyv&auml; ja odota pari minuutta ett&auml; %coinName% -maksuj&auml;rjestelm&auml; k&auml;sittelee ne. Jos l&auml;hetit mink&auml; tahansa muun summan, maksuj&auml;rjestelm&auml; ei k&auml;sittele maksua ja sinun pit&auml;&auml; l&auml;hett&auml;&auml; oikea summa uudestaan, tai olla yhteydess&auml; sivuston omistajaan.",
+									"msg_received" 	 	=> "%coinName% -maksuj&auml;rjestelm&auml; vastaanotti %amountPaid% %coinLabel% onnistuneesti !",
+									"msg_received2" 	=> "%coinName% Captcha vastaanotti %amountPaid% %coinLabel% onnistuneesti !",
+									"payment"			=> "Valitse maksutapa",
+									"pay_in"			=> "Maksu valuutassa %coinName%",
+									"loading"			=> "Ladataan ..."),
+                    	    
+							"el" => array("name"		=> "Greek",
+									"button"			=> "&Pi;&alpha;&tau;&#942;&sigma;&tau;&epsilon; &epsilon;&delta;&#974; &alpha;&nu; &#941;&chi;&epsilon;&tau;&epsilon; &#942;&delta;&eta; &sigma;&tau;&epsilon;&#943;&lambda;&epsilon;&iota; &tau;&alpha; %coinNames%",
+									"msg_not_received" 	=> "<b>&Tau;&alpha; %coinNames% &delta;&epsilon;&nu; &#941;&chi;&omicron;&upsilon;&nu; &pi;&alpha;&rho;&alpha;&lambda;&eta;&phi;&theta;&epsilon;&#943; &alpha;&kappa;&#972;&mu;&alpha;.</b><br>&Alpha;&nu; &#941;&chi;&epsilon;&tau;&epsilon; &#942;&delta;&eta; &sigma;&tau;&epsilon;&#943;&lambda;&epsilon;&iota; &tau;&alpha; %coinNames% (&alpha;&kappa;&rho;&iota;&beta;&#974;&sigmaf; &tau;&omicron; %coinName% &pi;&omicron;&sigma;&#972; &sigma;&epsilon; &mu;&#943;&alpha; &pi;&lambda;&eta;&rho;&omega;&mu;&#942; &#972;&pi;&omega;&sigmaf; &phi;&alpha;&#943;&nu;&epsilon;&tau;&alpha;&iota; &sigma;&tau;&omicron; &pi;&alpha;&rho;&alpha;&kappa;&#940;&tau;&omega; &kappa;&omicron;&upsilon;&tau;&#943;), &pi;&alpha;&rho;&alpha;&kappa;&alpha;&lambda;&omicron;&#973;&mu;&epsilon; &pi;&epsilon;&rho;&iota;&mu;&#941;&nu;&epsilon;&tau;&epsilon; &mu;&epsilon;&rho;&iota;&kappa;&#940; &lambda;&epsilon;&pi;&tau;&#940; &mu;&#941;&chi;&rho;&iota; &nu;&alpha; &pi;&alpha;&rho;&alpha;&lambda;&eta;&phi;&theta;&omicron;&#973;&nu; &alpha;&pi;&#972; &tau;&omicron; &Sigma;&#973;&sigma;&tau;&eta;&mu;&alpha; &Pi;&lambda;&eta;&rho;&omega;&mu;&#942;&sigmaf; %coinNames%. &Alpha;&nu; &sigma;&tau;&epsilon;&#943;&lambda;&epsilon;&tau;&epsilon; &omicron;&pi;&omicron;&iota;&omicron;&delta;&#942;&pi;&omicron;&tau;&epsilon; &#940;&lambda;&lambda;&omicron; &pi;&omicron;&sigma;&#972;, &tau;&omicron; &Sigma;&#973;&sigma;&tau;&eta;&mu;&alpha; &Pi;&lambda;&eta;&rho;&omega;&mu;&#942;&sigmaf; &theta;&alpha; &alpha;&gamma;&nu;&omicron;&#942;&sigma;&epsilon;&iota; &tau;&eta;&nu; &sigma;&upsilon;&nu;&alpha;&lambda;&lambda;&alpha;&gamma;&#942; &kappa;&alpha;&iota; &theta;&alpha; &pi;&rho;&#941;&pi;&epsilon;&iota; &nu;&alpha; &xi;&alpha;&nu;&alpha;&sigma;&tau;&epsilon;&#943;&lambda;&epsilon;&tau;&epsilon; &tau;&omicron; &sigma;&omega;&sigma;&tau;&#972; &pi;&omicron;&sigma;&#972; &#942; &nu;&alpha; &epsilon;&pi;&iota;&kappa;&omicron;&iota;&nu;&omega;&nu;&#942;&sigma;&epsilon;&tau;&epsilon; &mu;&epsilon; &tau;&omicron;&nu; &delta;&iota;&alpha;&chi;&epsilon;&iota;&rho;&iota;&sigma;&tau;&#942; &tau;&eta;&sigmaf; &iota;&sigma;&tau;&omicron;&sigma;&epsilon;&lambda;&#943;&delta;&alpha;&sigmaf;.",
+									"msg_received" 	 	=> "&Tau;&omicron; &Sigma;&#973;&sigma;&tau;&eta;&mu;&alpha; &Pi;&lambda;&eta;&rho;&omega;&mu;&#942;&sigmaf; %coinName% &#941;&lambda;&alpha;&beta;&epsilon; &epsilon;&pi;&iota;&tau;&upsilon;&chi;&#974;&sigmaf; %amountPaid% %coinLabel% !",
+									"msg_received2" 	=> "&Kappa;&omega;&delta;&iota;&kappa;&#972;&sigmaf; &Epsilon;&lambda;&#941;&gamma;&chi;&omicron;&upsilon; %coinName% &#941;&lambda;&alpha;&beta;&epsilon; &epsilon;&pi;&iota;&tau;&upsilon;&chi;&#974;&sigmaf; %amountPaid% %coinLabel% !",
+									"payment"			=> "&Epsilon;&pi;&iota;&lambda;&#941;&xi;&tau;&epsilon; &Mu;&#941;&theta;&omicron;&delta;&omicron; &Pi;&lambda;&eta;&rho;&omega;&mu;&#942;&sigmaf;",
+									"pay_in"			=> "&Pi;&lambda;&eta;&rho;&omega;&mu;&#942; &sigma;&epsilon; %coinName%",
+									"loading"			=> "&Phi;&#972;&rho;&tau;&omega;&sigma;&eta; ..."),
+                    	    
+							"cs" => array("name"		=> "Czech",
+									"button"			=> "Klikn&#283;te zde, pokud jste ji&#382; %coinNames% odeslali",
+									"msg_not_received" 	=> "<b>%coinNames% je&scaron;t&#283; nebyly obdr&#382;eny.</b><br>Pokud jste  u&#382; %coinNames% odeslali ( p&#345;esn&aacute; suma %coinName% v jedn&eacute; platb&#283; se zobrazuje boxu pod t&iacute;mto textem), pros&iacute;m po&#269;kejte n&#283;kolik minut dokud nebudou obdr&#382;eny %coinName% platebn&iacute;m syst&eacute;mem. Pokud jste odeslali jakoukoliv jinou sumu, platebn&iacute; syst&eacute;m bude transakci ignorovat a Vy budete muset odeslat spr&aacute;vnou &#269;&aacute;stku znovu, nebo kontaktujte administr&aacute;tora webu pro asistenci.",
+									"msg_received" 	 	=> "%coinName% platebn&iacute; syst&eacute;m obdr&#382;el %amountPaid% %coinLabel% &uacute;sp&#283;&scaron;n&#283; !",
+									"msg_received2" 	=> "%coinName% Captcha obdr&#382;el %amountPaid% %coinLabel% &uacute;sp&#283;&scaron;n&#283; !",
+									"payment"			=> "Zvolte Platebn&iacute; Metodu",
+									"pay_in"			=> "Platba v %coinName%",
+									"loading"			=> "Na&#269;&iacute;t&aacute;n&iacute; ..."),
+                    	    
+							"sl" => array("name"		=> "Slovenian",
+									"button"			=> "Klikni Tu, v primeru da, ste %coinNames% kovance &#382;e poslali",
+									"msg_not_received" 	=> "<b>%coinNames% kovancev &scaron;e nismo prejeli.</b><br>V primeru, da ste %coinName% kovance &#382;e poslali (v to&#269;nem znesku kot ga vidite v okvirju spodaj), prosimo po&#269;akajte &scaron;e nekaj minut, da jih %coinName% pla&#269;ilni sistem zabele&#382;i. V primeru, da ste poslali napa&#269;en znesek ba bo pla&#269;ilni sistem transakcijo ignoriral in boste morali to&#269;en znesek poslati ponovno ali pa kontaktirati lastnika trgovine za pomo&#269;.",
+									"msg_received" 	 	=> "%coinName% pla&#269;ilni sistem je uspe&scaron;no prejel %amountPaid% %coinLabel% !",
+									"msg_received2" 	=> "%coinName% Captcha je uspe&scaron;no prejela %amountPaid% %coinLabel% !",
+									"payment"			=> "Izberite na&#269;in pla&#269;ila",
+									"pay_in"			=> "Pla&scaron;ilo v %coinName%",
+									"loading"			=> "Nalaganje ..."),
+                    	    
+							"sr" => array("name"		=> "Serbian",
+									"button"			=> "Klikni ovde ako si vec poslao %coinNames%",
+									"msg_not_received" 	=> "<b>%coinNames% jo&scaron; uvek nisu primljeni.</b><br>Ako si vec poslao/la %coinNames% (tacan iznos jednim placanjem, kako je navedeno ispod), molim te sacekaj koji minut da transakcija bude registrovana od strane %coinName% mre&#382;e i 'legne' u novcanik. Ako si poslao/la bilo koji drugi iznos od navedenog sistem placanja ce ignorisati transakciju i morace&scaron; ponovo da po&scaron;alje&scaron; tacnu sumu ili da nas kontaktira&scaron;.",
+									"msg_received" 	 	=> "%coinName% sistem placanja je primio %amountPaid% %coinLabel% uspe&scaron;no !",
+									"msg_received2" 	=> "%coinName% Captcha je primio %amountPaid% %coinLabel% uspe&scaron;no !",
+									"payment"			=> "Odaberi nacin placanja",
+									"pay_in"			=> "Placanje %coinName%",
+									"loading"			=> "U&#269;itavanje ..."),
+                    	    
+							"et" => array("name"		=> "Estonian",
+									"button"			=> "Vajuta Siia, kui Sa juba saatsid %coinNames% meile",
+									"msg_not_received" 	=> "<b>%coinNames% ei ole veel saabunud.</b><br>Kui Sa juba saatsid %coinNames% (t&auml;pselt sama summa mis n&auml;idatud), siis palun oota m&otilde;ned minutid veel, et need %coinNames% s&uuml;steemis kohale j&otilde;uaks. Kui saatsite m&otilde;ne Teise summa, siis makses&uuml;steem ignoreerib seda ja makse tuleb teha uuesti v&otilde;i kontakteeruda lehe haldajaga, et probleem lahendada.",
+									"msg_received" 	 	=> "%coinName% makses&uuml;steem sai edukalt %amountPaid% %coinLabel% !",
+									"msg_received2" 	=> "%coinName% Captcha sai edukalt %amountPaid% %coinLabel% !",
+									"payment"			=> "Vali maksevahend",
+									"pay_in"			=> "Maksmine %coinName%",
+									"loading"			=> "Laadimine ..."),
+                    	    
+							"sq" => array("name"		=> "Albanian",
+									"button"			=> "Kliko k&euml;tu n&euml;se ju keni d&euml;rguar tashm&euml; %coinNames%",
+									"msg_not_received" 	=> "<b>%coinNames% ende nuk jan&euml; marr&euml;.</b><br>N&euml;se ju keni d&euml;rguar tashm&euml; %coinNames% (shuma e sakt&euml; %coinName% n&euml; nj&euml; pages&euml; si&ccedil; tregohet n&euml; kutin&euml; m&euml; posht&euml;), ju lutem prisni disa minuta p&euml;r t&euml; marr&euml; ato nga %coinName% Payment System. N&euml;se d&euml;rgoni ndonj&euml; shum&euml; tjet&euml;r, Sistemi i Pagesave do t&euml; injoroj&euml; transaksionin dhe do t'ju duhet t&euml; d&euml;rgoni p&euml;rs&euml;ri shum&euml;n e sakt&euml;, ose kontaktoni pronarin e faqes p&euml;r ndihm&euml;.",
+									"msg_received" 	 	=> "Sistemi i Pagesave %coinName% mori %amountPaid% %coinLabel% me sukses!",
+									"msg_received2" 	=> "%coinName% Captcha mori %amountPaid% %coinLabel% me sukses!",
+									"payment"			=> "Zgjidh Metod&euml;n e Pages&euml;s",
+									"pay_in"			=> "Pagesa n&euml; %coinName%",
+									"loading"			=> "Po ngarkohet ...")
+                    	    
 							);
 
 	if(!defined("CRYPTOBOX_LOCALISATION")) define("CRYPTOBOX_LOCALISATION", json_encode($cryptobox_localisation));
-	unset($cryptobox_localisation);  
+	unset($cryptobox_localisation);         
 	
 	if (!CRYPTOBOX_WORDPRESS || defined("CRYPTOBOX_PRIVATE_KEYS"))
 	{
@@ -2283,6 +2386,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);                  
+		unset($v); unset($cryptobox_private_keys);                                      
 	}
 ?>

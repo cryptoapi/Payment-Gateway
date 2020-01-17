@@ -98,7 +98,7 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 	.............
 	// Save new Bitcoin payment in database table `user_orders`
 	$recordExists = run_sql("select paymentID as nme FROM `user_orders` WHERE paymentID = ".intval($paymentID));
-	if (!$recordExists) run_sql("INSERT INTO `user_orders` VALUES(".intval($paymentID).",'".$payment_details["user"]."','".$payment_details["order"]."',".floatval($payment_details["amount"]).",".floatval($payment_details["amountusd"]).",'".$payment_details["coinlabel"]."',".intval($payment_details["confirmed"]).",'".$payment_details["status"]."')");
+	if (!$recordExists) run_sql("INSERT INTO `user_orders` VALUES(".intval($paymentID).",'".addslashes($payment_details["user"])."','".addslashes($payment_details["order"])."',".floatval($payment_details["amount"]).",".floatval($payment_details["amountusd"]).",'".addslashes($payment_details["coinlabel"])."',".intval($payment_details["confirmed"]).",'".addslashes($payment_details["status"])."')");
 	
 	.............
 	// Received second IPN notification (optional) - Bitcoin payment confirmed (6+ transaction confirmations)
@@ -130,7 +130,7 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 
 
 
-    return true;      
+    return true;        
 }
 
 ?>
