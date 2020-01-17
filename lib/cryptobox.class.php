@@ -200,7 +200,7 @@ class Cryptobox {
 			{
 				case "COOKIE":
 					$this->cookieName = 'cryptoUsr'.$this->icrc32($this->boxID."*&*".$this->coinLabel."*&*".$this->orderID."*&*".$this->private_key);
-					if (isset($_COOKIE[$this->cookieName]) && trim($_COOKIE[$this->cookieName]) && strpos($_COOKIE[$this->cookieName], "__") && preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $_COOKIE[$this->cookieName]) == $_COOKIE[$this->cookieName] && strlen($_COOKIE[$this->cookieName]) <= 30) $this->userID = trim($_COOKIE[$this->cookieName]);
+					if (isset($_COOKIE[$this->cookieName]) && trim($_COOKIE[$this->cookieName]) && strpos($_COOKIE[$this->cookieName], "__") && preg_replace('/[^A-Za-z0-9\_]/', '', $_COOKIE[$this->cookieName]) == $_COOKIE[$this->cookieName] && strlen($_COOKIE[$this->cookieName]) <= 30) $this->userID = trim($_COOKIE[$this->cookieName]);
 					else
 					{	 
 						$s = trim(strtolower($_SERVER['SERVER_NAME']), " /");
@@ -216,7 +216,7 @@ class Cryptobox {
 					
 					if (session_status() == PHP_SESSION_NONE) session_start();
 					$this->cookieName = 'cryptoUser'.$this->icrc32($this->private_key."*&*".$this->boxID."*&*".$this->coinLabel."*&*".$this->orderID);
-					if (isset($_SESSION[$this->cookieName]) && trim($_SESSION[$this->cookieName]) && strpos($_SESSION[$this->cookieName], "--") && preg_replace('/[^A-Za-z0-9\.\_\-\@]/', '', $_SESSION[$this->cookieName]) == $_SESSION[$this->cookieName] && strlen($_SESSION[$this->cookieName]) <= 30) $this->userID = trim($_SESSION[$this->cookieName]);
+					if (isset($_SESSION[$this->cookieName]) && trim($_SESSION[$this->cookieName]) && strpos($_SESSION[$this->cookieName], "--") && preg_replace('/[^A-Za-z0-9\-]/', '', $_SESSION[$this->cookieName]) == $_SESSION[$this->cookieName] && strlen($_SESSION[$this->cookieName]) <= 30) $this->userID = trim($_SESSION[$this->cookieName]);
 					else
 					{	 
 						$d = time(); if ($d > 1410000000) $d -= 1410000000;
@@ -228,7 +228,7 @@ class Cryptobox {
 				case "IPADDRESS":
 					
 					if (session_status() == PHP_SESSION_NONE) session_start();
-					if (isset($_SESSION['cryptoUserIP']) && filter_var($_SESSION['cryptoUserIP'], FILTER_VALIDATE_IP) && preg_replace('/[^A-Za-z0-9\.\:]/', '', $_SESSION['cryptoUserIP']) == $_SESSION['cryptoUserIP'])
+					if (isset($_SESSION['cryptoUserIP']) && filter_var($_SESSION['cryptoUserIP'], FILTER_VALIDATE_IP) && preg_replace('/[^A-Za-z0-9\.\:]/', '', $_SESSION['cryptoUserIP']) == $_SESSION['cryptoUserIP'] && strlen($_SESSION['cryptoUserIP']) <= 50)
 						 $ip = $_SESSION['cryptoUserIP'];
 					else $ip = $_SESSION['cryptoUserIP'] = $this->ip_address();
 					$this->userID = trim(md5($ip."*&*".$this->boxID."*&*".$this->coinLabel."*&*".$this->orderID));
@@ -1608,8 +1608,8 @@ class Cryptobox {
 	        else return CRYPTOBOX_LANGUAGE;
 	    }
 
-	    if (isset($_GET[$id]) && in_array($_GET[$id], array_keys($localisation)) && !defined("CRYPTOBOX_LANGUAGE_HTMLID_IGNORE")) { $lan = $_GET[$id]; setcookie($id, $lan, time()+7*24*3600, "/"); }
-	    elseif (isset($_COOKIE[$id]) && in_array($_COOKIE[$id], array_keys($localisation)) && !defined("CRYPTOBOX_LANGUAGE_HTMLID_IGNORE") && preg_replace('/[^A-Za-z0-9]/', '', $_COOKIE[$id]) == $_COOKIE[$id] && strlen($_COOKIE[$id]) <= 30) $lan = $_COOKIE[$id];
+	    if (isset($_GET[$id]) && in_array($_GET[$id], array_keys($localisation)) && !defined("CRYPTOBOX_LANGUAGE_HTMLID_IGNORE") && preg_replace('/[^A-Za-z0-9]/', '', $_GET[$id]) == $_GET[$id] && strlen($_GET[$id]) <= 5) { $lan = $_GET[$id]; setcookie($id, $lan, time()+7*24*3600, "/"); }
+	    elseif (isset($_COOKIE[$id]) && in_array($_COOKIE[$id], array_keys($localisation)) && !defined("CRYPTOBOX_LANGUAGE_HTMLID_IGNORE") && preg_replace('/[^A-Za-z0-9]/', '', $_COOKIE[$id]) == $_COOKIE[$id] && strlen($_COOKIE[$id]) <= 5) $lan = $_COOKIE[$id];
 	    elseif (in_array($default, array_keys($localisation))) $lan = $default;
 	    else 	$lan = "en";
 	    
@@ -1646,8 +1646,8 @@ class Cryptobox {
 	     
 	    
 	    // Current Selected Coin
-	    if (isset($_GET[$id]) && in_array($_GET[$id], $available_payments) && in_array($_GET[$id], $coins)) { $coinName = $_GET[$id]; setcookie($id, $coinName, time()+7*24*3600, "/"); }
-	    elseif (isset($_COOKIE[$id]) && in_array($_COOKIE[$id], $available_payments) && in_array($_COOKIE[$id], $coins) && preg_replace('/[^A-Za-z0-9]/', '', $_COOKIE[$id]) == $_COOKIE[$id] && strlen($_COOKIE[$id]) <= 30) $coinName = $_COOKIE[$id];
+	    if (isset($_GET[$id]) && in_array($_GET[$id], $available_payments) && in_array($_GET[$id], $coins) && preg_replace('/[^A-Za-z0-9]/', '', $_GET[$id]) == $_GET[$id] && strlen($_GET[$id]) <= 25) { $coinName = $_GET[$id]; setcookie($id, $coinName, time()+7*24*3600, "/"); }
+	    elseif (isset($_COOKIE[$id]) && in_array($_COOKIE[$id], $available_payments) && in_array($_COOKIE[$id], $coins) && preg_replace('/[^A-Za-z0-9]/', '', $_COOKIE[$id]) == $_COOKIE[$id] && strlen($_COOKIE[$id]) <= 25) $coinName = $_COOKIE[$id];
 	    else $coinName = $default;
 	
 	    $current =  $coinName;
@@ -2386,6 +2386,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);                              
+		unset($v); unset($cryptobox_private_keys);                 
 	}
 ?>
