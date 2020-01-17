@@ -1700,7 +1700,7 @@ class Cryptobox {
 		{
 		    
 		    $tmp = "<div class='dropdown'>";
-		    $tmp .= "<button type='button' class='btn btn-secondary dropdown-toggle' data-toggle='dropdown' id='dropdownMenuButtonLang' aria-haspopup='true' aria-expanded='false'>";
+		    $tmp .= "<button type='button' class='btn btn-outline-secondary dropdown-toggle' data-toggle='dropdown' id='dropdownMenuButtonLang' aria-haspopup='true' aria-expanded='false'>";
 		    $tmp .= "Language" . " - " . $localisation[$lan]['name'];
 		    $tmp .= "</button>";
 		    $tmp .= "<div class='dropdown-menu' aria-labelledby='dropdownMenuButtonLang' style='width:21em;margin:1px 0 1px -10px'>";
@@ -2386,6 +2386,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);                                      
+		unset($v); unset($cryptobox_private_keys);                              
 	}
 ?>
