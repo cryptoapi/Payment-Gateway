@@ -4,7 +4,7 @@
 	* @category    Javascript
 	* @website     https://gourl.io   
 	* @api         https://gourl.io/api.html     
-	* @version     2.1.7
+	* @version     2.2.0
 	*/
 	
 	/**

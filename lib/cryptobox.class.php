@@ -15,7 +15,7 @@
  * @example     https://gourl.io/lib/examples/example_customize_box.php    <----
  * @gitHub  	https://github.com/cryptoapi/Payment-Gateway
  * @license 	Free GPLv2
- * @version     2.1.7
+ * @version     2.2.0
  *
  *
  *  CLASS CRYPTOBOX - LIST OF METHODS:
@@ -79,7 +79,7 @@ if (!CRYPTOBOX_WORDPRESS) { // Pure PHP
 elseif (!defined('ABSPATH')) exit; // Wordpress
 
 
-define("CRYPTOBOX_VERSION", "2.1.7");
+define("CRYPTOBOX_VERSION", "2.2.0");
 
 // GoUrl supported crypto currencies
 define("CRYPTOBOX_COINS", json_encode(array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency')));
@@ -131,6 +131,7 @@ class Cryptobox {
 	private $processed		= false;	// optional - set flag to paid & processed	
 	private $cookieName 	= "";		// user cookie/session name (if cookies/sessions use)
 	private $localisation 	= "";		// localisation; en - English, es - Spanish, fr - French, de - German, nl - Dutch, it - Italian, ru - Russian, pl - Polish, pt - Portuguese, fa - Persian, ko - Korean, ja - Japanese, id - Indonesian, tr - Turkish, ar - Arabic, cn - Simplified Chinese, zh - Traditional Chinese, hi - Hindi
+	private $ver 		    = "";		// version
 	
 	
 	public function __construct($options = array()) 
@@ -141,8 +142,7 @@ class Cryptobox {
 		if (!function_exists( 'curl_init' )) 										die(sprintf("Error. Please enable <a target='_blank' href='%s'>CURL extension</a> in PHP. <a target='_blank' href='%s'>Read here &#187;</a>", "http://php.net/manual/en/book.curl.php", "http://stackoverflow.com/questions/1347146/how-to-enable-curl-in-php-xampp"));
 		if (!function_exists( 'mysqli_connect' )) 									die(sprintf("Error. Please enable <a target='_blank' href='%s'>MySQLi extension</a> in PHP. <a target='_blank' href='%s'>Read here &#187;</a>", "http://php.net/manual/en/book.mysqli.php", "http://crybit.com/how-to-enable-mysqli-extension-on-web-server/"));
 		if (version_compare(phpversion(), '5.4.0', '<')) 							die(sprintf("Error. You need PHP 5.4.0 (or greater). Current php version: %s", phpversion()));
-		
-		
+
 		foreach($options as $key => $value) 
 			if (in_array($key, array("public_key", "private_key", "webdev_key", "amount", "amountUSD", "period", "language", "iframeID", "orderID", "userID", "userFormat"))) $this->$key = (is_string($value)) ? trim($value) : $value;
 
@@ -241,6 +241,18 @@ class Cryptobox {
 			}
 		}
 
+		// version string
+		$this->ver = "version | gourlphp " . CRYPTOBOX_VERSION;
+		if (CRYPTOBOX_WORDPRESS) $this->ver .= " | gourlwordpress" . (defined('GOURL_VERSION') ? " ".GOURL_VERSION : "");
+		if (CRYPTOBOX_WORDPRESS && defined('GOURLWC_VERSION') && strpos($this->orderID, "gourlwoocommerce.") === 0)   $this->ver .= " | gourlwoocommerce " . GOURLWC_VERSION;
+		if (CRYPTOBOX_WORDPRESS && defined('GOURLAP_VERSION') && strpos($this->orderID, "gourlappthemes.") === 0)     $this->ver .= " | gourlappthemes " . GOURLAP_VERSION;
+		if (CRYPTOBOX_WORDPRESS && defined('GOURLEDD_VERSION') && strpos($this->orderID, "gourledd.") === 0)          $this->ver .= " | gourledd " . GOURLEDD_VERSION;
+		if (CRYPTOBOX_WORDPRESS && defined('GOURLPMP_VERSION') && strpos($this->orderID, "gourlpmpro.") === 0)        $this->ver .= " | gourlpmpro " . GOURLPMP_VERSION;
+		if (CRYPTOBOX_WORDPRESS && defined('GOURLGV_VERSION') && strpos($this->orderID, "gourlgive.") === 0)          $this->ver .= " | gourlgive " . GOURLGV_VERSION;
+		if (CRYPTOBOX_WORDPRESS && defined('GOURLJI_VERSION') && strpos($this->orderID, "gourljigoshop.") === 0)      $this->ver .= " | gourljigoshop " . GOURLJI_VERSION;
+		if (CRYPTOBOX_WORDPRESS && defined('GOURLWPSC_VERSION') && strpos($this->orderID, "gourlwpecommerce.") === 0) $this->ver .= " | gourlwpecommerce " . GOURLWPSC_VERSION;
+		if (CRYPTOBOX_WORDPRESS && defined('GOURLMP_VERSION') && strpos($this->orderID, "gourlmarketpress.") === 0)   $this->ver .= " | gourlmarketpress " . GOURLMP_VERSION;
+		
 		if (!$this->iframeID) $this->iframeID = $this->iframe_id();
 		
 		$this->check_payment();
@@ -273,6 +285,8 @@ class Cryptobox {
 		
 		$width = intval($width);
 		$height = intval($height);
+
+		$box_style = trim($box_style, "; ") .";max-width:".$width."px !important;max-height:".$height."px !important;";
 		
 		$cryptobox_html = "";
 		$val 			= md5($this->iframeID.$this->private_key.$this->userID);
@@ -295,7 +309,7 @@ class Cryptobox {
 		
 		$cryptobox_html .= "<div align='center' style='min-width:".$width."px'><iframe id='$this->iframeID' ".($box_style?'style="'.htmlspecialchars($box_style, ENT_COMPAT).'"':'')." scrolling='no' marginheight='0' marginwidth='0' frameborder='0' width='$width' height='$height'></iframe></div>";
 		$cryptobox_html .= "<div><script type='text/javascript'>";
-		$cryptobox_html .= "cryptobox_show($this->boxID, '$this->coinName', '$this->public_key', $this->amount, $this->amountUSD, '$this->period', '$this->language', '$this->iframeID', '$this->userID', '$this->userFormat', '$this->orderID', '$this->cookieName', '$this->webdev_key', '$hash', $width, $height);";
+		$cryptobox_html .= "cryptobox_show($this->boxID, '$this->coinName', '$this->public_key', $this->amount, $this->amountUSD, '$this->period', '$this->language', '$this->iframeID', '$this->userID', '$this->userFormat', '$this->orderID', '$this->cookieName', '$this->webdev_key', '".base64_encode($this->ver)."', '$hash', $width, $height);";
 		$cryptobox_html .= "</script></div>";
 	
 		if ($submit_btn && !$this->paid)
@@ -355,6 +369,7 @@ class Cryptobox {
 	        "j"     => 1, // json   
 	        "d" 	=> base64_encode($ip),
 	        "f"     => base64_encode($this->ua(false)),
+	        "t" 	=> base64_encode($this->ver),
 	        "h" 	=> $hash
 	    );
 	     
@@ -433,8 +448,8 @@ class Cryptobox {
 	public function cryptobox_hash($json = false, $width = 0, $height = 0)
 	{
 	    
-	    if ($json) $hash_str = $this->boxID."|".$this->coinName."|".$this->public_key."|".$this->private_key."|".$this->webdev_key."|".$this->amount."|".$this->amountUSD."|".$this->period."|". $this->language."|".$this->orderID."|".$this->userID."|".$this->userFormat."|".$this->ip_address();
-	    else       $hash_str = $this->boxID."|".$this->coinName."|".$this->public_key."|".$this->private_key."|".$this->webdev_key."|".$this->amount."|".$this->amountUSD."|".$this->period."|". $this->language."|".$this->orderID."|".$this->userID."|".$this->userFormat."|".$this->iframeID."|".$width."|".$height;
+	    if ($json) $hash_str = $this->boxID."|".$this->coinName."|".$this->public_key."|".$this->private_key."|".$this->webdev_key."|".$this->amount."|".$this->amountUSD."|".$this->period."|". $this->language."|".$this->orderID."|".$this->userID."|".$this->userFormat."|".$this->ver."|".$this->ip_address();
+	    else       $hash_str = $this->boxID."|".$this->coinName."|".$this->public_key."|".$this->private_key."|".$this->webdev_key."|".$this->amount."|".$this->amountUSD."|".$this->period."|". $this->language."|".$this->orderID."|".$this->userID."|".$this->userFormat."|".$this->ver."|".$this->iframeID."|".$width."|".$height;
 
 		
 	    $hash = md5($hash_str);
@@ -1317,7 +1332,7 @@ class Cryptobox {
 	{
 		$ip		= $this->ip_address();
 		$private_key_hash = strtolower(hash("sha512", $this->private_key));
-		$hash 	= md5($this->boxID.$private_key_hash.$this->userID.$this->orderID.$this->language.$this->period.$ip);
+		$hash 	= md5($this->boxID.$private_key_hash.$this->userID.$this->orderID.$this->language.$this->period.$this->ver.$ip);
 		$box_status = "";
 		
 		$data = array(
@@ -1327,6 +1342,7 @@ class Cryptobox {
 				"u"		=> $this->userID,
 				"l"		=> $this->language,
 				"e"		=> $this->period,
+				"t"		=> $this->ver, 
 				"i"		=> $ip,
 				"h"		=> $hash
 		);
@@ -1915,11 +1931,12 @@ class Cryptobox {
 	    }
 	    
 	    
-	    // d. get rates from https://free.currencyconverterapi.com/api/v6/convert?q=BTC_EUR&compact=y
+	    // d. get rates from https://free.currconv.com/api/v7/convert?q=BTC_EUR&compact=y&apiKey=your_free_currencyconverterapi_key
+	    // free api key here - https://free.currencyconverterapi.com/free-api-key
 	    // ----------------
 	    if (!$val)
 	    {
-	        $data = json_decode(get_url_contents("https://free.currencyconverterapi.com/api/v6/convert?q=".$key."&compact=ultra&apiKey=".$currencyconverterapi_key, 20, TRUE), TRUE);
+	        $data = json_decode(get_url_contents("https://free.currconv.com/api/v7/convert?q=".$key."&compact=ultra&apiKey=".$currencyconverterapi_key, 20, TRUE), TRUE);
 	        if (isset($data[$key]) && $data[$key] > 0) $val = $data[$key];
 	        elseif(isset($data["error"])) echo "<h1>Error in function convert_currency_live(...)! ". $data["error"] . "</h1>";
 	    }
@@ -2378,7 +2395,7 @@ class Cryptobox {
 							);
 
 	if(!defined("CRYPTOBOX_LOCALISATION")) define("CRYPTOBOX_LOCALISATION", json_encode($cryptobox_localisation));
-	unset($cryptobox_localisation);         
+	unset($cryptobox_localisation);  
 	
 	if (!CRYPTOBOX_WORDPRESS || defined("CRYPTOBOX_PRIVATE_KEYS"))
 	{
@@ -2386,6 +2403,6 @@ class Cryptobox {
 		foreach ($cryptobox_private_keys as $v)
 			if (strpos($v, " ") !== false || strpos($v, "PRV") === false || strpos($v, "AA") === false || strpos($v, "77") === false) die("Invalid Private Key - ". (CRYPTOBOX_WORDPRESS ? "please setup it on your plugin settings page" : "$v in variable \$cryptobox_private_keys, file cryptobox.config.php."));
 
-		unset($v); unset($cryptobox_private_keys);                 
+		unset($v); unset($cryptobox_private_keys);
 	}
 ?>

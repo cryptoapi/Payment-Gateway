@@ -4,7 +4,7 @@
 	* @category    Javascript
 	* @website     https://gourl.io
 	* @api         https://gourl.io/api.html
-	* @version     2.1.7
+	* @version     2.2.0
 	*/
 
 	/**
@@ -12,7 +12,7 @@
 	* Full Instruction - https://gourl.io/bitcoin-payment-gateway-api.html
 	*/
 	
-	function cryptobox_show(boxID, coinName, public_key, amount, amountUSD, period, language, iframeID, userID, userFormat, orderID, cookieName, webdev_key, hash, width, height)
+	function cryptobox_show(boxID, coinName, public_key, amount, amountUSD, period, language, iframeID, userID, userFormat, orderID, cookieName, webdev_key, ver, hash, width, height)
 	{
 		if (typeof width !== 'number') width = 0;
 		if (typeof height !== 'number') height = 0;
@@ -30,6 +30,7 @@
 		else if (period == '') alert('Invalid period');
 		else if (public_key.length != 50) alert('Invalid public key');
 		else if (webdev_key != '' && (webdev_key.indexOf("DEV") == -1 || webdev_key.length < 20)) alert('Invalid webdev_key, leave it empty');
+		else if (ver == '') alert('Invalid ver value');
 		else if (hash == '') alert('Invalid payment box hash');
 		else 
 		{
@@ -40,6 +41,7 @@
 			'/pe/'+encodeURIComponent(period.replace(' ', '_'))+'/l/'+encodeURIComponent(language)+
 			'/i/'+encodeURIComponent(iframeID)+'/u/'+encodeURIComponent(userID)+
 			'/us/'+encodeURIComponent(userFormat)+'/o/'+encodeURIComponent(orderID)+
+			'/t/'+encodeURIComponent(ver)+
 			(webdev_key?'/w/'+encodeURIComponent(webdev_key):'')+
 			(width>0?'/ws/'+encodeURIComponent(width):'')+
 			(height>0?'/hs/'+encodeURIComponent(height):'')+
