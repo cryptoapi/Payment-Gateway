@@ -8,21 +8,21 @@
  *
  *  User-defined function - cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "").
  *  Use this function to send confirmation email, update database, update user membership, etc.
- *  
- *  This IPN function will automatically appear for each new payment usually two times : 
+ *
+ *  This IPN function will automatically appear for each new payment usually two times :
  *  a) when a new payment is received, with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 0
  *  b) and a second time when existing payment is confirmed (6+ confirmations) with values: $box_status = cryptobox_updated, $payment_details[confirmed] = 1.
- *  
- *  But sometimes if the payment notification is delayed for 20-30min, the payment/transaction will already be confirmed and the function will
- *  appear once with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 1
- *  
+ *
+ *  But sometimes if the payment notification is delayed for 20-30min (for example, your site was unavailable and GoUrl Gateway auto re-send data later),
+ *  the payment/transaction will already be confirmed and the function will appear once with values: $box_status = cryptobox_newrecord, $payment_details[confirmed] = 1
+ *
  *  If payment received with correct amount, function receive: $payment_details[status] = 'payment_received' and $payment_details[user] = 11, 12, etc (user_id who has made payment)
  *  If incorrectly paid amount, the system can not recognize user; function receive: $payment_details[status] = 'payment_received_unrecognised' and $payment_details[user] = ''
  *
  *  Function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
  *  gets $paymentID from your table crypto_payments, $box_status = 'cryptobox_newrecord' OR 'cryptobox_updated' (description above)
  *  and payment details as array -
- * 
+ *
  *  1. EXAMPLE - CORRECT PAYMENT -
  *  -----------------------------------------------------
  *  $payment_details = Array
@@ -46,10 +46,10 @@
  *            "date":"30 January 2015"
  *            "datetime":"2015-01-30 13:32:45"
  *        }
- *         						
+ *
  *  2. EXAMPLE - INCORRECT PAYMENT/WRONG AMOUNT -
  *  -----------------------------------------------------
- *     $payment_details = Array 
+ *     $payment_details = Array
  *        {
  *            "status":"payment_received_unrecognised"
  *            "err":"An incorrect bitcoin amount has been received"
@@ -69,8 +69,8 @@
  *            "timestamp":"1422623712"
  *            "date":"30 January 2015"
  *            "datetime":"2015-01-30 13:15:12"
- *        }	 
- *        
+ *        }
+ *
  *        Read more - https://gourl.io/api-php.html#ipn
  */
 
@@ -81,7 +81,7 @@
 function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
 {
 
-    
+
     /** .............
 	.............
 
@@ -94,12 +94,12 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 	.............
 	For example, you have own table `user_orders`...
 	You can use function run_sql() from cryptobox.class.php ( https://gourl.io/api-php.html#run_sql )
-	
+
 	.............
 	// Save new Bitcoin payment in database table `user_orders`
 	$recordExists = run_sql("select paymentID as nme FROM `user_orders` WHERE paymentID = ".intval($paymentID));
 	if (!$recordExists) run_sql("INSERT INTO `user_orders` VALUES(".intval($paymentID).",'".addslashes($payment_details["user"])."','".addslashes($payment_details["order"])."',".floatval($payment_details["amount"]).",".floatval($payment_details["amountusd"]).",'".addslashes($payment_details["coinlabel"])."',".intval($payment_details["confirmed"]).",'".addslashes($payment_details["status"])."')");
-	
+
 	.............
 	// Received second IPN notification (optional) - Bitcoin payment confirmed (6+ transaction confirmations)
 	if ($recordExists && $box_status == "cryptobox_updated")  run_sql("UPDATE `user_orders` SET txconfirmed = ".intval($payment_details["confirmed"])." WHERE paymentID = ".intval($paymentID));
@@ -118,9 +118,9 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 	}
 
 	.............
-    
+
      */
- 
+
 	// Debug - new payment email notification for webmaster
 	// Uncomment lines below and make any test payment
 	// --------------------------------------------
