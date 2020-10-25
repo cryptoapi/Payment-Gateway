@@ -1,4 +1,13 @@
 ===============================================================================
+== Version 2.2.2 (October 2020)
+===============================================================================
+
+- Support Bitcoin Cash BCHN - https://bitcoincashnode.org
+
+
+
+
+===============================================================================
 == Version 2.2.1 (June 2020)
 ===============================================================================
 
@@ -210,4 +219,4 @@ Instruction - https://gourl.io/bitcoin-payment-gateway-api.html#p8
 
 - Added Dutch Language (Thanks to Erik)
 
-- Several new enhancements
+- Several new enhancements 
