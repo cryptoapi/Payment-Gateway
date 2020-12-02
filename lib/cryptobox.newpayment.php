@@ -81,6 +81,14 @@
 function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_status = "")
 {
 
+	// Debug - new payment email notification for webmaster
+	// Uncomment lines below and make any test payment
+	// You can use page https://gourl.io/info/ipn to send
+	// dummy payment data to your website,
+	// you will receive this email notification
+	// --------------------------------------------
+	// $email = "....your email address....";
+	// mail($email, "Payment - " . $paymentID . " - " . $box_status, " \n Payment ID: " . $paymentID . " \n\n Status: " . $box_status . " \n\n Details: " . print_r($payment_details, true));
 
     /** .............
 	.............
@@ -121,16 +129,9 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 
      */
 
-	// Debug - new payment email notification for webmaster
-	// Uncomment lines below and make any test payment
-	// --------------------------------------------
-	// $email = "....your email address....";
-	// mail($email, "Payment - " . $paymentID . " - " . $box_status, " \n Payment ID: " . $paymentID . " \n\n Status: " . $box_status . " \n\n Details: " . print_r($payment_details, true));
 
 
-
-
-    return true;        
+    return true;         
 }
 
 ?>
