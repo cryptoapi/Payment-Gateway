@@ -87,7 +87,7 @@ function cryptobox_new_payment($paymentID = 0, $payment_details = array(), $box_
 	// dummy payment data to your website,
 	// you will receive this email notification
 	// --------------------------------------------
-	// $email = "....your email address....";
+	// $email = "sekoaeg@gmail.com";
 	// mail($email, "Payment - " . $paymentID . " - " . $box_status, " \n Payment ID: " . $paymentID . " \n\n Status: " . $box_status . " \n\n Details: " . print_r($payment_details, true));
 
     /** .............
