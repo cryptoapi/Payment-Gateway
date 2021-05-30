@@ -38,7 +38,7 @@ Our Payment Gateway with Instant Checkout allows you to easily organise your web
 Information
 ------------------------------------
 
-Copyright &copy; 2014-2020 [Delta Consultants](https://gourl.io)
+Copyright &copy; 2014-2021 [Delta Consultants](https://gourl.io)
 
 Website: [https://gourl.io](https://gourl.io)
 

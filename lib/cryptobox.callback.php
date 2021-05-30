@@ -8,7 +8,7 @@
  * Cryptobox Server Callbacks
  *
  * @package     Cryptobox callbacks
- * @copyright   2014-2020 Delta Consultants
+ * @copyright   2014-2021 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
  * @version     2.2.2

@@ -2,7 +2,7 @@
 /**
  * @category    Main Example - Custom Payment Box ((json, bootstrap4, mobile friendly, white label product, your own logo)        
  * @package     GoUrl Cryptocurrency Payment API
- * copyright 	(c) 2014-2020 Delta Consultants
+ * copyright 	(c) 2014-2021 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
  * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, BitcoinSV, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit, UniversalCurrency
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p8
@@ -11,9 +11,9 @@
  */ 
     
 
-	/********************** NOTE - 2018-2020 YEARS *************************************************************************/ 
+	/********************** NOTE - 2018-2021 YEARS *************************************************************************/ 
 	/*****                                                                                                             *****/ 
-	/*****     This is NEW 2018-2020 latest Bitcoin Payment Box Example  (mobile friendly JSON payment box)            *****/ 
+	/*****     This is NEW 2018-2021 latest Bitcoin Payment Box Example  (mobile friendly JSON payment box)            *****/ 
 	/*****                                                                                                             *****/ 
 	/*****     You can generate php payment box code online - https://gourl.io/lib/examples/example_customize_box.php  *****/
 	/*****         White Label Product - https://gourl.io/lib/test/example_customize_box.php?method=curl&logo=custom   *****/

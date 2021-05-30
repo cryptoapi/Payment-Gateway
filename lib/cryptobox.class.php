@@ -8,7 +8,7 @@
  * PHP Cryptocurrency Payment Class
  *
  * @package     GoUrl PHP Bitcoin/Altcoin Payments and Crypto Captcha
- * @copyright   2014-2020 Delta Consultants
+ * @copyright   2014-2021 Delta Consultants
  * @category    Libraries
  * @website     https://gourl.io
  * @api         https://gourl.io/bitcoin-payment-gateway-api.html
