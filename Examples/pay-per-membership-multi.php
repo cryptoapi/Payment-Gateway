@@ -2,7 +2,7 @@
 /**
  * @category    Example12 - Pay-Per-Membership (payments in multiple cryptocurrencies, you can use original price in USD)
  * @package     GoUrl Cryptocurrency Payment API 
- * copyright 	(c) 2014-2021 Delta Consultants
+ * copyright 	(c) 2014-2023 Delta Consultants
  * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, BitcoinSV, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit, UniversalCurrency
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p6
  * @live_demo   https://gourl.io/lib/examples/pay-per-membership-multi.php
@@ -12,7 +12,7 @@
 	/*****                                                                                                             *****/ 
 	/*****     This is iFrame Bitcoin Payment Box Example (2014 - 2017)                                                *****/ 
 	/*****                                                                                                             *****/ 
-	/*****     Available - new 2018-2021 version; mobile friendly JSON payment box (own logo, white label product)     *****/
+	/*****     Available - new 2018-2023 version; mobile friendly JSON payment box (own logo, white label product)     *****/
 	/*****     New Demo with generation php payment box code - https://gourl.io/lib/examples/example_customize_box.php *****/
 	/*****         White Theme - https://gourl.io/lib/examples/example_customize_box.php?theme=black                   *****/
 	/*****         Black Theme - https://gourl.io/lib/examples/example_customize_box.php?theme=default     		   *****/
@@ -43,7 +43,7 @@
 
 	// List of coins that you accept for payments
 	// For example, for accept payments in bitcoin, bitcoincash, litecoin use - $available_payments = array('bitcoin', 'bitcoincash', 'litecoin'); 
-	$available_payments = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dash', 'dogecoin', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
+	$available_payments = array('bitcoin', 'bitcoincash', 'litecoin', 'dogecoin');
 	
 	
 	// Goto  https://gourl.io/info/memberarea/My_Account.html

@@ -2,7 +2,7 @@
 /**
  * @category    Example - Custom Payment Box (json format; customise your bitcoin/altcoin payment box with your own text / logo)   
  * @package     GoUrl Cryptocurrency Payment API
- * copyright 	(c) 2014-2021 Delta Consultants
+ * copyright 	(c) 2014-2023 Delta Consultants
  * @desc     	GoUrl Crypto Payment Box Example (json, bootstrap4, mobile friendly, optional - free White Label Product - Bitcoin/altcoin Payments with your own logo and all payment requests through your server, open source)
  * @crypto      Supported Cryptocoins -	Bitcoin, BitcoinCash, BitcoinSV, Litecoin, Dash, Dogecoin, Speedcoin, Reddcoin, Potcoin, Feathercoin, Vertcoin, Peercoin, MonetaryUnit, UniversalCurrency
  * @website     https://gourl.io/bitcoin-payment-gateway-api.html#p8
@@ -11,9 +11,9 @@
  */ 
     
 
-	/********************** NOTE - 2018-2021 YEARS *************************************************************************/ 
+	/********************** NOTE - 2018-2023 YEARS *************************************************************************/ 
 	/*****                                                                                                             *****/ 
-	/*****     This is NEW 2018-2021 latest Bitcoin Payment Box Example  (mobile friendly JSON payment box)            *****/ 
+	/*****     This is NEW 2018-2023 latest Bitcoin Payment Box Example  (mobile friendly JSON payment box)            *****/ 
 	/*****                                                                                                             *****/ 
 	/*****     You can generate php payment box code online - https://gourl.io/lib/examples/example_customize_box.php  *****/
 	/*****         White Label Product - https://gourl.io/lib/test/example_customize_box.php?method=curl&logo=custom   *****/
@@ -71,7 +71,7 @@
 	
 	// List of coins that you accept for payments
 	//$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
-	$coins = array('bitcoin', 'bitcoincash', 'litecoin', 'dogecoin', 'dash', 'speedcoin');  // for example, accept payments in bitcoin, bitcoincash, litecoin, 'dogecoin', dash, speedcoin 
+	$coins = array('bitcoin', 'bitcoincash', 'litecoin', 'dogecoin');  // for example, accept payments in bitcoin, bitcoincash, litecoin, 'dogecoin', dash, speedcoin 
 	
 	// Create record for each your coin - https://gourl.io/editrecord/coin_boxes/0 ; and get free gourl keys
 	// It is not bitcoin wallet private keys! Place GoUrl Public/Private keys below for all coins which you accept
@@ -478,7 +478,7 @@
 	<br>
 	<div class='card card-body bg-light d-inline-block'>
 			
-		<h1 class="display-4">Customize GoUrl Bitcoin/ Altcoin Payment Box (2021 year)</h1>
+		<h1 class="display-4">Customize GoUrl Bitcoin/ Altcoin Payment Box (2023 year)</h1>
 		<p class='lead'>See live <a href='#dmgnpcode'>generated php/html code</a> for your website below (<a target="_blank" href="https://github.com/cryptoapi/Payment-Gateway">open source class</a>)</p>
 
         <div id="dropdown1" class="d-inline-block dropdown mx-3 my-3">
@@ -741,7 +741,7 @@
 	// List of coins that you accept for payments
 	//$coins = array('bitcoin', 'bitcoincash', 'bitcoinsv', 'litecoin', 'dogecoin', 'dash', 'speedcoin', 'reddcoin', 'potcoin', 'feathercoin', 'vertcoin', 'peercoin', 'monetaryunit', 'universalcurrency');
 	$coins = array('bitcoin', 'litecoin', 'dogecoin', 'dash', 'speedcoin');  // for example, accept payments in bitcoin, bitcoincash, litecoin, dash, speedcoin 
-	<?php if ($numcoin == 1 && in_array($coinName, array('bitcoin', 'bitcoincash', 'litecoin', 'dogecoin', 'dash', 'speedcoin'))) echo "\$coins = array(\"$coinName\");  // accept payments in $coinName only \n\r"; ?>
+	<?php if ($numcoin == 1 && in_array($coinName, array('bitcoin', 'bitcoincash', 'litecoin', 'dogecoin'))) echo "\$coins = array(\"$coinName\");  // accept payments in $coinName only \n\r"; ?>
 
 	// Create record for each your coin - https://gourl.io/editrecord/coin_boxes/0 ; and get free gourl keys
 	// It is not bitcoin wallet private keys! Place GoUrl Public/Private keys below for all coins which you accept
@@ -907,7 +907,7 @@
         <div class="row">
           <div class="col-12 col-md">
             <img class="mb-2" src="https://getbootstrap.com/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-            <small class="d-block mb-3 text-muted">&copy; 2014-2021</small>
+            <small class="d-block mb-3 text-muted">&copy; 2014-2023</small>
             <br>
             <div><a target="_blank" href="https://validator.w3.org/nu/?showsource=yes&amp;doc=<?php echo "https://".$_SERVER[HTTP_HOST].urlencode($_SERVER[REQUEST_URI]); ?>"><img title="Markup Validation Service" src="https://gourl.io/images/w3c.png" alt="Valid HTML 5"></a></div>
           </div>
